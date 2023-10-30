@@ -13,9 +13,11 @@
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Korisnici (učenici)
+				\item Administrator riječi				
+				\item Razvojni tim
+				\item Konkurencija
+				\item Naručitelj
 				
 			\end{packed_enum}
 			
@@ -66,6 +68,7 @@
 %{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}
 					
 
+
 					\noindent \underbar{\textbf{UC1 - Registracija}}
 					\begin{packed_item}
 	
@@ -81,6 +84,7 @@
 							\item Sustav prikazuje formu za unos podataka (ime, email,...)
 							\item Korisnik unosi podatke i potvrđuje registraciju
 							\item Sustav pohranjuje podatke i šalje email s inicijalnom lozinkom
+							
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
@@ -101,93 +105,94 @@
 							\end{packed_enum}
 							\item[4.b] Nevažeća email adresa
 								% Što tada? Hoćemo li realizirati provjeru email adrese i obaviještavanje korisnika u slučaju da je nevažeća ili ne?
-								
+
 						\end{packed_item}
 					\end{packed_item}
-				
-				\noindent \underbar{\textbf{UC2 - Prijava}}
-				\begin{packed_item}
 					
-					\item \textbf{Glavni sudionik: } Korisnik
-					\item  \textbf{Cilj:} 
-					\item  \textbf{Sudionici:} Backend
-					\item  \textbf{Preduvjet:} UC1(Registracija)
-					\item  \textbf{Opis osnovnog tijeka:}
 					
-					\item[] \begin{packed_enum}
+					\noindent \underbar{\textbf{UC2 - Prijava}}
+					\begin{packed_item}
 						
+						\item \textbf{Glavni sudionik: } Korisnik
+						\item  \textbf{Cilj:} 
+						\item  \textbf{Sudionici:} Backend
+						\item  \textbf{Preduvjet:} UC1(Registracija)
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
 							\item Korisnik odabire opciju prijava
 							\item Sustav prikazuje formu za unos podataka
 							\item Korisnik unosi podatke i potvrđuje prijavu
 							\item Sustav otvara stranicu s ponuđenim rječnicima 
-					\end{packed_enum}
-					
-					\item  \textbf{Opis mogućih odstupanja:}
-					
-					\item[] \begin{packed_item}
-						
-						\item[3.a] Korisnik odustaje od prijave
-						\item[] \begin{packed_enum}
-							
-							\item Sustav prikazuje početnu stranicu
-							
 						\end{packed_enum}
 						
-						\item[3.b] Uneseni podatci za prijavu su netočni
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[3.a] Korisnik odustaje od prijave
+							\item[] \begin{packed_enum}
+								
+								\item Sustav prikazuje početnu stranicu
+								
+							\end{packed_enum}
+							
+							\item[3.b] Uneseni podatci za prijavu su netočni
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obaviještava korisnika da su uneseni podatci netočni
 								
 							\end{packed_enum}
-						
-						\item[3.c] Korisnik se prijavljuje po prvi put
-						\item[] \begin{packed_enum}
 							
-							\item Sustav prikazuje formu za promijenu lozinke
+							\item[3.c] Korisnik se prijavljuje po prvi put
+							\item[] \begin{packed_enum}
+								
+								\item Sustav prikazuje formu za promijenu lozinke
+								
+							\end{packed_enum}
 							
-						\end{packed_enum}
 							
-						
+						\end{packed_item}
 					\end{packed_item}
-				\end{packed_item}
-				
+					
 					\noindent \underbar{\textbf{UC3 - Odabir rječnika i moda učenja}}
-				\begin{packed_item}
-					
-					\item \textbf{Glavni sudionik: } Korisnik
-					\item  \textbf{Cilj:} 
-					\item  \textbf{Sudionici:} Backend
-					\item  \textbf{Preduvjet:} UC2(Prijava)
-					\item  \textbf{Opis osnovnog tijeka:}
-					
-					\item[] \begin{packed_enum}
+					\begin{packed_item}
 						
-						\item Korisnik odabire rječnik
-						\item Sustav prikazuje formu za odabir moda učenja(upit engleske riječi uz odabir hrvatskog prijevoda, upit hrvatske riječi uz odabir engleskog prijevoda, upit izgovorom engleske riječi uz odgovor pisanjem riječi na engleskom, upit tekstualnim oblikom engleske riječi uz snimanje izgovora u zvučnu datoteku)
-						\item Korisnik odabire mod učenja
-						\item Sustav prikazuje stranicu s prvim pitanjem
-					\end{packed_enum}
-					
-					\item  \textbf{Opis mogućih odstupanja:}
-					
-					\item[] \begin{packed_item}
+						\item \textbf{Glavni sudionik: } Korisnik
+						\item  \textbf{Cilj:} 
+						\item  \textbf{Sudionici:} Backend
+						\item  \textbf{Preduvjet:} UC2(Prijava)
+						\item  \textbf{Opis osnovnog tijeka:}
 						
-						\item[3.a] Korisnik odustaje od odabira moda
 						\item[] \begin{packed_enum}
 							
-							\item Sustav prikazuje stranicu s odabirom rječnika
-							
+							\item Korisnik odabire rječnik
+							\item Sustav prikazuje formu za odabir moda učenja(upit engleske riječi uz odabir hrvatskog prijevoda, upit hrvatske riječi uz odabir engleskog prijevoda, upit izgovorom engleske riječi uz odgovor pisanjem riječi na engleskom, upit tekstualnim oblikom engleske riječi uz snimanje izgovora u zvučnu datoteku)
+							\item Korisnik odabire mod učenja
+							\item Sustav prikazuje stranicu s prvim pitanjem
 						\end{packed_enum}
 						
-						\item[4.a] Korisnik odustaje od kviza 
-						\item[] \begin{packed_enum}
-							
-							\item Sustav prikazuje stranicu s odabirom rječnika
-							
-						\end{packed_enum}
+						\item  \textbf{Opis mogućih odstupanja:}
 						
+						\item[] \begin{packed_item}
+							
+							\item[3.a] Korisnik odustaje od odabira moda
+							\item[] \begin{packed_enum}
+								
+								\item Sustav prikazuje stranicu s odabirom rječnika
+								
+							\end{packed_enum}
+							
+							\item[4.a] Korisnik odustaje od kviza 
+							\item[] \begin{packed_enum}
+								
+								\item Sustav prikazuje stranicu s odabirom rječnika
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
 					\end{packed_item}
-				\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC4 - Odgovor na pitanje}}
 					\begin{packed_item}
@@ -371,6 +376,196 @@
 							
 						\end{packed_item}
 					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC6 - Kreiranje novog rječnika}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$ Administrator riječi$>$
+						\item  \textbf{Cilj:} $<$Kreiranje novog rječnika$>$
+						\item  \textbf{Sudionici:} $<$Backend$>$
+						\item  \textbf{Preduvjet:} $<$1. Korisnik je prijavljen u sustav - UC2 (Prijava)$>$
+						\item  \textbf{Preduvjet:} $<$2. Korisnik ima status administratora$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$1. Administrator odabire opciju kreiranja novog rječnika$>$
+							\item $<$2. Sustav otvara formu za upis podataka o rječniku $>$
+							\item $<$3. Administrator upisuje sve potrebne podatke$>$
+							\item $<$4. Administrator odabire opciju "Spremi"$>$
+							\item $<$5. Sustav sprema promjene i prikazuje početnu stranicu$>$
+						
+						\end{packed_enum}
+					
+						\item  \textbf{Opis mogućih odstupanja:}
+					
+						\item[] \begin{packed_item}
+						
+							\item[3.a] $<$Administrator ne upisuje sve potrebne podatke $>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$Sustav obavještava administratora o nedostatku podataka $>$
+								
+							\end{packed_enum}	
+							
+							\item[4.a] $<$Administrator odustaje od dodavanja nove riječi$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$Sustav prikazuje početnu stranicu$>$
+								
+							\end{packed_enum}
+								\end{packed_item}
+						\end{packed_item}
+					
+						\noindent \underbar{\textbf{UC$<$7$>$ -$<$ Dodavanje nove riječi$>$}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }$<$ Administrator riječi$>$
+						\item  \textbf{Cilj:} $<$Dodavanje nove riječi u rječnik$>$
+						\item  \textbf{Sudionici:} $<$Backend, Vanjski rječnik$>$
+						\item  \textbf{Preduvjet:} $<$1. Korisnik je prijavljen u sustav - UC2 (Prijava)$>$
+						\item  \textbf{Preduvjet:} $<$2. Korisnik ima status administratora$>$
+						\item  \textbf{Preduvjet:} $<$3. Kreiran je rječnik - UC6 (Kreiranje novog rječnika)$>$
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item $<$1. Administrator odabire opciju dodavanja nove riječi u rječnik$>$
+							\item $<$2. Sustav otvara formu za upis podataka o riječi $>$
+							\item $<$3. Administrator upisuje dio riječi i pokreče pretragu$>$
+							\item $<$4. Sustav dojavljuje savjete s informacijama priklupljenim iz vanjskih rječnika$>$
+							\item $<$5. Administrator upisuje sve potrebne podatke$>$
+							\item $<$6. Administrator odabire jedan ili više prethodno definiranih rječnika i odabire opciju "Spremi"$>$
+							\item $<$7. Sustav sprema riječ u odabrani(e) rječnik(e)i prikazuje početnu stranicu$>$
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[4.a] $<$Sustav ne prepoznaje riječ$>$
+							\item[5.a] $<$Administrator ne upisuje sve potrebne podatke $>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$Sustav obavještava administratora o nedostatku podataka $>$
+								
+							\end{packed_enum}	
+							
+							\item[6.a] $<$Administrator odustaje od dodavanja nove riječi$>$
+							\item[] \begin{packed_enum}
+								
+								\item $<$Sustav prikazuje početnu stranicu$>$
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+					\end{packed_item}
+				
+					\noindent \underbar{\textbf{UC$<$8$>$ -$<$ Uređivanje riječi$>$}}
+				\begin{packed_item}
+					
+					\item \textbf{Glavni sudionik: }$<$ Administrator riječi$>$
+					\item  \textbf{Cilj:} $<$Uređivanje riječi u rječnik$>$
+					\item  \textbf{Sudionici:} $<$Backend$>$
+					\item  \textbf{Preduvjet:} $<$1. Korisnik je prijavljen u sustav - UC2 (Prijava)$>$
+					\item  \textbf{Preduvjet:} $<$2. Korisnik ima status administratora$>$
+					\item  \textbf{Preduvjet:} $<$3. Riječ postoji u rječniku - UC7 (Dodavanje nove riječi)$>$
+					\item  \textbf{Opis osnovnog tijeka:}
+					
+					\item[] \begin{packed_enum}
+						
+						\item $<$1. Administrator odabire rječnik u kojem se nalazi riječ koju želi urediti$>$
+						\item $<$2. Sustav otvara odabrani rječnik$>$
+						\item $<$3. Administrator odabire opciju "Uredi" za riječ koju želi urediti$>$
+						\item $<$4. Sustav otvara formu za upis podatak o riječi$>$
+						\item $<$5. Administrator mijenja podatke koje želi primijeniti i odabire opciju "Spremi"$>$
+						\item $<$6. Sustav sprema promjene i prikazuje početnu stranicu$>$
+					\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						\item[5.a] $<$Administrator odustaje od promjena$>$
+						\item[] \begin{packed_enum}
+							
+							\item $<$Sustav prikazuje početnu stranicu$>$
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+				\end{packed_item}
+				
+					\noindent \underbar{\textbf{UC$<$9$>$ -$<$ Uklanjanje riječi$>$}}
+				\begin{packed_item}
+					
+					\item \textbf{Glavni sudionik: }$<$ Administrator riječi$>$
+					\item  \textbf{Cilj:} $<$Uklanjanje riječi iz baze$>$
+					\item  \textbf{Sudionici:} $<$Baza podataka$>$
+					\item  \textbf{Preduvjet:} $<$1. Korisnik je prijavljen u sustav - UC2 (Prijava)$>$
+					\item  \textbf{Preduvjet:} $<$2. Korisnik ima status administratora$>$
+					\item  \textbf{Preduvjet:} $<$3. Riječ postoji u rječniku - UC7 (Dodavanje nove riječi)$>$
+					\item  \textbf{Opis osnovnog tijeka:}
+					
+					\item[] \begin{packed_enum}
+						
+						\item $<$1. Administrator odabire rječnik u kojem se nalazi riječ koju želi ukloniti$>$
+						\item $<$2. Sustav otvara odabrani rječnik$>$
+						\item $<$3. Administrator odabire opciju "Ukloni" za riječ koju želi ukloniti$>$
+						\item $<$4. Sustav prikazuje prozor s upitom "Jeste li sigurni da želite ukloniti odabranu riječ?"$>$
+						\item $<$5. Administrator odabire opciju "Da"$>$
+						\item $<$6. Sustav uklanja odabranu riječ i prikazuje početnu stranicu$>$
+					\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						\item[5.a] $<$Administrator odustaje od uklanjanja riječi$>$
+						\item[] \begin{packed_enum}
+						
+							\item $<$Sustav prikazuje početnu stranicu$>$
+						
+						\end{packed_enum}
+						
+					\end{packed_item}
+				\end{packed_item}
+				
+					\noindent \underbar{\textbf{UC$<$10$>$ -$<$ Dodavanje novih administratora$>$}}
+				\begin{packed_item}
+					
+					\item \textbf{Glavni sudionik: }$<$ Administrator riječi$>$
+					\item  \textbf{Cilj:} $<$Dodavanje novih administratora$>$
+					\item  \textbf{Sudionici:} $<$-$>$
+					\item  \textbf{Preduvjet:} $<$1. Korisnik je prijavljen u sustav - UC2 (Prijava)$>$
+					\item  \textbf{Preduvjet:} $<$2. Korisnik ima status administratora$>$
+					\item  \textbf{Opis osnovnog tijeka:}
+					
+					\item[] \begin{packed_enum}
+						
+						\item $<$1. Administrator odabire opciju dodavanja novih administratora$>$
+						\item $<$2. Sustav otvara prozor za pretragu korisnika $>$
+						\item $<$3. Administrator pretražuje korisnike: upisuje korisničko ime i odabire opciju "Traži"$>$
+						\item $<$4. Sustav prikazuje listu pronađenih korisnika$>$
+						\item $<$5. Administrator odabire korisnika i opciju "Učini administratorom"$>$
+						\item $<$6. Sustav sprema promjene i prikazuje početnu stranicu$>$
+					\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						\item[4.a] $<$Sustav ne pronalazi traženog korisnika$>$
+						\item[] \begin{packed_enum}
+							
+							\item $<$Sustav obavještava administratora da traženi korisnik nije pronađen$>$
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+				\end{packed_item}
+				
+				
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
