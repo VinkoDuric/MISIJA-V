@@ -2,24 +2,26 @@
 
 Cilj ovog projekta je razviti web aplikaciju pod nazivom "FlipMemo" za učenje stranog jezika na osnovu ponavljanja s odmakom (eng. spaced repetition). Samo učenje novih riječi provodi se postavljanjem serije pitanja o riječima iz prije definirane baze riječi. S obzirom na to da je učenje jezika često dugotrajan i zahtjevan proces ovim projektom i aplikacijom povećali bi zadržavanje informacija u dugoročnoj memoriji korisnika i učinkovitost samog učenja stranog jezika.
 
-Sama web aplikacija se sastoji od uloga "Korisnik" i "Administrator riječi". Svaki "Korisnik" koji poželi koristiti aplikaciju morat će se prvo prijaviti u sustav pomoću  gumba "Prijava", ako "Korisnik" nema kreiran korisnički račun biti će prvo potrebna registracija putem gumba "Registracija". U sučelju "Registracija" korisnik će moratri unjeti podatke kao što su ime, prezime, email s kojim će se prijavljivati na sustav. Nakon što korisnik pohrani podatke sustav šalje email s inicijalnom lozinkom korisnika. Prilikom registracije korisnik može odustati od registracije i biti vraćen na početnu stranicu. Sučelje "Registracija" obavještava korisnika ako u sustavu več postoji korsinik s istom email adresom ili nevažećom email adresom. Kada se korinik uspješno registrira vraćen je na početnu stranicu gdje se sa svojim novim podacima može prijaviti u sustav.
+Sistem posuda s različitim vremenskim intervalima osigurava da se riječi koje korisnik teže usvaja ponavljaju češće za razliku od onih riječi koje su usvojene s manje poteškoća kako bi optimizirali proces učenja stranih riječi. Aplikacija nudi različite modove učenja kao što su prepoznavanje izgovora i pisanje riječi čime se obuhvaća usvajanje jezika kroz čitanje, pisanje, slušanje i izgovor. "FlipMemo" ima potencijal postati mjesto za sve one koji žele usvojiti novi jezik na efikasan i zabavan način.
 
-Prilikom odabira "Prijava" korisniku se prikacije forma za unos podataka. Forma se sastoji od unosa email adrese i passworda vezanog za taj korisnicki racun. "Korisnik" prvo mora biti registriran kako bi uopće mogao biti prijavljen. Nakon što "Korisnik" unese ispravne podatke  sustav otvara stranicu s ponuđenim jezicima. U slučaju da "Korisnik" želi odustati od prijave sustav ga vraća na početnu stranicu. Ako "Korisnik" unese krive podatke sustav obavještava korisnika kako su navedeni podaci netočni te traži ponovni unos i provjeru podataka. Prilikom prijave korisnika po prvi put sa inicijalnom šifrom sustav prikazuje formu za promjenu lozinke.
+Sama web aplikacija se sastoji od uloga "Korisnik" i "Administrator riječi". Svaki "Korisnik" koji poželi koristiti aplikaciju morat će se prvo prijaviti u sustav pomoću  gumba "Prijava", ako "Korisnik" nema kreiran korisnički račun bit će prvo potrebna registracija putem gumba "Registracija". U sučelju "Registracija" korisnik će morati unijeti podatke kao što su ime, prezime, email s kojim će se prijavljivati na sustav. Nakon što korisnik pohrani podatke sustav šalje email s inicijalnom lozinkom korisnika. Prilikom registracije korisnik može odustati od registracije i biti vraćen na početnu stranicu. Sučelje "Registracija" obavještava korisnika ako u sustavu već postoji korisnik s istom email adresom ili nevažećom email adresom. Kada se korisnik uspješno registrira vraćen je na početnu stranicu gdje se sa svojim novim podacima može prijaviti u sustav.
+
+Prilikom odabira "Prijava" korisniku se prikazuje forma za unos podataka. Forma se sastoji od unosa email adrese i passworda vezanog za taj korisnički račun. "Korisnik" prvo mora biti registriran kako bi uopće mogao biti prijavljen. Nakon što "Korisnik" unese ispravne podatke  sustav otvara stranicu s ponuđenim jezicima. U slučaju da "Korisnik" želi odustati od prijave sustav ga vraća na početnu stranicu. Ako "Korisnik" unese krive podatke sustav obavještava korisnika kako su navedeni podaci netočni te traži ponovni unos i provjeru podataka. Prilikom prijave korisnika po prvi put s inicijalnom šifrom sustav prikazuje formu za promjenu lozinke.
 
 Nakon uspješne prijave "Korisnik" može odabrati "Odabir jezika" ili "Odjava".
-Ako "Korisnik" odabere opciju "Odjava" susatav će vratiti korisnika na početnu stranicu. Svaki prijavljeni "Korisnik" imati će opciju "odabir jezika" gdje će nakon odabranog stranog jezika sustav prikazati stranicu s odabirom rječnika.
+Ako "Korisnik" odabere opciju "Odjava" sustav će vratiti korisnika na početnu stranicu. Svaki prijavljeni "Korisnik" imat će opciju "odabir jezika" gdje će nakon odabranog stranog jezika sustav prikazati stranicu s odabirom rječnika.
 Nakon uspješnog odabira jezika u sučelju "Odabir rječnika i moda učenja" svaki korisnik odabire željeni rječnik za učenje. Sustav zatim prikazuje formu za odabir jednog od četiri moda za učenje jezika: 
 
 \begin{packed_item}
 	\item  upit engleske riječi uz odabir hrvatskog prijevoda
-	\item  upit hrvatske riječi uz odabri engleskog prijevoda
-	\item  upit izgovorom engleske riječi uz odgovor pisanjem riječi na engeskom
+	\item  upit hrvatske riječi uz odabir engleskog prijevoda
+	\item  upit izgovorom engleske riječi uz odgovor pisanjem riječi na engleskom
 	\item  upit tekstualnim oblikom engleske riječi uz snimanje izgovora u zvučnu datoteku
 \end{packed_item}
 
 Sustav korisniku nakon odabranog moda za učenje prikazuje stranicu s prvim pitanjem. U slučaju da "Korisnik" odustaje od odabira moda ili od kviza, sustav vraća korisnika na stranicu s odabirom rječnika.
 
-U skladu s odabranim modom učenja "Korisnik" daje odgovore. "Odgovor na pitanje" izgleda tako da "Korisnik" daje odgovor za koji smatra da je točan, sustav pohranjuje taj odgovor i obavještava korisnika o točnosti njegovog odogovora. "Korisnik" zatim odabire opciju nastavi te sustav prikazuje sljedeće pitanje. U slučaju da "Korisnik" želi odustati od kviza sustav prikazuje stranicu s odabirom rječnika. Navedeno ponašanje "Odgovor na pitanje" vrijedi za sve dalje navedene vrste odgovora na pitanje kao što su:
+U skladu s odabranim modom učenja "Korisnik" daje odgovore. "Odgovor na pitanje" izgleda tako da "Korisnik" daje odgovor za koji smatra da je točan, sustav pohranjuje taj odgovor i obavještava korisnika o točnosti njegovog odgovora. "Korisnik" zatim odabire opciju nastavi te sustav prikazuje sljedeće pitanje. U slučaju da "Korisnik" želi odustati od kviza sustav prikazuje stranicu s odabirom rječnika. Navedeno ponašanje "Odgovor na pitanje" vrijedi za sve dalje navedene vrste odgovora na pitanje kao što su:
 
 \begin{packed_item}
 	\item  odabir odgovora
@@ -27,11 +29,11 @@ U skladu s odabranim modom učenja "Korisnik" daje odgovore. "Odgovor na pitanje
 	\item  snimanje izgovora u zvučnu datoteku
 \end{packed_item}
 
-Prilikom odabira odgovora "Korisnik" odabire jedan odgovor među ponuđenima te sustav se ponaša isto kao što je navedeno u "Odgovor na pitanje". Kod unosa odgovora "Korsnik" upipsuje odgovor na za to predviđeno mjesto te potvrđuje klikom na gumb gdje mu sustav javlja je li odgovor točan. Prilikom snimanja izgovora u zvučnu datoteku "Korisnik" snima izgovor te sustav pogranjuje zvučnu datoteku i obavještava korisnika o točnosti izgovora.
+Prilikom odabira odgovora "Korisnik" odabire jedan odgovor među ponuđenima te sustav se ponaša isto kao što je navedeno u "Odgovor na pitanje". Kod unosa odgovora "Korisnik" upisuje odgovor na za to predviđeno mjesto te potvrđuje klikom na gumb gdje mu sustav javlja je li odgovor točan. Prilikom snimanja izgovora u zvučnu datoteku "Korisnik" snima izgovor te sustav pohranjuje zvučnu datoteku i obavještava korisnika o točnosti izgovora.
 
-U slučaju da "Korisnik" želi izbrisati svoj korisnički račun "Korisnik" mora prvo biti prijavljen u sustav. Nakon uspješne prijave "Korisnik" odabire opciju brisanja korisničkog računa prilikom kojeg sustav prikazuje prozor sa upitom "Jeste li sigurni da želite obrisati svoj korisnički račun?". Ako "Korisnik" odabere opciju "Da" sustav briše korisnički račun te prikazuje početnu stranicu, u slučaju da "Korsink" odustaje od brisanja korisničkog računa sustav prikazuje stranicu s odabirom rječnika.
+U slučaju da "Korisnik" želi izbrisati svoj korisnički račun "Korisnik" mora prvo biti prijavljen u sustav. Nakon uspješne prijave "Korisnik" odabire opciju brisanja korisničkog računa prilikom kojeg sustav prikazuje prozor s upitom "Jeste li sigurni da želite obrisati svoj korisnički račun?". Ako "Korisnik" odabere opciju "Da" sustav briše korisnički račun te prikazuje početnu stranicu, u slučaju da "Korisnik" odustaje od brisanja korisničkog računa sustav prikazuje stranicu s odabirom rječnika.
 
-Kako bi cijela aplikacija funkcionirala uvodimo "Administratora riječi" koji ima navedne ovlasti:
+Kako bi cijela aplikacija funkcionirala uvodimo "Administratora riječi" koji ima navedene ovlasti:
 
 \begin{packed_item}
 	\item  kreiranje novog rječnika
@@ -42,14 +44,35 @@ Kako bi cijela aplikacija funkcionirala uvodimo "Administratora riječi" koji im
 	\item  dodavanje novog administratora
 \end{packed_item}
 
-Kako bi "Administrator riječi" započeo sa kreiranjem novog rječnika prvo se prijavljuje u sustav. Nakon toga "Administrator riječi" odabire opciju "Kreiraj novi rječnik". Sustav zatim administratoru otvara formu za upis podataka o rječniku gdje administrator upisuje sve potrebne podatke. Nakon upisivanja podataka administrator odabire opciju "Spremi" kako bi sustav pohranio promjene te prikazao početnu stranicu. Ako u bilo kojem trenutku "Administrator riječi" odustaje od dodavanja riječi sustav ga vraća na početnu stranicu. U slučaju da administrator ne upiše sve potrebne podatke za dodavanje nove riječi sustav obavještava administratora o nedostatku podataka.
+Kako bi "Administrator riječi" započeo s kreiranjem novog rječnika prvo se prijavljuje u sustav. Nakon toga "Administrator riječi" odabire opciju "Kreiraj novi rječnik". Sustav zatim administratoru otvara formu za upis podataka o rječniku gdje administrator upisuje sve potrebne podatke. Nakon upisivanja podataka administrator odabire opciju "Spremi" kako bi sustav pohranio promjene te prikazao početnu stranicu. Ako u bilo kojem trenutku "Administrator riječi" odustaje od dodavanja riječi sustav ga vraća na početnu stranicu. U slučaju da administrator ne upiše sve potrebne podatke za dodavanje nove riječi sustav obavještava administratora o nedostatku podataka.
 
-Kod brisanja rječnika "Administrator riječi" prvo mora imati kreiran rječnik "Kreiranje novog rječnika". U izborniku za brisanje rječnika "Administrator riječi" odabire rječnik koji želi obristai gdje sustav otvara odabrani rječnik. Administrator zatim ima opciju pritiska na gumb "Obriši" prilikom kojeg sustav prikazuje prozor sa upitom "Jeste li sigurni da želite obrisati odabrani rječnik?". Nakon odabira "Da" sustav sprema promjene, briše rječnik i prikazuje početnu stranicu. U slučaju da administrator želi odustati od brisanja rječnika sustav vraća administratora na početnu stranicu. 
+Kod brisanja rječnika "Administrator riječi" prvo mora imati kreiran rječnik "Kreiranje novog rječnika". U izborniku za brisanje rječnika "Administrator riječi" odabire rječnik koji želi obrisati gdje sustav otvara odabrani rječnik. Administrator zatim ima opciju pritiska na gumb "Obriši" prilikom kojeg sustav prikazuje prozor s upitom "Jeste li sigurni da želite obrisati odabrani rječnik?". Nakon odabira "Da" sustav sprema promjene, briše rječnik i prikazuje početnu stranicu. U slučaju da administrator želi odustati od brisanja rječnika sustav vraća administratora na početnu stranicu. 
 
-Sistem posuda s različitim vremenskim intervalima osigurava da se riječi koje korisnik teže usvaja ponavljaju češće za razliku od onih riječi koje su usvojene s manje poteškoća. Na taj način  optimizira proces učenja stranih riječi. Aplikacija nudi različite modove učenja kao što su prepoznavanje izgovora i pisanje riječi čime se obuhvaća usvajanje jezika kroz čitanje, pisanje, slušanje i izgovor. "FlipMemo" ima potencijal postati mjesto za sve one koji žele usvojiti novi jezik na efikasan i zabavan način.
+Kako bi "Administrator riječi" odabrao opciju "Dodaj novu riječ" mora imati kreiran rječnik inače neće moći odabrati tu opciju. "Administrator riječi" odabire opciju te sustav mu otvara formu za upis podataka o riječi nakon čega administrator upisuje dio riječi i pokreće pretragu. Sustav pritom dojavljuje savjete s informacijama prikupljenim iz vanjskih rječnika i administrator upisuje sve potrebne podatke. "Administrator riječi" odabire jedan ili više prethodno definiranih rječnika o odabire opciju "Spremi" te sustav sprema riječ u odabrani(e) rječnik(e) i vraća administratora na početnu stranicu. Mogući problemi koji nastaju dodavanjem nove riječi su da sustav ne može prepoznati riječ ili da administrator ne upisuje sve potrebne podatke. U slučaju  da "Administrator riječi" ne upisuje sve potrebne podatke, sustav obavještava administratora o nedostatku podataka.
+Ako u bilo kojem trenutku kod dodavanja nove riječi administrator želi odustati, sustav ga vraća na početnu stranicu.
 
-Od postojećih aplikacija koje imaju slična rješenja kao "FlipMemo" izdvojili bi Anki i DuoLingo. Glavna razlika između Anki aplikacije i našeg zadatka je što se Anki koristi u općenite svrhe isto koristeći ponavljanje s odmakom, a ne samo za učenje jezika dok naša aplikacija bi se fokusirala samo na učenje jezika. DuoLingo predstavlja unaprijeđenu verziju našeg projektnog zadatka. DuoLingo pruža korisnicima velik broj stranih jezika te korisnici kroz cjeline i predavanja postepeno uče gramatiku, izgovor, pisanje i mnoge druge opcije koje DuoLingo nudi. Iako trenutno ne možemo konkurirati tako velikoj korporaciji na temelju usluge koju oni nude, možemo konkurirati sa besplatnom upotrebom naše aplikacije. Da bi unaprijedili "FlipMemo" aplikaciju trebali bi zaposliti izvorne govornike stranih jezika, pojačati fond riječi i rečenica te unaprijedili sustave za prepoznavanje izgovora korisnika. Iako trenutno nemamo sredstva za izradu takve aplikacije kao što je DuoLingo, korisnicima koji su željni naučiti strani jezik, pružamo besplatnu interaktivnu aplikaciju za efikasno i kvalitetno učenje stranog jezika.
+Kod "Dodavanje nove riječi" administrator ima opciju "Uređivanje riječi". "Administrator riječi" odabire rječnik u kojem se nalazi riječ koju želi urediti, sustav zatim otvara odabrani rječnik i administrator odabire opciju "Uredi" za riječ koju želi urediti. Klikom na gumb "Uredi" otvara se forma za upis podataka o riječi te administrator mijenja podatke koje želi promijeniti i klikom na gumb "Spremi" sprema promjene i vraća administratora na početnu stranicu. Ako u bilo kojem trenutku kod uređivanja riječi administrator želi odustati, sustav ga vraća na početnu stranicu.
 
+Kako bi "Administrator riječi" uklonio riječ kod "Dodavanje nove riječi" administrator odabire rječnik u kojem se nalazi riječ koju želi ukloniti. Odabirom rječnika sustav otvara odabrani rječnik
+i "Administrator riječi" odabire opciju "Ukloni" za riječ koju želi ukloniti prilikom čega sustav prikazuje prozor s upitom "Jeste li sigurni da želite ukloniti odabranu riječ?". Odabirom opcije "Da" sustav uklanja odabranu riječ i prikazuje početnu stranicu. Ako u bilo kojem trenutku kod uklanjanja riječi administrator želi odustati, sustav ga vraća na početnu stranicu.
 
+U slučaju da "Administrator riječi" želi dodati druge nove administratore mora se prvo prijaviti na početnoj stranici. Nakon uspješne prijave administrator odabire opciju "Dodaj novog administratora"
+gdje sustav otvara formu za unos podataka gdje administrator unosi podatke i odabire opciju "Spremi". Klikom na gumb spremi sustav sprema promjene i vraća administratora na početnu stranicu. 
+Ako u bilo kojem trenutku administrator želi odustati od dodavanja novog administratora, sustav vraća administratora na početnu stranicu.
+
+Od postojećih aplikacija koje imaju slična rješenja kao "FlipMemo" izdvojili bi Anki i Duolingo. Glavna razlika između Anki aplikacije i našeg zadatka je što se Anki koristi u općenite svrhe isto koristeći ponavljanje s odmakom, a ne samo za učenje jezika dok naša aplikacija bi se fokusirala samo na učenje jezika. Duolingo predstavlja unaprijeđenu verziju našeg projektnog zadatka. Duolingo pruža korisnicima velik broj stranih jezika te korisnici kroz cjeline i predavanja postepeno uče gramatiku, izgovor, pisanje i mnoge druge opcije koje Duolingo nudi. 
+
+Iako trenutno ne možemo konkurirati tako velikoj korporaciji na temelju usluge koju oni nude, možemo konkurirati s besplatnom upotrebom naše aplikacije. Neke od ideja koje bi u budućnosti mogle unaprijediti "FlipMemo" aplikaciju, a nisu nužne za funkcionalnost projekta su:
+
+\begin{packed_item}
+	\item  zaposliti izvorne govornike stranih jezika 
+	\item  pojačati fond riječi i rečenica
+	\item  unaprijediti sustave za prepoznavanje izgovora korisnika
+	\item  mogućnost praćenja napretka i vremena utrošenog na učenje 
+	\item  slanje obavijesti na mail u slučaju duže neaktivnosti kako bi potaknuli korisnike da uče
+	\item  statistička analiza i praćenje napretka učenja u usporedbi s drugim korisnicima 
+\end{packed_item}
+
+Iako trenutno nemamo sredstva za izradu takve aplikacije kao što je npr. Duolingo i dio navedenih funkcionalisti nisu važne za osnovno funkcioniranje projekta, korisnicima koji su željni naučiti strani jezik, pružamo besplatnu interaktivnu aplikaciju za efikasno i kvalitetno učenje stranog jezika.
 
 	
