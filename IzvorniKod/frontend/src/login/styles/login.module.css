@@ -1,0 +1,130 @@
+.loginCard {
+  width: 800px;
+  height: 550px;
+  background-color: white;
+  margin: auto;
+  border-radius: 5px;
+  display: grid;
+  grid-template-areas: 
+    'logo info'
+    'img  info';
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  overflow: clip;
+  box-shadow: 0 0 10px var(--shadow-color);
+  position:relative;
+}
+
+
+.logo {
+  grid-area: logo;
+  margin-top: 2rem;
+}
+
+.loginImg {
+  grid-area: img;
+}
+
+.loginInfoContainer {
+  grid-area: info;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffeba1;
+}
+
+.loginForm {
+  width: 90%;
+}
+
+.createAccountLink {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.3rem;
+}
+
+.remember {
+  float: right;
+}
+
+.submitBtn {
+  margin: 2rem auto;
+}
+
+.termsAndPolicy {
+  font-size: small;
+  font-weight: normal;
+}
+
+@media screen and (max-width: 1024px) {
+  .loginCard {
+    grid-template-areas: 
+      'logo'
+      'info';
+    grid-template-columns: 100%;
+    height:auto;
+    width: min-content;
+  }
+
+  .logo {
+    width: 300px;
+    padding: 2rem;
+    padding-bottom: 1.5rem;
+    box-sizing: content-box;
+    margin: auto;
+    margin-top: 0;
+  }
+
+  .loginInfoContainer {
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: .5rem;
+    width: 100%;
+    min-width: 500px
+  }
+
+  .createAccountLink {
+    top: auto;
+    right: 50%;
+    bottom: 1rem;
+    transform: translate(50%)
+  }
+
+  .termsAndPolicy {
+    text-align: center;
+  }
+
+
+  .submitBtn {
+    margin-bottom: 4rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .loginCard {
+    box-shadow: none;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .createAccountLink {
+    position: initial;
+    display: block;
+    width: fit-content;
+    margin: auto;
+    transform: none;
+  }
+
+  .loginInfoContainer {
+    height: inherit;
+    justify-content: flex-start;
+    padding-top: 1rem;
+    min-width: auto;
+  }
+
+  .submitBtn {
+    margin-bottom: 2rem;
+  }
+}
