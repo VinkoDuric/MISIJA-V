@@ -28,8 +28,6 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         this.accountDTOMapper = accountDTOMapper;
     }
 
-
-
     @Override
     public AuthenticationResponse login(AuthenticationRequest request) {
         Authentication authentication = authenticationManager.authenticate(

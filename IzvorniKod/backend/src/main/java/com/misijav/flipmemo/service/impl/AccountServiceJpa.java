@@ -18,7 +18,4 @@ public class AccountServiceJpa implements AccountService {
     public Optional<Account> findByEmail(String email) {
         return racunRepo.findByEmail(email);
     }
-
-    public static class AuthenticationService {
-    }
 }

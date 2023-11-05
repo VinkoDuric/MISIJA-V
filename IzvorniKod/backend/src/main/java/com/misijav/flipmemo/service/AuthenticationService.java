@@ -10,7 +10,7 @@ public interface AuthenticationService {
      * @param request request object containing credentials
      * @return authentication response containing token and account info
      */
-    public AuthenticationResponse login(AuthenticationRequest request);
+    AuthenticationResponse login(AuthenticationRequest request);
 
     // TODO: Add register method
 }

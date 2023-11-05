@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 public class AccountUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private final AccountService racunService;
+    private final AccountService accountService;
 
     public AccountUserDetailsService(AccountService racunService) {
-        this.racunService = racunService;
+        this.accountService = racunService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return racunService.findByEmail(email).orElseThrow(
+        return accountService.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("No email '" + email + "'")
         );
     }
