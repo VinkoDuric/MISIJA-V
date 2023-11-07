@@ -1,22 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Login from './login/page';
+import Login from './auth/page';
 import reportWebVitals from './reportWebVitals';
+import AuthPages from './auth/authpages';
 import { Route, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login path='/login'/>,
+    element: <Login page={AuthPages.LOGIN}/>,
   },
   {
   path: "/login",
-  element: <Login path='/login'/>,
+  element: <Login page={AuthPages.LOGIN}/>,
   },
   {
     path: "/signin",
-    element: <Login path='/signin'/>,
+    element: <Login page={AuthPages.SIGNIN}/>,
   }
 ])
 
