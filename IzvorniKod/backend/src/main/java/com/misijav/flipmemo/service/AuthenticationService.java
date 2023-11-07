@@ -12,5 +12,10 @@ public interface AuthenticationService {
      */
     AuthenticationResponse login(AuthenticationRequest request);
 
+    /**
+     * Invalidate cookie tokens for currently logged in user.
+     */
+    void logout();
+
     // TODO: Add register method
 }

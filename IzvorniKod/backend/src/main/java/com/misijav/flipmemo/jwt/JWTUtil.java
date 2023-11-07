@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -24,25 +23,12 @@ public class JWTUtil {
     private static final String SECRET_KEY =
             "foobar_123456789_foobar_123456789_foobar_123456789_foobar_123456789";
 
-
-    public String issueToken(String subject) {
-        return issueToken(subject, Map.of());
-    }
-
-    public String issueToken(String subject, String ...scopes) {
-        return issueToken(subject, Map.of("scopes", scopes));
-    }
-
-    public String issueToken(String subject, List<String> scopes) {
-        return issueToken(subject, Map.of("scopes", scopes));
-    }
-
     public String issueToken(
             String subject,
-            Map<String, Object> claims) {
+            int tokenVersion) {
         return Jwts
                 .builder()
-                .setClaims(claims)
+                .setClaims(Map.of("version", tokenVersion))
                 .setSubject(subject)
                 .setIssuer("localhost")
                 .setIssuedAt(Date.from(Instant.now()))
@@ -72,9 +58,12 @@ public class JWTUtil {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public boolean isTokenValid(String jwt, String username) {
-        String subject = getSubject(jwt);
-        return subject.equals(username) && !isTokenExpired(jwt);
+    public boolean isTokenValid(String jwt, String username, int tokenVersion) {
+        Claims claims = getClaims(jwt);
+        String subject = claims.getSubject();
+        int version = (int) claims.get("version");
+
+        return subject.equals(username) && !isTokenExpired(jwt) && version == tokenVersion;
     }
 
     private boolean isTokenExpired(String jwt) {

@@ -24,6 +24,7 @@ public class Account implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Roles role;
+    private int tokenVersion = 0;
 
     private Account() {}
 
@@ -43,24 +44,13 @@ public class Account implements UserDetails {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public void setPassword(String password) {
@@ -75,6 +65,9 @@ public class Account implements UserDetails {
         this.role = role;
     }
 
+    public int getTokenVersion() { return tokenVersion; }
+
+    public void incrementTokenVersion() { ++tokenVersion; }
 
     @Override
     public String toString() {
@@ -85,6 +78,7 @@ public class Account implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", tokenVersion=" + tokenVersion +
                 '}';
     }
 

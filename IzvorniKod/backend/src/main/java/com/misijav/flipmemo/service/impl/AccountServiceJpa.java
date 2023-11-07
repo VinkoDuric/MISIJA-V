@@ -12,10 +12,10 @@ import java.util.Optional;
 public class AccountServiceJpa implements AccountService {
 
     @Autowired
-    private AccountRepository racunRepo;
+    private AccountRepository accountRepository;
 
     @Override
     public Optional<Account> findByEmail(String email) {
-        return racunRepo.findByEmail(email);
+        return accountRepository.findByEmail(email);
     }
 }

@@ -36,7 +36,8 @@ public class SecurityFilterChainConfig {
         http.csrf(AbstractHttpConfigurer::disable);
                 //.cors(Customizer.withDefaults())
         http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**")).permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/login")).permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/register")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/api/v1/secured/any")).hasAnyRole(Roles.USER.name())
             .requestMatchers(new AntPathRequestMatcher("/api/v1/secured/admin")).hasRole(Roles.ADMIN.name())
             .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).authenticated()
