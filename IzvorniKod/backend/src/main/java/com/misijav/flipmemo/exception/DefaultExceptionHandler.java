@@ -50,6 +50,11 @@ public class DefaultExceptionHandler {
         return getResponse(HttpStatus.NOT_FOUND, e.getMessage(), request.getRequestURI());
     }
 
+    @ExceptionHandler(ResourceConflictException.class)
+    public ResponseEntity<ApiError> handleException(ResourceConflictException e, HttpServletRequest request) {
+        return getResponse(HttpStatus.CONFLICT, e.getMessage(), request.getRequestURI());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleException(RuntimeException e, HttpServletRequest request) {
         return getResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request.getRequestURI());
