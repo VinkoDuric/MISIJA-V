@@ -30,13 +30,25 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
+    private Cookie getAuthCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies == null) {
+            throw new BadCredentialsException("Login before you can refresh connection.");
+        }
+
+        Optional<Cookie> cookie = Arrays.stream(cookies).filter((c) -> c.getName().equals("auth")).findFirst();
+        return cookie.orElse(null);
+    }
+
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
         AuthenticationResponse responseData = authenticationService.login(request);
         ResponseCookie cookie = ResponseCookie.from("auth", responseData.token())
                 .httpOnly(true)
-                .secure(true)
-                .maxAge(Duration.ofMinutes(15))
+                .secure(false)
+                .path("/api/v1")
+                .maxAge(Duration.ofHours(15))
                 .sameSite("Lax")
                 .build();
 
@@ -47,35 +59,29 @@ public class AuthenticationController {
     }
 
     @GetMapping("logout")
-    public void login(HttpServletResponse response) {
-        ResponseCookie cookie = ResponseCookie.from("auth", "")
-                .httpOnly(true)
-                .secure(true)
-                .maxAge(0)
-                .build();
+    public void login(HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = getAuthCookie(request);
 
+        if (cookie == null) {
+            throw new BadCredentialsException("Login before you can refresh connection.");
+        }
         accountService.logout();
 
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         response.setStatus(HttpStatus.OK.value());
     }
 
     @GetMapping("refresh")
     public void refresh(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
+        Cookie cookie = getAuthCookie(request);
 
-        if (cookies == null) {
+        if (cookie == null) {
             throw new BadCredentialsException("Login before you can refresh connection.");
         }
 
-        Optional<Cookie> cookie = Arrays.stream(cookies).filter((c) -> c.getName().equals("auth")).findFirst();
-
-        if (cookie.isEmpty()) {
-            throw new BadCredentialsException("Login before you can refresh connection.");
-        }
-
-        cookie.get().setMaxAge((int)Duration.ofMinutes(15).getSeconds());
-        response.addCookie(cookie.get());
+        cookie.setMaxAge((int)Duration.ofMinutes(15).getSeconds());
+        response.addCookie(cookie);
         response.setStatus(HttpStatus.OK.value());
     }
 }
