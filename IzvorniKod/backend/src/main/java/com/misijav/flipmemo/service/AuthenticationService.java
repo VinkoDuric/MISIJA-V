@@ -20,9 +20,8 @@ public interface AuthenticationService {
     void logout();
 
     /**
-     * Register new user
+     * Register a new user.
      * @param request request object containing registration data
-     * @return registration response with a success message
      */
-    RegistrationResponse register(RegistrationRequest request);
+    void register(RegistrationRequest request);
 }

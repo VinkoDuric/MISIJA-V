@@ -87,7 +87,9 @@ public class AuthenticationController {
 
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequest request) {
-        RegistrationResponse response = authenticationService.register(request);
-        return ResponseEntity.ok(response);
+        authenticationService.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new RegistrationResponse("You have been successfully registered. " +
+                        "To activate your account check your email and confirm your registration."));
     }
 }
