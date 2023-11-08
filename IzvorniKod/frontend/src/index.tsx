@@ -1,36 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './index.css';
-import Login from './auth/page';
+import Auth from './auth/page';
+import Home from './home/page';
 import reportWebVitals from './reportWebVitals';
 import AuthPages from './auth/authpages';
-import { Route, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
+/**
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login page={AuthPages.LOGIN}/>,
+    element: <Auth page={AuthPages.LOGIN}/>,
   },
   {
   path: "/login",
-  element: <Login page={AuthPages.LOGIN}/>,
+  element: <Auth page={AuthPages.LOGIN}/>,
   },
   {
     path: "/signin",
-    element: <Login page={AuthPages.SIGNIN}/>,
+    element: <Auth page={AuthPages.SIGNIN}/>,
+  },
+  {
+    path: "/home",
+    element: <Home/>
   }
 ])
+**/
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    {/* <RouterProvider router={router} */}
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Auth page={AuthPages.LOGIN}/>} />
+        <Route path='/login' element={<Auth page={AuthPages.LOGIN}/>} />
+        <Route path='/signin' element={<Auth page={AuthPages.SIGNIN}/>} />
+        <Route path='/home' element={<Home/>} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals(console.log);

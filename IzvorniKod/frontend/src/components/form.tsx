@@ -1,7 +1,7 @@
 import './styles/form.css';
 import { ChangeEvent, useState } from 'react';
 
-enum ButtonType {
+export enum ButtonType {
   ACCENT,
 }
 

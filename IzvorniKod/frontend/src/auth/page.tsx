@@ -5,22 +5,27 @@ import LoginInfo from './loginInfo';
 //import SigninInfo from './signinInfo';
 import './styles/login.css';
 
-interface LoginProps {
+interface AuthProps {
   page: AuthPages;
 };
 
 const SigninInfo = lazy(() => import('./signinInfo'));
 
-export default function Login({page}: LoginProps) {
+export default function Auth({page}: AuthProps) {
   return (
     <div className={styles.loginCard}>
-      <img className={styles.logo} src="images/logo.svg" width={'70%'} />
       <img
+        alt='FlipMemoLogo'
+        className={styles.logo}
+        src="images/logo.svg"
+        width={'70%'} />
+      <img
+        alt='LoginImage'
         className={styles.loginImg}
         src="images/flipmemo-login.svg"
         width={'100%'}
       />
-      {page === AuthPages.LOGIN && <Suspense fallback={<div>Loding...</div>}><LoginInfo /></Suspense>}
+      {page === AuthPages.LOGIN && <LoginInfo />}
       {page === AuthPages.SIGNIN && <Suspense fallback={<div>Loding...</div>}><SigninInfo /></Suspense>}
     </div>
   );
