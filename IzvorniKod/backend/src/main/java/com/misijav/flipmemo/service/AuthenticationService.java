@@ -2,6 +2,8 @@ package com.misijav.flipmemo.service;
 
 import com.misijav.flipmemo.rest.auth.AuthenticationRequest;
 import com.misijav.flipmemo.rest.auth.AuthenticationResponse;
+import com.misijav.flipmemo.rest.auth.RegistrationRequest;
+import com.misijav.flipmemo.rest.auth.RegistrationResponse;
 
 public interface AuthenticationService {
 
@@ -17,5 +19,10 @@ public interface AuthenticationService {
      */
     void logout();
 
-    // TODO: Add register method
+    /**
+     * Register new user
+     * @param request request object containing registration data
+     * @return registration response with a success message
+     */
+    RegistrationResponse register(RegistrationRequest request);
 }

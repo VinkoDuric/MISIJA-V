@@ -84,4 +84,10 @@ public class AuthenticationController {
         response.addCookie(cookie);
         response.setStatus(HttpStatus.OK.value());
     }
+
+    @PostMapping("register")
+    public ResponseEntity<?> register(@RequestBody RegistrationRequest request) {
+        RegistrationResponse response = authenticationService.register(request);
+        return ResponseEntity.ok(response);
+    }
 }
