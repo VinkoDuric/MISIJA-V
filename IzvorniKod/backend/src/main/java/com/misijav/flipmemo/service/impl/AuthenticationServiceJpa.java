@@ -11,18 +11,23 @@ import com.misijav.flipmemo.model.Roles;
 import com.misijav.flipmemo.rest.auth.AuthenticationRequest;
 import com.misijav.flipmemo.rest.auth.AuthenticationResponse;
 import com.misijav.flipmemo.rest.auth.RegistrationRequest;
-import com.misijav.flipmemo.rest.auth.RegistrationResponse;
 import com.misijav.flipmemo.service.AuthenticationService;
+import jakarta.mail.internet.MimeMessage;
+import org.passay.CharacterData;
+import org.passay.CharacterRule;
+import org.passay.EnglishCharacterData;
+import org.passay.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 @Service
 public class AuthenticationServiceJpa implements AuthenticationService {
@@ -37,9 +42,8 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     private  final PasswordEncoder passwordEncoder;
     @Autowired
     private final JWTUtil jwtUtil;
-
-    //@Autowired
-    //private JavaMailSender javaMailSender;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public AuthenticationServiceJpa(AccountRepository accountRepository,
                                     AuthenticationManager authenticationManager,
@@ -90,7 +94,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
             throw new ResourceConflictException("Email is already in use.");
         }
 
-        String randomPassword = "some-random-password";
+        String randomPassword = generateRandomPassword();
 
         // Create new Account entity
         Account newUser = new Account(
@@ -105,17 +109,67 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         accountRepository.save(newUser);
 
         // send verification email
-        sendVerificationEmail(request.email(), randomPassword);
+        sendVerificationEmail(request.firstName(), request.email(), randomPassword);
     }
 
-    private void sendVerificationEmail(String userEmail, String verificationToken) {
-        /*SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(userEmail);
-        message.setSubject("Flipmemo - Verification Email");
-        // TODO change url
-        message.setText("To verify your email, click the following link: " +
-                "http://localhost/verify?token=" + verificationToken);
-        javaMailSender.send(message);
-         */
+    /**
+     * Generates a secure random password of 8 characters
+     * (two lower case characters, two uppercase characters, two digits, and two special characters)
+     * @return random password
+     */
+    private String generateRandomPassword() {
+        PasswordGenerator generator = new PasswordGenerator();
+        CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
+        CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
+        upperCaseRule.setNumberOfCharacters(2);
+
+        CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
+        CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
+        lowerCaseRule.setNumberOfCharacters(2);
+
+        CharacterData digitChars = EnglishCharacterData.Digit;
+        CharacterRule digitRule = new CharacterRule(digitChars);
+        digitRule.setNumberOfCharacters(2);
+
+        CharacterData specialChars = new CharacterData() {
+            @Override
+            public String getErrorCode() {
+                return null;
+            }
+            @Override
+            public String getCharacters() {
+                return "!@#$%^&*()_+";
+            }
+        };
+        CharacterRule specialCharRule = new CharacterRule(specialChars);
+        specialCharRule.setNumberOfCharacters(2);
+
+        return generator.generatePassword(8, upperCaseRule, lowerCaseRule,
+                digitRule, specialCharRule);
+    }
+
+    private void sendVerificationEmail(String userFirstName, String userEmail, String userPassword) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        // TODO change login address
+        String loginAddress = "https://www.fer.unizg.hr/";
+        String htmlMsg = "<h2>Dear " + userFirstName + ",</h2>\n\n" +
+                "<p>Thank you for registering an account on <strong>FlipMemo</strong>, the language learning application.</p>" +
+                "\n\n<p style=\"margin: 5px 0;\"><strong>Your login credentials:</strong></p>" +
+                "\n<p style=\"margin: 5px 0;\"><strong>Username: </strong>" + userEmail + "</p>" +
+                "\n<p style=\"margin: 5px 0;\"><strong>Password: </strong>" + userPassword + "</p>" +
+                "\n\n<p>We strongly recommend changing your initial password on your first login for enhanced " +
+                "account security. To access your account, log in <a href="+loginAddress+">here</a>.</p>" +
+                "\n\n<p style=\"font-style: italic;\">Best regards,</p>" +
+                "\n<p style=\"font-style: italic;\">The FlipMemo Team</p>";
+        try {
+            helper.setText(htmlMsg, true);
+            helper.setTo(userEmail);
+            helper.setSubject("FlipMemo - Registration Successful");
+            helper.setFrom("flipmemo@talentsecho.com");
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
