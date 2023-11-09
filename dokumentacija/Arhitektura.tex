@@ -36,21 +36,21 @@
 			
 		%\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
 		
-Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka čiji su glavni elementi relacije. Relacije možemo promatrati kao tablice definirane svojim imenom te atributima. Relacijski model nastao je na temelju ER modela baze podataka čiji su temeljni elementi entiteti i veze. Zadatak baze podataka je brzo, kompaktno te jednostavno pohranjivanje, izmjenu te uklanjanje raznih podataka. Za ovaj sustav, to su podaci o korisničkim računima, podaci o pohranjenim rječnicima te riječima u njima, opisi riječi te stadij učenja u kojem se nalazi korisnik sustava. U skladu s tim, definiramo bazu podataka sastavljenu od entiteta:
+\hspace*{6mm} Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka čiji su glavni elementi relacije. Relacije možemo promatrati kao tablice definirane svojim imenom te atributima. Relacijski model nastao je na temelju ER modela baze podataka čiji su temeljni elementi entiteti i veze. Zadatak baze podataka je brzo, kompaktno te jednostavno pohranjivanje, izmjenu te uklanjanje raznih podataka. Za ovaj sustav, to su podaci o korisničkim računima, podaci o pohranjenim rječnicima te riječima u njima, opisi riječi te stadij učenja u kojem se nalazi korisnik sustava. U skladu s tim, definiramo bazu podataka sastavljenu od entiteta:
 			
 			\begin{packed_item}
 				
-				\item Racun
-				\item VrstaRacuna
-				\item TrenutnoStanje
-				\item Posuda
-				\item ModUcenja
-				\item Rjecnik
-				\item Jezik
-				\item Fraza
-				\item Rijec
-				\item rijecURjecniku
-				\item rijecUPosudi
+				\item Account
+				\item AccountType
+				\item CurrentState
+				\item Pot
+				\item LearningMode
+				\item Dictionary
+				\item Language
+				\item Phrase
+				\item Word
+				\item wordInDict
+				\item wordInPot
 				
 			\end{packed_item}
 		
@@ -60,57 +60,57 @@ Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka č
 %				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
 				
 				
-				\textbf{Racun} Ovaj entitet sadrži informacije o korisničkom računu. Njegovi atributi su: idRacun, emailRacun, imeOsoba, prezimeOsoba, lozinkaRacun te idVrstaRacun. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom VrstaRacuna preko atributa idVrstaRacun, u vezi \textit{One-to-Many} s entitetom Posuda preko atributa idRacun te u vezi \textit{One-to-Many} s entitetom TrenutnoStanje preko atributa idRacun.
+				\hspace*{6mm} \textbf{Account} Ovaj entitet sadrži informacije o korisničkom računu. Njegovi atributi su: accountID, accountEmail, personName, personSurname, accountPassword te accountTypeID. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom AccountType preko atributa accountTypeID, u vezi \textit{One-to-Many} s entitetom Pot preko atributa accountID te u vezi \textit{One-to-Many} s entitetom CurrentState preko atributa accountID.
 				
 				\begin{longtblr}[
 					label=racun,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{Racun}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idRacun & INT	&  	Jedinstven identifikator korisnika generiran od strane baze podataka (surogatni ključ)  	\\ \hline
-					emailRacun	& VARCHAR &   Jedinstvena adresa elektroničke pošte (alternativni ključ)	\\ \hline 
-					imeOsoba & VARCHAR & Ime korisnika  \\ \hline 
-					prezimeOsoba & VARCHAR	&  	Prezime korisnika	\\ \hline 
-					lozinkaRacun & VARCHAR & Kriptirana lozinka korisnika  \\ \hline
-					\SetCell{LightBlue} idVrstaRacun	& INT &   Identifikator vrste računa korisnika	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Account}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}accountID & INT	&  	Jedinstven identifikator korisnika generiran od strane baze podataka (surogatni ključ)  	\\ \hline
+					accountEmail	& VARCHAR &   Jedinstvena adresa elektroničke pošte (alternativni ključ)	\\ \hline 
+					personName & VARCHAR & Ime korisnika  \\ \hline 
+					personSurname & VARCHAR	&  	Prezime korisnika	\\ \hline 
+					accountPassword & VARCHAR & Kriptirana lozinka korisnika  \\ \hline
+					\SetCell{LightBlue} accountTypeID	& INT &   Identifikator vrste računa korisnika	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{VrstaRacuna} Ovaj entitet sadrži informacije o vrsti korisničkog računa (radi li se o učeniku ili administratoru riječi). Njegovi atributi su: idVrstaRacun te imeVrstaRacun. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom Racun preko atributa idVrstaRacun.
+				\textbf{AccountType} Ovaj entitet sadrži informacije o vrsti korisničkog računa (radi li se o učeniku ili administratoru riječi). Njegovi atributi su: accountTypeID te accountTypeName. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom Account preko atributa accountTypeID.
 				
 				\begin{longtblr}[
 					label=vrstaRacuna,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[7,l]|X[6, l]|X[19, l]|}, 
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{VrstaRacuna}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idVrstaRacun & INT	&  Jedinstven identifikator vrste računa generiran od strane baze podataka (surogatni ključ)  	\\ \hline
-					imeVrstaRacun	& VARCHAR &   Ime vrste računa	\\ \hline  
+					\hline \SetCell[c=3]{c}{\textbf{AccountType}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}accountTypeID & INT	&  Jedinstven identifikator vrste računa generiran od strane baze podataka (surogatni ključ)  	\\ \hline
+					accountTypeName	& VARCHAR &   Ime vrste računa	\\ \hline  
 				\end{longtblr}
 				
-				\textbf{TrenutnoStanje} Ovaj slabi entitet sadrži informacije o trenutnom stanju u kojem se nalazi korisnik sustava. Njegovi atributi su: idRjecnik, idRacun, idModUcenja. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom Rjecnik preko atributa idRjecnik, u vezi \textit{Many-to-One} je s entitetom Racun preko atributa idRacun, u vezi \textit{Many-to-One} je s entitetom ModUcenja preko atributa idModUcenja.
+				\textbf{CurrentState} Ovaj slabi entitet sadrži informacije o trenutnom stanju u kojem se nalazi korisnik sustava. Njegovi atributi su: dictionaryID, accountID, learningModeID. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom Dictionary preko atributa dictionaryID, u vezi \textit{Many-to-One} je s entitetom Account preko atributa accountID, u vezi \textit{Many-to-One} je s entitetom LearningMode preko atributa learningModeID.
 				
 				\begin{longtblr}[
 					label=trenutnoStanje,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{TrenutnoStanje}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idRjecnik & INT	&  	Jedinstven identifikator rječnika (strani ključ)	\\ \hline
-					\SetCell{LightGreen}idRacun & INT	&  	Jedinstven identifikator računa (strani ključ)	\\ \hline
-					\SetCell{LightGreen}idModUcenja & INT	&  	Jedinstven identifikator moda (strani ključ) učenja 	\\ \hline
+					\hline \SetCell[c=3]{c}{\textbf{CurrentState}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}dictionaryID & INT	&  	Jedinstven identifikator rječnika (strani ključ)	\\ \hline
+					\SetCell{LightGreen}accountID & INT	&  	Jedinstven identifikator računa (strani ključ)	\\ \hline
+					\SetCell{LightGreen}learningModeID & INT	&  	Jedinstven identifikator moda (strani ključ) učenja 	\\ \hline
 				\end{longtblr}
 				
-				\textbf{Posuda} Ovaj slabi entitet sadrži informacije o pojedinoj posudi riječi pridruženoj nekom korisniku. Njegovi atributi su: idPosuda, idRacun, vrijemeTrajanja, brojPosuda. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom Racun preko atributa idRacun, u vezi \textit{Many-to-Many} je s entitetom Rijec preko atributa idRijec, idPosuda, idRacun.
+				\textbf{Pot} Ovaj slabi entitet sadrži informacije o pojedinoj posudi riječi pridruženoj nekom korisniku. Njegovi atributi su: potID, accountID, expirationTime, potNumber. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom Account preko atributa accountID, u vezi \textit{Many-to-Many} je s entitetom Word preko atributa wordID, potID, accountID.
 				
 				\begin{longtblr}[
 					label=posuda,
@@ -120,45 +120,45 @@ Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka č
 						colspec={|X[7,l]|X[6, l]|X[19, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{Posuda}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idPosuda & INT	&  Jedinstveni identifikator posude riječi 	\\ \hline
-					\SetCell{LightGreen}idRacun & INT & Jedinstveni identifikator računa korisnika (strani ključ) \\ \hline
-					vrijemeTrajanja & INTERVAL & Vrijeme koje je potrebno proći kako bi se riječi iz posude pojavile u pitanju korisniku  \\ \hline 
-					brojPosuda & INT	&  	Redni broj posude (alternativni ključ)	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Pot}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}potID & INT	&  Jedinstveni identifikator posude riječi 	\\ \hline
+					\SetCell{LightGreen}accountID & INT & Jedinstveni identifikator računa korisnika (strani ključ) \\ \hline
+					expirationTime & INTERVAL & Vrijeme koje je potrebno proći kako bi se riječi iz posude pojavile u pitanju korisniku  \\ \hline 
+					potNumber & INT	&  	Redni broj posude (alternativni ključ)	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{ModUcenja} Ovaj entitet sadrži informacije o modu učenja u kojem je korisnik. Njegovi atributi su: idModUcenja, opisModUcenja. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom TrenutnoStanje preko atributa idModUcenja.
+				\textbf{LearningMode} Ovaj entitet sadrži informacije o modu učenja u kojem je korisnik. Njegovi atributi su: learningModeID, learningModeDescription. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom CurrentState preko atributa learningModeID. \newpage
 				
 				\begin{longtblr}[
 					label=modUcenja,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[7,l]|X[6, l]|X[19, l]|}, 
+						colspec={|X[11,l]|X[6, l]|X[15, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{ModUcenja}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idModUcenja & INT	&  Jedinstven identifikator moda učenja generiran od strane baze podataka (surogatni ključ)  	\\ \hline
-					opisModUcenja	& VARCHAR &   Kratki opis moda učenja	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{LearningMode}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}learningModeID & INT	&  Jedinstven identifikator moda učenja generiran od strane baze podataka (surogatni ključ)  	\\ \hline
+					learningModeDescription	& VARCHAR &   Kratki opis moda učenja	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Rjecnik} Ovaj entitet sadrži informacije o rječniku za neki jezik. Njegovi atributi su: idRjecnik, imeRjecnik, idJezik. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom TrenutnoStanje preko atributa idRjecnik, u vezi \textit{Many-to-One} s entitetom Jezik preko atributa idJezik te u vezi \textit{Many-to-Many} s entitetom Rijec preko atributa idRjecnik, idRijec.
+				\textbf{Dictionary} Ovaj entitet sadrži informacije o rječniku za neki jezik. Njegovi atributi su: dictionaryID, dictionaryName, languageID. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom CurrentState preko atributa dictionaryID, u vezi \textit{Many-to-One} s entitetom Language preko atributa languageID te u vezi \textit{Many-to-Many} s entitetom Word preko atributa dictionaryID, wordID.
 				
 				\begin{longtblr}[
 					label=rjecnik,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[7,l]|X[6, l]|X[19, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{Rjecnik}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idRjecnik & INT	&  	Jedinstveni identifikator rječnika generiran od strane baze podataka (surogatni ključ)  	\\ \hline
-					imeRjecnik	& VARCHAR &   Ime rječnika	\\ \hline 
-					\SetCell{LightBlue}idJezik	& INT &   Jedinstveni identifikator jezika kojem je rječnik pridružen	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Dictionary}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}dictionaryID & INT	&  	Jedinstveni identifikator rječnika generiran od strane baze podataka (surogatni ključ)  	\\ \hline
+					dictionaryName	& VARCHAR &   Ime rječnika	\\ \hline 
+					\SetCell{LightBlue}languageID	& INT &   Jedinstveni identifikator jezika kojem je rječnik pridružen	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Jezik} Ovaj entitet sadrži informacije o jeziku kojeg podržava sustav. Njegovi atributi su: idJezik, kraticaJezik, imeJezik. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom Rjecnik preko atributa idJezik.
+				\textbf{Language} Ovaj entitet sadrži informacije o jeziku kojeg podržava sustav. Njegovi atributi su: languageID, languageCode, languageName. Ovaj entitet u vezi \textit{One-to-Many} je s entitetom Dictionary preko atributa languageID.
 				
 				\begin{longtblr}[
 					label=jezik,
@@ -168,13 +168,13 @@ Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka č
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{Jezik}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idjezik & INT	&  Jedinstveni identifikator jezika generiran od strane baze podataka (surogatni ključ)	\\ \hline
-					kraticaJezik	& CHAR &   Troslovna kratica jezika	\\ \hline 
-					imeJezik & VARCHAR & Ime jezika  \\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Language}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}languageID & INT	&  Jedinstveni identifikator jezika generiran od strane baze podataka (surogatni ključ)	\\ \hline
+					languageCode	& CHAR &   Troslovna kratica jezika	\\ \hline 
+					languageName & VARCHAR & Ime jezika  \\ \hline 
 				\end{longtblr}
 				
-				\textbf{Fraza} Ovaj entitet sadrži informacije o frazi koja bolje opisuje neku riječ. Njegovi atributi su: idFraza, sadrzajFraza, idRijec. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom Rijec preko atributa idRijec.
+				\textbf{Phrase} Ovaj entitet sadrži informacije o frazi koja bolje opisuje neku riječ. Njegovi atributi su: phraseID, phraseContent, wordID. Ovaj entitet u vezi \textit{Many-to-One} je s entitetom Word preko atributa wordID.
 				
 				\begin{longtblr}[
 					label=fraza,
@@ -184,29 +184,29 @@ Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka č
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{Fraza}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idFraza & INT	&  	Jedinstveni identifikator fraze generiran od strane baze podataka (surogatni ključ)  	\\ \hline
-					sadrzajFraza	& VARCHAR &   Tekst fraze	\\ \hline 
-					\SetCell{LightBlue}idRijec	& INT &   Jedinstveni identifikator riječi kojoj je fraza pridružena	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Phrase}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}phraseID & INT	&  	Jedinstveni identifikator fraze generiran od strane baze podataka (surogatni ključ)  	\\ \hline
+					phraseContent	& VARCHAR &   Tekst fraze	\\ \hline 
+					\SetCell{LightBlue}wordID	& INT &   Jedinstveni identifikator riječi kojoj je fraza pridružena	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Rijec} Ovaj entitet sadrži informacije o riječi koja je dodana u sustav. Njegovi atributi su: idRijec, sadrzajRijec, izgovorRijec. Ovaj entitet u vezi \textit{Many-to-Many} je s entitetom Posuda preko atributa idPosuda, idRijec, idRacun, u vezi \textit{Many-to-One} s entitetom Fraza preko atributa idFraza, u vezi je \textit{Many-to-Many} s entitetom Rjecnik preko atributa idRjecnik, idRijec.
+				\textbf{Word} Ovaj entitet sadrži informacije o riječi koja je dodana u sustav. Njegovi atributi su: wordID, wordContent, wordPronunciation. Ovaj entitet u vezi \textit{Many-to-Many} je s entitetom Pot preko atributa potID, wordID, accountID, u vezi \textit{Many-to-One} s entitetom Phrase preko atributa phraseID, u vezi je \textit{Many-to-Many} s entitetom Dictionary preko atributa dictionaryID, wordID.
 				
 				\begin{longtblr}[
 					label=rijec,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[9,l]|X[6, l]|X[17, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{Rijec}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idRijec & INT	&  Jedinstveni identifikator riječi generiran od strane baze podataka (surogatni ključ)	\\ \hline
-					sadrzajRijec	& VARCHAR &   Sadržaj riječi	\\ \hline 
-					izgovorRijec & BYTEA & Glasovna datoteka koja predstavlja izgovor riječi  \\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Word}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}wordID & INT	&  Jedinstveni identifikator riječi generiran od strane baze podataka (surogatni ključ)	\\ \hline
+					wordContent	& VARCHAR &   Sadržaj riječi	\\ \hline 
+					wordPronunciation & BYTEA & Glasovna datoteka koja predstavlja izgovor riječi  \\ \hline 
 				\end{longtblr}
 				
-				\textbf{rijecURjecniku} Ovaj entitet nastao zbog veze \textit{Many-to-Many} sadrži informacije o tome u kojim rječnicima se nalazi riječ. Njegovi atributi su: idRijec, idRjecnik.
+				\textbf{wordInDict} Ovaj entitet nastao zbog veze \textit{Many-to-Many} sadrži informacije o tome u kojim rječnicima se nalazi riječ. Njegovi atributi su: wordID, dictionaryID.
 				
 				\begin{longtblr}[
 					label=rijecURjecniku,
@@ -216,12 +216,12 @@ Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka č
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{rijecURjecniku}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idRjecnik & INT	&  	Jedinstven identifikator rječnika (strani ključ)	\\ \hline
-					\SetCell{LightGreen}idRijec & INT	&  	Jedinstven identifikator riječi (strani ključ)	\\ \hline
+					\hline \SetCell[c=3]{c}{\textbf{wordInDict}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}dictionaryID & INT	&  	Jedinstven identifikator rječnika (strani ključ)	\\ \hline
+					\SetCell{LightGreen}wordID & INT	&  	Jedinstven identifikator riječi (strani ključ)	\\ \hline
 				\end{longtblr}
 				
-				\textbf{rijecUPosudi} Ovaj entitet nastao zbog veze \textit{Many-to-Many} sadrži informacije o u kojoj se posudi za koji račun nalazi neka riječ. Njegovi atributi su: idRijec, idPosuda, idRacun.
+				\textbf{wordInPot} Ovaj entitet nastao zbog veze \textit{Many-to-Many} sadrži informacije o u kojoj se posudi za koji račun nalazi neka riječ. Njegovi atributi su: wordID, potID, accountID.
 				
 				\begin{longtblr}[
 					label=rijecUPosudi,
@@ -231,10 +231,10 @@ Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka č
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{rijecUPosudi}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}idRijec & INT	&  	Jedinstven identifikator riječi (strani ključ)	\\ \hline
-					\SetCell{LightGreen}idRacun & INT	&  	Jedinstven identifikator računa (strani ključ)	\\ \hline
-					\SetCell{LightGreen}idPosuda & INT	&  	Jedinstven identifikator posude (strani ključ) učenja 	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{wordInPot}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}wordID & INT	&  	Jedinstven identifikator riječi (strani ključ)	\\ \hline
+					\SetCell{LightGreen}accountID & INT	&  	Jedinstven identifikator računa (strani ključ)	\\ \hline
+					\SetCell{LightGreen}potID & INT	&  	Jedinstven identifikator posude (strani ključ) učenja 	\\ \hline 
 				\end{longtblr}
 				
 				
@@ -249,6 +249,8 @@ Za potrebe rada sustava kojeg gradimo koristit ćemo relacijsku bazu podataka č
 					\caption{Dijagram baze podataka}
 					\label{fig:dijagramBP}
 				\end{figure}
+				
+				\newpage
 			
 			
 		\section{Dijagram razreda}
