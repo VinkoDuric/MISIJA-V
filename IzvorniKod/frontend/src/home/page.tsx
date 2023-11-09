@@ -20,6 +20,7 @@ export default function Home() {
     }, []);
 
     function onClick() {
+        console.log('fetch')
         fetch('/api/v1/auth/logout').then(() => {
             navigate('/');
         });
@@ -27,7 +28,7 @@ export default function Home() {
     
     return (
     <>
-        {serverText !== null ||
+        {serverText !== null &&
         <div>
             <span>{serverText}</span>
             <Button onClick={onClick}>Log Out</Button>

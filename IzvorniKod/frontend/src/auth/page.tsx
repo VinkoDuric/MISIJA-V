@@ -2,14 +2,12 @@ import { lazy, Suspense } from 'react';
 import styles from './styles/login.module.css';
 import AuthPages from './authpages';
 import LoginInfo from './loginInfo';
-//import SigninInfo from './signinInfo';
+import SigninInfo from './signinInfo';
 import './styles/login.css';
 
 interface AuthProps {
   page: AuthPages;
 };
-
-const SigninInfo = lazy(() => import('./signinInfo'));
 
 export default function Auth({page}: AuthProps) {
   return (
@@ -26,7 +24,7 @@ export default function Auth({page}: AuthProps) {
         width={'100%'}
       />
       {page === AuthPages.LOGIN && <LoginInfo />}
-      {page === AuthPages.SIGNIN && <Suspense fallback={<div>Loding...</div>}><SigninInfo /></Suspense>}
+      {page === AuthPages.SIGNIN && <SigninInfo />}
     </div>
   );
 }

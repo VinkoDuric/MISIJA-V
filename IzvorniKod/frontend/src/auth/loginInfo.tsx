@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles/login.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { Button, Checkbox, InputText, InputPassword } from '../components/form';
 
 export default function LoginInfo() {
 
+  const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
@@ -19,14 +20,23 @@ export default function LoginInfo() {
       headers: new Headers({'Content-Type': 'application/json'})
     });
 
-    if (response.status === 200) {
+    if (response.status === 200)
       navigate('/home');
-    }
+    else
+      setError(true);
   }
 
   return (
     <div className={styles.loginInfoContainer}>
-      <span className={'xxlarge-text'}>USER LOGIN</span>
+      <span className={'xxlarge-text'}>
+        USER LOGIN
+      </span>
+      {
+        error === true &&
+        <span className={styles.errorMsg}>
+          You have entered an invalid username or password.
+        </span>
+      }
       <form
         className={styles.loginForm}
         onSubmit={handleSubmit}

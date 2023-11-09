@@ -15,7 +15,6 @@
   position:relative;
 }
 
-
 .logo {
   grid-area: logo;
   margin-top: 2rem;
@@ -36,6 +35,11 @@
 
 .loginForm {
   width: 90%;
+}
+
+.errorMsg {
+  color: red;
+  margin-bottom: 1em;
 }
 
 .createAccountLink {
