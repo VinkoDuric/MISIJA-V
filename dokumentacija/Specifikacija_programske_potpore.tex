@@ -1039,14 +1039,23 @@
 %					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
 %				\eject		
 
-					\includegraphics[width=\textwidth]{UseCaseDiagram0}
-					Slika 3.1: Dijagram obrazaca uporabe, funkcionalnosti korisnika i administratora riječi
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/UseCaseDiagram0.PNG}
+						\caption{Dijagram obrazaca uporabe, funkcionalnosti korisnika i administratora riječi}
+						\label{fig:useCaseDiagram0}
+					\end{figure}
 					
-					\includegraphics[width=\textwidth]{UseCaseDiagram1}
-					Slika 3.2: Dijagram obrazaca uporabe, funkcionalnosti korisnika
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/UseCaseDiagram1.PNG}
+						\caption{Dijagram obrazaca uporabe, funkcionalnosti korisnika}
+						\label{fig:useCaseDiagram1}
+					\end{figure}
 					
-					\includegraphics[width=\textwidth]{UseCaseDiagram2}
-					Slika 3.3: Dijagram obrazaca uporabe, funkcionalnosti administratora riječi\newpage
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/UseCaseDiagram2.PNG}
+						\caption{Dijagram obrazaca uporabe, funkcionalnosti administratora riječi}
+						\label{fig:useCaseDiagram2}
+					\end{figure} \newpage
 				
 			\subsection{Sekvencijski dijagrami}
 				
@@ -1058,29 +1067,43 @@
 				\textbf{Obrazac uporabe UC1- Registracija}\\
 				Korisnik odabire opciju „Registracija“. Sustav prikazuje formu za unos podataka za registraciju. Korisnik unosi potrebne podatke i potvrđuje registraciju.. Ako korisnik odustane od registracije, sustav vraća korisnika na početnu stranicu. Ako je korisnik unio mail adresu koja se već koristi u sustavu, sustav vraća obavijest o već registriranoj mail adresi. Ako mail adresa ne postoji u bazi podataka, sustav na navedenu mail adresu šalje mail s inicijalnom lozinkom.\newpage
 
-				\includegraphics[width=\textwidth]{UC1}
-				Slika 3.4: Sekvencijski dijagram za UC1\newpage
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UC1.PNG}
+					\caption{Sekvencijski dijagram za UC1}
+					\label{fig:sekv1}
+				\end{figure} \newpage
 				
 				
 				\noindent\textbf{Obrazac uporabe UC2 - Prijava}\\
 				Korisnik odabire opciju „Prijava“. Sustav prikazuje formu za unos podataka za prijavu. Korisnik unosi potrebne podatke i potvrđuje prijavu. Sustav provjerava ispravnost podataka. Ako su podatci neispravni, sustav šalje obavijest o krivo unesenim podatcima, a korisnik mora ispraviti podatke i ponovno potvrditi prijavu sve dok ne budu uneseni ispravni podatci. Ako se korisnik po prvi puta prijavljuje u sustav, sustav mu prikazuje formu za promjenu inicijalne lozinke. Korisnik unosi novu lozinku, a sustav ju sprema u bazu podataka. Nakon prijave u sustav, sustav šalje korisnika na stranicu s ponuđenim jezicima.
 				
-				\includegraphics[width=\textwidth]{UC2}
-				Slika 3.5: Sekvencijski dijagram za UC2\newpage				
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UC2.PNG}
+					\caption{Sekvencijski dijagram za UC2}
+					\label{fig:sekv2}
+				\end{figure} \newpage
+								
 				
 				
 				\noindent\textbf{Obrasci uporabe UC4, UC5 i UC6 - Odabir jezika, Odabir rječnika i moda učenja, Odgovor na pitanje}\\
 				Korisnik odabire željeni jezik. Sustav iz baze podataka dohvaća rječnike koji su vezani za odabrani jezik te ih prikazuje korisniku. Korisnik odabire željeni rječnik. Sustav iz baze podataka dohvaća modove učenja te ih prikazuje korisniku. Korisnik odabire mod učenja. Sustav iz baze podataka dohvaća pitanje te prikazuje stranicu s pitanjem. Korisnik odgovara na pitanje te ako je odgovor točan, sustav u bazi podataka odgovoreno pitanje stavlja u iduću posudu. Ako je odgovor netočan, sustav u bazi podataka odgovoreno pitanje stavlja u prvu posudu. Korisnik odabire opciju „Sljedeće pitanje“. Sustav dohvaća novo pitanje iz baze podataka. Ako korisnik odustane od kviza, sustav ga vraća na stranicu s prikazom rječnika.
 				
-				\includegraphics[width=\textwidth]{UC4,UC5,UC6}
-				Slika 3.6: Sekvencijski dijagram za UC4, UC5, UC6\newpage
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UC4,UC5,UC6.PNG}
+					\caption{Sekvencijski dijagram za UC4, UC5, UC6}
+					\label{fig:sekv3}
+				\end{figure} \newpage
 				
 				
 				\noindent\textbf{Obrasci uporabe UC8 i UC10 - Kreiranje novog rječnika i Dodavanje nove riječi}\\
 				Administrator odabire opciju „Kreiraj novi rječnik“. Sustav prikazuje formu za unos podataka novog rječnika. Administrator upisuje potrebne podatke. Ako su uneseni podatci neispravni, sustav prikazuje obavijest o neispravno unesenim podatcima, a administrator mora ispraviti unesene podatke. Kada su podatci ispravno uneseni, sustav podatke sprema u bazu podataka, a administratoru prikazuje početnu stranicu. Administrator odabire opciju „Dodaj novu riječ“. Sustav prikazuje formu za unos nove riječi. Nakon što administrator unese dio željene riječi, sustav pomoću vanjskih rječnika administratoru dojavljuje savjete s informacijama za unos riječi. Administrator odabire ponuđene riječi, upisuje potrebne podatke te odabire opciju „Spremi“. Sustav novu riječ sprema u bazu podataka, a administratora vraća na početnu stranicu.
 				
-				\includegraphics[width=\textwidth]{UC8,UC10}
-				Slika 3.7: Sekvencijski dijagram za UC8, UC10\newpage
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UC8,UC10.PNG}
+					\caption{Sekvencijski dijagram za UC8, UC10}
+					\label{fig:sekv4}
+				\end{figure} \newpage
 	
 		\section{Ostali zahtjevi}
 		
