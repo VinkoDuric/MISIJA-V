@@ -13,8 +13,8 @@ public class AccountUserDetailsService implements UserDetailsService {
     @Autowired
     private final AccountService accountService;
 
-    public AccountUserDetailsService(AccountService racunService) {
-        this.accountService = racunService;
+    public AccountUserDetailsService(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @Override

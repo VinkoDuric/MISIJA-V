@@ -43,18 +43,20 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     @Autowired
     private final JWTUtil jwtUtil;
     @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     public AuthenticationServiceJpa(AccountRepository accountRepository,
                                     AuthenticationManager authenticationManager,
                                     AccountDTOMapper accountDTOMapper,
                                     PasswordEncoder passwordEncoder,
-                                    JWTUtil jwtUtil) {
+                                    JWTUtil jwtUtil,
+                                    JavaMailSender javaMailSender) {
         this.accountRepository = accountRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
         this.accountDTOMapper = accountDTOMapper;
+        this.javaMailSender = javaMailSender;
     }
 
     @Override
