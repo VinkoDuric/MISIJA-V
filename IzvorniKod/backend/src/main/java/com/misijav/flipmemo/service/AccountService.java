@@ -12,4 +12,10 @@ public interface AccountService {
      * @return account if it's found
      */
     Optional<Account> findByEmail(String email);
+
+    /**
+     * Delete an account by email
+     * @param email account's email
+     */
+    void deleteAccount(String email);
 }

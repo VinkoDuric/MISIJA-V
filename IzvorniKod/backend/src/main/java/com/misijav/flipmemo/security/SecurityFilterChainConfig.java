@@ -40,6 +40,7 @@ public class SecurityFilterChainConfig {
             .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/register")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/api/v1/secured/any")).hasAnyRole(Roles.USER.name())
             .requestMatchers(new AntPathRequestMatcher("/api/v1/secured/admin")).hasRole(Roles.ADMIN.name())
+            .requestMatchers(new AntPathRequestMatcher("/api/v1/account/**")).authenticated()
             .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).authenticated()
             .anyRequest().permitAll()
         );

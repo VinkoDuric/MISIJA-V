@@ -11,8 +11,20 @@ import java.util.Optional;
 @Service
 public class AccountServiceJpa implements AccountService {
 
+    private final AccountRepository accountRepository;
+
     @Autowired
-    private AccountRepository accountRepository;
+    public AccountServiceJpa(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    @Override
+    public void deleteAccount(String email) {
+        Account account = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found with email" + email));
+
+        accountRepository.delete(account);
+    }
 
     @Override
     public Optional<Account> findByEmail(String email) {
