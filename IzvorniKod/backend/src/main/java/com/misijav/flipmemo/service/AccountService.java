@@ -1,6 +1,7 @@
 package com.misijav.flipmemo.service;
 
 import com.misijav.flipmemo.model.Account;
+import com.misijav.flipmemo.rest.AccountModificationRequest;
 
 import java.util.Optional;
 
@@ -18,4 +19,6 @@ public interface AccountService {
      * @param email account's email
      */
     void deleteAccount(String email);
+
+    void updateAccount(Long id, AccountModificationRequest request);
 }

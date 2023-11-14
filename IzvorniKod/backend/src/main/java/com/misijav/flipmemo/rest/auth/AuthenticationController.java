@@ -75,6 +75,7 @@ public class AuthenticationController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         response.setStatus(HttpStatus.OK.value());
+        logger.info("User logged out successfully.");
     }
 
     @GetMapping("refresh")
