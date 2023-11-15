@@ -255,11 +255,33 @@
 			
 		\section{Dijagram razreda}
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+			%\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
 			
-			\textbf{\textit{dio 1. revizije}}\\
+			%\textbf{\textit{dio 1. revizije}}\\
 			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+			%\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/ClassDiagram1.PNG}
+				\caption{Dijagram razreda - modeli}
+				\label{fig:classDiagram1}
+			\end{figure}
+			
+			\newpage
+			
+			Slika 4.2 prikazuje razrede koji predstavljaju model u arhitekturi sustava. Dijagram je idejno razrađen. Čini ga razred Roles kojim označavamo o kojem se tipu korisničkog računa radi. On je vezan uz razred Account koji označava sam korisnički račun. Kako postoji više vrsta korisničkog računa te kako sve funkcionalnosti nisu iste za sve vrste korisničkih računa, postoje i razredi Learner i WordAdministrator koji su izvedene razreda Account razreda. Za razred WordAdministrator postoji rekurzivna ovisnost jer je moguće kreirati nove administratore riječi ako je korisnik također administrator riječi. Uz razred Learner veže se razred PronunciationQualityService koji je servis za ocjenu kvalitete izgovora riječi ako je učenik u tom modu učenja, razred LearningMode koji predstavlja mod učenja te ga učenik može promijeniti. Uz razred Learner također se veže i razred CurrentState koji označava trenutno stanje u kojem se učenik nalazi za prije odabrani rječnik. Nadalje, uz razred CurrentState veže se i razred Dictionary koji predstavlja rječnik. Uz rječnik je povezan razred Language jer rječnik pripada jeziku. Uz rječnik također je povezan i razred Word koji predstavlja riječ. Riječ je bolje opisana s nekoliko fraza koje su u modelu sustava razred Phrase. Uz razrede Learner i Word veže se i razred Pot koji je model posude u koju su spremljene riječi i to različito za svakog korisnika. Razredi Language, Word i Dictionary vezani su uz razred WordAdministrator jer administrator riječi može dodavati, brisati i mijenjati sadržaj jezika, rječnika i riječi. Na kraju, postoji i razred ExternalDictionary koji administrator riječi poziva ako želi dobiti prijedlog riječi koje zatim može dodati u neki od rječnika u sustavu. \newpage
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/ClassDiagram0.PNG}
+				\caption{Dijagram razreda - generičke funkcionalnosti}
+				\label{fig:classDiagram0}
+			\end{figure}
+			
+			\newpage
+			
+			Slika 4.3 prikazuje detaljnije razrađen dijagram razreda, ali samo za generičke funkcionalnosti. Razred Account predstavlja istoimeni entitet u bazi podataka s brojnim metodama. On je povezan s enumeracijskim razredom Roles koji predstavlja listu svih mogućih vrsta korisničkog računa. Na dijagramu su također prikazana i dva kontrolera. AuthenticationController provjerava i odgovara na zahtjeve za ulazak u sustav i izlazak iz istoga. AccountController služi za promjenu podataka u sustavu za korisnički račun te također služi i uklanjanje računa iz sustava. Sučelje AccountService, razredi AccountServiceJpa kao njegova implementacija te AccountUserDetailsService služe za manipulaciju s korisničkim računima kroz bazu podataka. Slično, sučelje AuthenticationService i razred AuthenticationServiceJpa kao implementacija sučelja služe da ulazak u sustav te provjeru ispravnosti podataka kojima korisnik želi pristupiti sustavu. Uz to, postoje i neke sigurnosne klase koje služe za očuvanje sigurnosti podataka i sustava.
+			
+			\newpage
 			
 			\textbf{\textit{dio 2. revizije}}\\			
 			
