@@ -1,38 +1,83 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/form";
 import { useEffect, useState } from "react";
+import "./styles/home.css";
 
 export default function Home() {
-    let navigate = useNavigate();
+  let navigate = useNavigate();
+  let [serverText, setServerText] = useState<String | null>(null);
+  let [userName, setUserName] = useState<String | null>(null);
 
-    let [serverText, setServerText] = useState<String|null>(null);
+  useEffect(() => {
+    fetch("/api/v1/secured/admin")
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        }
+        throw new Error("Failed authentication");
+      })
+      .then((text) => setServerText(text))
+      .catch((error) => console.log(error));
 
-    useEffect(() => {
-        fetch('/api/v1/secured/admin')
-        .then(response => {
-            if (response.ok) {
-                return response.text()
-            }
-            throw new Error('Failed authentication')
-        })
-        .then(text => setServerText(text))
-        .catch(error => console.log(error));
-    }, []);
+    fetch("/api/v1/user/name")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Failed to fetch user name");
+      })
+      .then((data) => setUserName(data.name))
+      .catch((error) => console.log(error));
+  }, []);
 
-    function onClick() {
-        console.log('fetch')
-        fetch('/api/v1/auth/logout').then(() => {
-            navigate('/');
-        });
-    }
-    
-    return (
+  function onLogoutClick() {
+    fetch("/api/v1/auth/logout").then(() => {
+      navigate("/");
+    });
+  }
+
+  return (
     <>
-        {serverText !== null &&
-        <div>
-            <span>{serverText}</span>
-            <Button onClick={onClick}>Log Out</Button>
-        </div>}
+      <div className="homeCard">
+        <div className="row">
+          <img
+            alt="FlipMemoLogo"
+            className="logo"
+            src="images/logo.svg"
+            width={"50%"}
+          />
+
+          <div className="row_second">
+            <Button
+              className="button_second"
+              onClick={() => {
+                /* handle password change */
+              }}
+            >
+              Korisnički račun
+            </Button>
+            <Button className="button_second" onClick={onLogoutClick}>
+              Odjava
+            </Button>
+          </div>
+          <div className="text">
+            <p>Hey, {userName || "Korisnik"}</p>
+          </div>
+        </div>
+        <div className="homeCard_second" onClick={onLogoutClick}>
+          <div className="card">
+            <img
+              alt="FlipMemoLogo"
+              className="flag"
+              src="images/uk.svg"
+              width={"100%"}
+            />
+            <div className="text_second">
+              <p>Engleski</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
-    );
+  );
 }

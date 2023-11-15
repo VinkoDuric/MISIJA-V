@@ -5,14 +5,14 @@
   margin: auto;
   border-radius: 5px;
   display: grid;
-  grid-template-areas: 
-    'logo info'
-    'img  info';
+  grid-template-areas:
+    "logo info"
+    "img  info";
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   overflow: clip;
   box-shadow: 0 0 10px var(--shadow-color);
-  position:relative;
+  position: relative;
 }
 
 .logo {
@@ -63,11 +63,11 @@
 
 @media screen and (max-width: 1024px) {
   .loginCard {
-    grid-template-areas: 
-      'logo'
-      'info';
+    grid-template-areas:
+      "logo"
+      "info";
     grid-template-columns: 100%;
-    height:auto;
+    height: auto;
     width: min-content;
   }
 
@@ -83,22 +83,21 @@
   .loginInfoContainer {
     align-items: center;
     padding-top: 0;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
     width: 100%;
-    min-width: 500px
+    min-width: 500px;
   }
 
   .createAccountLink {
     top: auto;
     right: 50%;
     bottom: 1rem;
-    transform: translate(50%)
+    transform: translate(50%);
   }
 
   .termsAndPolicy {
     text-align: center;
   }
-
 
   .submitBtn {
     margin-bottom: 4rem;
