@@ -8,6 +8,7 @@ import {
 import "./index.css";
 import Auth from "./auth/page";
 import Home from "./home/page";
+import User from "./user/page";
 import reportWebVitals from "./reportWebVitals";
 import AuthPages from "./auth/authpages";
 import { Routes, Route } from "react-router-dom";
@@ -24,6 +25,7 @@ root.render(
         <Route path="/login" element={<Auth page={AuthPages.LOGIN} />} />
         <Route path="/signin" element={<Auth page={AuthPages.SIGNIN} />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/user" element={<User />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

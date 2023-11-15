@@ -36,6 +36,12 @@ export default function Home() {
     });
   }
 
+  function onLogIn() {
+    fetch("/api/v1/account").then(() => {
+      navigate("/user");
+    });
+  }
+
   return (
     <>
       <div className="homeCard">
@@ -48,12 +54,7 @@ export default function Home() {
           />
 
           <div className="row_second">
-            <Button
-              className="button_second"
-              onClick={() => {
-                /* handle password change */
-              }}
-            >
+            <Button className="button_second" onClick={onLogIn}>
               Korisnički račun
             </Button>
             <Button className="button_second" onClick={onLogoutClick}>
@@ -64,7 +65,7 @@ export default function Home() {
             <p>Hey, {userName || "Korisnik"}</p>
           </div>
         </div>
-        <div className="homeCard_second" onClick={onLogoutClick}>
+        <div className="homeCard_second">
           <div className="card">
             <img
               alt="FlipMemoLogo"

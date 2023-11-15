@@ -1,0 +1,115 @@
+.homeCard-user {
+  width: 550px;
+  height: 600px;
+  background-color: white;
+  margin: auto;
+  border-radius: 5px;
+  justify-items: center;
+  overflow: clip;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 /0.1);
+  position: relative;
+}
+
+.homeCard_second-user {
+  width: 500px;
+  height: 450px;
+  background-image: url("/public/images/background.svg");
+  background-size: cover;
+  margin: auto;
+  border-radius: 5px;
+  display: flex;
+  overflow: clip;
+  position: relative;
+}
+
+.row-user {
+  display: grid;
+  grid-template-areas: "logo odjava pozdrav";
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.card-user {
+  width: 150px;
+  height: 180px;
+  margin: 25px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  position: relative;
+}
+
+.card-user:hover {
+  width: 150px;
+  height: 180px;
+  margin: 25px;
+  background-color: var(--theme-color-mid-dark);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  position: relative;
+}
+
+.text_second-user {
+  grid-area: pozdrav;
+  font-size: medium;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  color: black;
+}
+
+.flag-user {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 2rem;
+  max-width: 120px;
+}
+
+.row_second-user {
+  grid-area: odjava;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  height: 2rem;
+}
+
+.button_second-user {
+  width: 100px;
+  margin: 5px auto;
+  margin-left: 4rem;
+  padding: 0.5rem;
+  font-size: small;
+  cursor: pointer;
+}
+
+.button_second-user1 {
+  width: 100px;
+  padding: 0.5rem;
+  font-size: small;
+  cursor: pointer;
+  height: 40px;
+  width: 80px;
+}
+
+.logo-user {
+  width: 90%;
+  grid-area: logo;
+  margin: 2rem;
+}
+
+.text-user {
+  font-size: small;
+  font-weight: bold;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  color: var(--theme-color-mid-dark);
+}
