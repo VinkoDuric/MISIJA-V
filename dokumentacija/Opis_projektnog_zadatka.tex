@@ -33,6 +33,8 @@ Prilikom odabira odgovora "Korisnik" odabire jedan odgovor među ponuđenima te 
 
 U slučaju da "Korisnik" želi izbrisati svoj korisnički račun "Korisnik" mora prvo biti prijavljen u sustav. Nakon uspješne prijave "Korisnik" odabire opciju brisanja korisničkog računa prilikom kojeg sustav prikazuje prozor s upitom "Jeste li sigurni da želite obrisati svoj korisnički račun?". Ako "Korisnik" odabere opciju "Da" sustav briše korisnički račun te prikazuje početnu stranicu, u slučaju da "Korisnik" odustaje od brisanja korisničkog računa sustav prikazuje stranicu s odabirom rječnika.
 
+U slučaju da "Korisnik" želi izmijeniti podatke svog korisničkog računa "Korisnik" mora prvo biti prijavljen u sustav. Nakon uspješne prijave "Korisnik" odabire opciju izmjene osobnih podataka svog korisničkog računa prilikom kojeg sustav prikazuje prozor s trenutnim korisničkim podatcima. Unutar prozora se nalaze korisnički podatci unutar polja: "Ime", "Prezime", "Email" i "Lozinka". "Korisnik" može odabrati bilo koje polje i zamijeniti trenutnu vrijednost s novom. Nakon željene izmjene "Korisnik" ima dvije opcije: "Spremi" - sve izmjene se pohranjuju u sustav i "Odustani" - sve izmjene se odbacuju. Nakon odabira, sustav korisniku prikazuje početnu stranicu.
+
 Kako bi cijela aplikacija funkcionirala uvodimo "Administratora riječi" koji ima navedene ovlasti:
 
 \begin{packed_item}
@@ -42,6 +44,8 @@ Kako bi cijela aplikacija funkcionirala uvodimo "Administratora riječi" koji im
 	\item  uređivanje riječi
 	\item  uklanjanje riječi
 	\item  dodavanje novog administratora
+	\item  brisanje postojećeg korisnika
+	\item  izmjena osobnih podataka postojećeg korisnika
 \end{packed_item}
 
 Kako bi "Administrator riječi" započeo s kreiranjem novog rječnika prvo se prijavljuje u sustav. Nakon toga "Administrator riječi" odabire opciju "Kreiraj novi rječnik". Sustav zatim administratoru otvara formu za upis podataka o rječniku gdje administrator upisuje sve potrebne podatke. Nakon upisivanja podataka administrator odabire opciju "Spremi" kako bi sustav pohranio promjene te prikazao početnu stranicu. Ako u bilo kojem trenutku "Administrator riječi" odustaje od dodavanja riječi sustav ga vraća na početnu stranicu. U slučaju da administrator ne upiše sve potrebne podatke za dodavanje nove riječi sustav obavještava administratora o nedostatku podataka.
@@ -59,6 +63,8 @@ i "Administrator riječi" odabire opciju "Ukloni" za riječ koju želi ukloniti 
 U slučaju da "Administrator riječi" želi dodati druge nove administratore mora se prvo prijaviti na početnoj stranici. Nakon uspješne prijave administrator odabire opciju "Dodaj novog administratora"
 gdje sustav otvara formu za unos podataka gdje administrator unosi podatke i odabire opciju "Spremi". Klikom na gumb spremi sustav sprema promjene i vraća administratora na početnu stranicu. 
 Ako u bilo kojem trenutku administrator želi odustati od dodavanja novog administratora, sustav vraća administratora na početnu stranicu.
+
+Kako bi "Administrator riječi" obrisao postojeći "Korisnički" račun ili izimjenio osobne podatke postojećeg korisničkog računa, mora prvo biti prijavljen u sustav. Nakon uspješne prijave administrator odabire opciju "Upravljanje korisničkim računima" gdje sustav otvara formu koja administratoru nudi opciju "Brisanje korisničkog računa" i "Uređivanje korisničkog računa". Prva opcija ima samo jedno polje "Email". Druga opcija ima polja: "Email", "Novi email", "Novo ime", "Novo prezime" i "Nova lozinka". Nakon željenog odabira i popunjavanja administrator ima opciju "Spremi" koja izvršava odabranu radnju i opciju "Odustani" koja ne mijenja stanje u sustavu. Nakon željenog odabira, sustav vraća administratora na početnu stranicu.
 
 Od postojećih aplikacija koje imaju slična rješenja kao "FlipMemo" izdvojili bi Anki i Duolingo. Glavna razlika između Anki aplikacije i našeg zadatka je što se Anki koristi u općenite svrhe isto koristeći ponavljanje s odmakom, a ne samo za učenje jezika dok naša aplikacija bi se fokusirala samo na učenje jezika. Duolingo predstavlja unaprijeđenu verziju našeg projektnog zadatka. Duolingo pruža korisnicima velik broj stranih jezika te korisnici kroz cjeline i predavanja postepeno uče gramatiku, izgovor, pisanje i mnoge druge opcije koje Duolingo nudi. 
 
