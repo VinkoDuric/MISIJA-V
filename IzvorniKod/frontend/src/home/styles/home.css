@@ -21,7 +21,7 @@ body {
 .homeCard_second {
   width: 900px;
   height: 460px;
-  background-image: url("/public/images/background.svg");
+  background-color: var(--theme-color-mid);
   background-size: cover;
   margin: auto;
   border-radius: 5px;

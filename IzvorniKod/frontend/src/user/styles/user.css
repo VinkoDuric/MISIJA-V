@@ -13,7 +13,8 @@
 .homeCard_second-user {
   width: 500px;
   height: 450px;
-  background-image: url("/public/images/background.svg");
+  background-color: var(--theme-color-mid);
+
   background-size: cover;
   margin: auto;
   border-radius: 5px;
