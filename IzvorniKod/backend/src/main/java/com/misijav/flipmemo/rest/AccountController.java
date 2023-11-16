@@ -3,15 +3,29 @@ package com.misijav.flipmemo.rest;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Account;
 import com.misijav.flipmemo.model.Roles;
+import com.misijav.flipmemo.rest.auth.AuthenticationResponse;
 import com.misijav.flipmemo.service.AccountService;
+import com.misijav.flipmemo.service.AuthenticationService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/account")
@@ -19,10 +33,12 @@ public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private final AccountService accountService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, AuthenticationService authenticationService) {
         this.accountService = accountService;
+        this.authenticationService = authenticationService;
     }
 
     @DeleteMapping
@@ -37,15 +53,32 @@ public class AccountController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> PUT(@AuthenticationPrincipal UserDetails userDetails,
-                                    @RequestBody AccountModificationRequest request) {
+    public ResponseEntity<?> PUT(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    @AuthenticationPrincipal UserDetails userDetails,
+                                    @RequestBody AccountModificationRequest accRequest) {
         Account requester = (Account) userDetails;
 
         logger.info("Received request to modify account from user {}", requester.getEmail());
-        accountService.updateAccount(requester.getId(), request);
+        accountService.updateAccount(requester.getId(), accRequest);
         logger.info("Successfully modified user account {}", requester.getEmail());
 
-        return ResponseEntity.ok().build();
+        // send user data to frontend
+        AuthenticationResponse responseData = authenticationService.refresh(
+                SecurityContextHolder.getContext().getAuthentication());
+
+        ResponseCookie cookie = ResponseCookie.from("auth", responseData.token())
+                .httpOnly(true)
+                .secure(false)
+                .path("/api/v1")
+                .maxAge(Duration.ofHours(15))
+                .sameSite("Lax")
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return ResponseEntity.ok()
+                .body(responseData.account());
     }
 
     @DeleteMapping("/deleteAccount/{email}")

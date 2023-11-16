@@ -25,6 +25,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -77,7 +79,8 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     @Override
     public AuthenticationResponse refresh(Authentication authentication) {
         Account principal = (Account)authentication.getPrincipal();
-        String token = jwtUtil.issueToken(principal.getUsername(), principal.getTokenVersion());
+        Optional<Account> savedAccount = accountRepository.findByEmail(principal.getEmail());
+        String token = jwtUtil.issueToken(principal.getUsername(), savedAccount.get().getTokenVersion());
         AccountDTO accountDTO = accountDTOMapper.apply(principal);
         return new AuthenticationResponse(token, accountDTO);
     }
