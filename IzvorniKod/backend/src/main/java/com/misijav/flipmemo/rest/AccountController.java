@@ -30,7 +30,7 @@ public class AccountController {
         Account requester = (Account) userDetails;
 
         logger.info("Received request to delete account from user with email: {}", requester.getEmail());
-        accountService.deleteAccount(requester.getEmail());
+        accountService.deleteAccount(requester.getId());
         logger.info("Account with email {} deleted successfully.", requester.getEmail());
 
         return ResponseEntity.ok().build();
@@ -61,7 +61,7 @@ public class AccountController {
 
         // Check if the requester is an ADMIN
         if (requester.getRole() == Roles.ADMIN) {
-            accountService.deleteAccount(target.getEmail());
+            accountService.deleteAccount(target.getId());
             logger.info("Account with email {} deleted successfully.", email);
             return ResponseEntity.ok().build();
         } else {

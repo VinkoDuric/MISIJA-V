@@ -28,9 +28,9 @@ public class AccountServiceJpa implements AccountService {
     }
 
     @Override
-    public void deleteAccount(String email) {
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found with email " + email));
+    public void deleteAccount(Long id) {
+        Account account = accountRepository.findUserById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id " + id));
 
         accountRepository.delete(account);
     }

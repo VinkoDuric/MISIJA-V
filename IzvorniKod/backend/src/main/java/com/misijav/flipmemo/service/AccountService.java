@@ -15,10 +15,15 @@ public interface AccountService {
     Optional<Account> findByEmail(String email);
 
     /**
-     * Delete an account by email
-     * @param email account's email
+     * Delete an account by id
+     * @param id account's id
      */
-    void deleteAccount(String email);
+    void deleteAccount(Long id);
 
+    /**
+     * Update an account by id
+     * @param id account's id
+     * @param request account's updated data
+     */
     void updateAccount(Long id, AccountModificationRequest request);
 }
