@@ -1,20 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/form";
 import { useEffect, useState } from "react";
-import "./styles/user.css";
+import "./styles/changepass.css";
 
-interface User {
+interface ChangePass {
   email: string;
   firstName: string;
   lastName: string;
 }
 
-export default function User() {
+export default function ChangePass() {
   let navigate = useNavigate();
   let [serverText, setServerText] = useState<String | null>(null);
   let [userName, setUserName] = useState<String | null>(null);
 
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<ChangePass | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -32,44 +32,16 @@ export default function User() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  useEffect(() => {
-    fetch("/api/v1/secured/admin")
-      .then((response) => {
-        if (response.ok) {
-          return response.text();
-        }
-        throw new Error("Failed authentication");
-      })
-      .then((text) => setServerText(text))
-      .catch((error) => console.log(error));
-
-    fetch("/api/v1/user/name")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Failed to fetch user name");
-      })
-      .then((data) => setUserName(data.name))
-      .catch((error) => console.log(error));
-  }, []);
-
   function onLogoutClick() {
     fetch("/api/v1/auth/logout").then(() => {
       navigate("/");
     });
   }
 
-  function goBack() {
-    fetch("/api/v1/account").then(() => {
-      navigate("/home");
-    });
-  }
-
   return (
     <>
       <div className="homeCard-user">
-        <div className="row-user">
+        <div className="row-user1">
           <img
             alt="FlipMemoLogo"
             className="logo-user"
@@ -77,11 +49,6 @@ export default function User() {
             width={"100%"}
           />
 
-          <div className="row_second-user">
-            <Button className="button_second-user" onClick={goBack}>
-              Vrati
-            </Button>
-          </div>
           <div className="text-user">
             <p>Hey, {user?.firstName}</p>
           </div>
