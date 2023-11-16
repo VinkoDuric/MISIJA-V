@@ -34,12 +34,12 @@ export default function LoginInfo() {
   return (
     <div className={styles.loginInfoContainer}>
       <span className={'xxlarge-text'}>
-        USER LOGIN
+        Prijava
       </span>
       {
         error === true &&
         <span className={styles.errorMsg}>
-          You have entered an invalid username or password.
+          Uneseni e-mail ili lozinka su netočni.
         </span>
       }
       <form
@@ -48,19 +48,19 @@ export default function LoginInfo() {
         >
         
         <InputText name="email" placeholder="E-mail" />
-        <InputPassword name="password" placeholder="Password" />
+        <InputPassword name="password" placeholder="Lozinka" />
         
         <div>
-          <Checkbox label="remember" name="remember" />
+          <Checkbox label="zapamti me" name="remember" />
           <a className={styles.remember} href="#">
-            Forgot password?
+            Zaboravili ste lozinku?
           </a>
         </div>
         
-        <Button className={styles.submitBtn}>LOGIN</Button>
+        <Button className={styles.submitBtn}>Prijava</Button>
         
         <Link className={styles.createAccountLink} to="/signin">
-          Create account
+          Registracija
         </Link>
       </form>
     </div>

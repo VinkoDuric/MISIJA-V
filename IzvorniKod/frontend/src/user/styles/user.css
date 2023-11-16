@@ -24,8 +24,8 @@
 
 .row-user {
   display: grid;
-  grid-template-areas: "logo odjava pozdrav";
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "logo odjava";
+  grid-template-columns: 1fr 1fr;
 }
 
 .card-user {
@@ -90,15 +90,6 @@
   background-color: var(--theme-color-mid);
 }
 
-.button_second-user1 {
-  background-color: var(--theme-color-mid-dark);
-  width: 100px;
-  padding: 0.5rem;
-  font-size: small;
-  cursor: pointer;
-  height: 40px;
-  width: 80px;
-}
 
 .logo-user {
   width: 90%;
@@ -114,6 +105,25 @@
   display: flex;
   justify-content: center;
   color: var(--theme-color-mid-dark);
+}
+
+
+.button_edit{
+  background-color: var(--theme-color-mid-dark);
+  padding: 0.5rem;
+  font-size: small;
+  cursor: pointer;
+  height: 40px;
+  width: 80px;
+}
+
+.button_change_pass{
+  background-color: var(--theme-color-mid-dark);
+  padding: 0.5rem;
+  font-size: small;
+  cursor: pointer;
+  height: 40px;
+  width: 150px;
 }
 
 @media screen and (max-width: 650px) {

@@ -28,7 +28,7 @@ export default function SigninInfo() {
 
   return (
     <div className={styles.loginInfoContainer}>
-      <span className="xxlarge-text">SIGN IN</span>
+      <span className="xxlarge-text">Registracija</span>
       {
         error !== null &&
         <span className={styles.errorMsg}>
@@ -36,18 +36,18 @@ export default function SigninInfo() {
         </span>
       }
       <form className={styles.loginForm} onSubmit={handleSubmit}>
-        <InputText name="firstName" placeholder="Name" />
-        <InputText name="lastName" placeholder="Surname" />
+        <InputText name="firstName" placeholder="Ime" />
+        <InputText name="lastName" placeholder="Prezime" />
         <InputText name="email" placeholder="E-mail" />
 
         <div className={styles.termsAndPolicy}>
-          By signing up, you agree to the <a href={"#"}>Terms of Service</a> and{" "}
-          <a href={"#"}>Privacy Policy</a>, including Cookie Use.
+          Registracijom pristajem na <a href={"#"}>Uvjete</a> i{" "}
+          <a href={"#"}>Pravila privatnosti</a>, uključujući korištenje kolačića.
         </div>
 
-        <Button className={styles.submitBtn}>SIGN IN</Button>
+        <Button className={styles.submitBtn}>Registriraj me</Button>
         <Link className={styles.createAccountLink} to="/login">
-          Log in
+          Prijava
         </Link>
       </form>
     </div>

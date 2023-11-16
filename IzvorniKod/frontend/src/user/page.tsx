@@ -82,9 +82,6 @@ export default function User() {
               Vrati
             </Button>
           </div>
-          <div className="text-user">
-            <p>Hey, {user?.firstName}</p>
-          </div>
         </div>
         <div className="homeCard_second-user">
           <div
@@ -94,31 +91,18 @@ export default function User() {
               padding: "40px",
             }}
           >
-            <div>Informacije korisničkog računa: </div>
-            <div style={{ padding: "10px" }}></div>
+            <div style={{fontWeight: "bold"}}>Informacije korisničkog računa: </div>
+            <div style={{ padding: "20px"}}></div>
             <div>Ime: {user?.firstName}</div>
             <div style={{ padding: "10px" }}></div>
             <div>Prezime: {user?.lastName}</div>
             <div style={{ padding: "10px" }}></div>
             <div>Email: {user?.email}</div>
             <div style={{ padding: "10px" }}></div>
-            <form>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <label htmlFor="newPassword">Unesi novu lozinku</label>
-                <input id="newPassword"></input>
-                <div style={{ padding: "10px" }}></div>
-
-                <label htmlFor="repeatPassword">Ponovi novu lozinku</label>
-                <input id="repeatPassword"></input>
-                <div style={{ padding: "20px" }}></div>
-                <Button className="button_second-user1">Potvrdi</Button>
-              </div>
-            </form>
+            <div style={{ padding: "20px" }}></div>
+            <Button className="button_edit">Uredi</Button>
+            <div style={{ padding: "20px" }}></div>
+            <Button className="button_change_pass">Promjena lozinke</Button>
           </div>
         </div>
       </div>
