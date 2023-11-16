@@ -5,7 +5,6 @@ import com.misijav.flipmemo.exception.RequestValidationException;
 import com.misijav.flipmemo.exception.ResourceConflictException;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Account;
-import com.misijav.flipmemo.model.Roles;
 import com.misijav.flipmemo.rest.AccountModificationRequest;
 import com.misijav.flipmemo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,20 +54,14 @@ public class AccountServiceJpa implements AccountService {
             throw new ResourceConflictException("Email is already in use.");
         }
 
-        // Create new Account entity
-        Account newAccount = new Account(
-                request.email(),
-                request.firstName(),
-                request.lastName(),
-                passwordEncoder.encode(request.password()),
-                Roles.USER
-        );
+        // Update the existing Account entity
+        account.setEmail(request.email());
+        account.setFirstName(request.firstName());
+        account.setLastName(request.lastName());
+        account.setPassword(passwordEncoder.encode(request.password()));
 
-        // save updated user account to database
-        accountRepository.save(newAccount);
-
-        // delete old user account from database
-        accountRepository.delete(account);
+        // Save the updated user account to the database
+        accountRepository.save(account);
     }
 
     @Override

@@ -57,6 +57,12 @@ public class Account implements UserDetails {
         this.password = password;
     }
 
+    public void setEmail(String email) { this.email = email; }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
     public Roles getRole() {
         return role;
     }
