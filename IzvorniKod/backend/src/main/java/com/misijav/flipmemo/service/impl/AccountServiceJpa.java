@@ -5,6 +5,7 @@ import com.misijav.flipmemo.exception.RequestValidationException;
 import com.misijav.flipmemo.exception.ResourceConflictException;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Account;
+import com.misijav.flipmemo.model.Roles;
 import com.misijav.flipmemo.rest.AccountModificationRequest;
 import com.misijav.flipmemo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class AccountServiceJpa implements AccountService {
     private final AccountRepository accountRepository;
     private  final PasswordEncoder passwordEncoder;
 
-    @Autowired
+@Autowired
     public AccountServiceJpa(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
@@ -58,7 +59,12 @@ public class AccountServiceJpa implements AccountService {
         account.setEmail(request.email());
         account.setFirstName(request.firstName());
         account.setLastName(request.lastName());
+
         account.setPassword(passwordEncoder.encode(request.password()));
+        if (account.getTokenVersion() == 0) {
+            account.setRole(Roles.USER);
+        }
+        account.setTokenVersion(account.getTokenVersion() + 1);
 
         // Save the updated user account to the database
         accountRepository.save(account);

@@ -25,7 +25,7 @@ public class JWTUtil {
 
     public String issueToken(
             String subject,
-            int tokenVersion) {
+            Long tokenVersion) {
         return Jwts
                 .builder()
                 .setClaims(Map.of("version", tokenVersion))
@@ -58,7 +58,7 @@ public class JWTUtil {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public boolean isTokenValid(String jwt, String username, int tokenVersion) {
+    public boolean isTokenValid(String jwt, String username, Long tokenVersion) {
         Claims claims = getClaims(jwt);
         String subject = claims.getSubject();
         int version = (int) claims.get("version");

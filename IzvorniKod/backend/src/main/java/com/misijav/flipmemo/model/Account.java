@@ -24,7 +24,7 @@ public class Account implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Roles role;
-    private int tokenVersion = 0;
+    private Long tokenVersion = (long) 0;
 
     private Account() {}
 
@@ -63,6 +63,8 @@ public class Account implements UserDetails {
 
     public void setLastName(String lastName) { this.lastName = lastName; }
 
+    public void setTokenVersion(long tokenVersion) { this.tokenVersion = tokenVersion; }
+
     public Roles getRole() {
         return role;
     }
@@ -71,7 +73,7 @@ public class Account implements UserDetails {
         this.role = role;
     }
 
-    public int getTokenVersion() { return tokenVersion; }
+    public Long getTokenVersion() { return tokenVersion; }
 
     public void incrementTokenVersion() { ++tokenVersion; }
 

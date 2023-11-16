@@ -112,7 +112,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
                 request.firstName(),
                 request.lastName(),
                 passwordEncoder.encode(randomPassword),
-                Roles.USER
+                Roles.UNVERIFIED_USER
         );
 
         // save user to database
