@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import styles from './styles/login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { Button, Checkbox, InputText, InputPassword } from '../components/form';
+import { useRoleContext, Role } from '../roleContext';
 
 export default function LoginInfo() {
+  const { role, updateRole } = useRoleContext();
 
   const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -20,8 +22,11 @@ export default function LoginInfo() {
       headers: new Headers({'Content-Type': 'application/json'})
     });
 
-    if (response.status === 200)
+    if (response.status === 200) {
+      let role = (await response.json()).role;
       navigate('/home');
+      updateRole(role as Role);
+    }
     else
       setError(true);
   }
