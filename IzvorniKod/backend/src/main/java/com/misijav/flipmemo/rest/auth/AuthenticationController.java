@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -79,7 +80,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("refresh")
-    public void refresh(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> refresh(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = getAuthCookie(request);
 
         if (cookie == null) {
@@ -89,6 +90,13 @@ public class AuthenticationController {
         cookie.setMaxAge((int)Duration.ofMinutes(15).getSeconds());
         response.addCookie(cookie);
         response.setStatus(HttpStatus.OK.value());
+
+        // send user data to frontend
+        AuthenticationResponse responseData = authenticationService.refresh(
+            SecurityContextHolder.getContext().getAuthentication());
+
+        return ResponseEntity.ok()
+                .body(responseData.account());
     }
 
     @PostMapping("register")

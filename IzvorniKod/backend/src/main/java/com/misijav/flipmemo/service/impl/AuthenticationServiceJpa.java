@@ -75,6 +75,14 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     }
 
     @Override
+    public AuthenticationResponse refresh(Authentication authentication) {
+        Account principal = (Account)authentication.getPrincipal();
+        String token = jwtUtil.issueToken(principal.getUsername(), principal.getTokenVersion());
+        AccountDTO accountDTO = accountDTOMapper.apply(principal);
+        return new AuthenticationResponse(token, accountDTO);
+    }
+
+    @Override
     public void logout() {
         Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         account.incrementTokenVersion();
