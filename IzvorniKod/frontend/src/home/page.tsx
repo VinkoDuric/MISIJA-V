@@ -1,37 +1,61 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/form";
-import { useEffect, useState } from "react";
+import "./styles/home.css";
+import { useUserContext } from "../userContext";
 
 export default function Home() {
-    let navigate = useNavigate();
+  let {userInfo, updateUserInfo} = useUserContext();
+  let navigate = useNavigate();
 
-    let [serverText, setServerText] = useState<String|null>(null);
+  function onLogoutClick() {
+    fetch("/api/v1/auth/logout").then(() => {
+      console.log("logout");
+      updateUserInfo(null);
+      navigate("/");
+    });
+  }
 
-    useEffect(() => {
-        fetch('/api/v1/secured/admin')
-        .then(response => {
-            if (response.ok) {
-                return response.text()
-            }
-            throw new Error('Failed authentication')
-        })
-        .then(text => setServerText(text))
-        .catch(error => console.log(error));
-    }, []);
+  function onLogIn() {
+    navigate("/user");
+  }
 
-    function onClick() {
-        fetch('/api/v1/auth/logout').then(() => {
-            navigate('/');
-        });
-    }
-    
-    return (
+  return (
     <>
-        {serverText !== null ||
-        <div>
-            <span>{serverText}</span>
-            <Button onClick={onClick}>Log Out</Button>
-        </div>}
+      <div className="homeCard">
+        <div className="row">
+          <img
+            alt="FlipMemoLogo"
+            className="logo"
+            src="images/logo.svg"
+            width={"50%"}
+          />
+
+          <div className="row_second">
+            <Button className="button_second" onClick={onLogIn}>
+              Korisnički račun
+            </Button>
+            <Button className="button_second" onClick={onLogoutClick}>
+              Odjava
+            </Button>
+          </div>
+          <div className="text">
+            <p>Hey, {userInfo?.firstName || "Korisnik"}</p>
+          </div>
+        </div>
+        <div className="homeCard_second">
+          <div className="card">
+            <img
+              alt="FlipMemoLogo"
+              className="flag"
+              src="images/uk.svg"
+              width={"100%"}
+            />
+            <div className="text_second">
+              <p>Engleski</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
-    );
+  );
 }
