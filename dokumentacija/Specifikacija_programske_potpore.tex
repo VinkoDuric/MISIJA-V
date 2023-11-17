@@ -25,19 +25,22 @@
 			
 			
 			\begin{packed_enum}
+				
+				\item  \underbar{Neregistrirani korisnik može:}
+				
+				\begin{packed_enum}
+					
+					\item registrirati se i tako dobiti pristup sustavu
+					
+				\end{packed_enum}
+				
+				
 				\item  \underbar{Učenik može:}
 				
 				\begin{packed_enum}
 					
-					\item registrirati se
 					\item prijaviti se
 					\item odjaviti se
-%					\begin{packed_enum}
-%						
-%						\item  podfunkcionalnost 1 
-%						\item  podfunkcionalnost 2
-%				
-%					\end{packed_enum}
 					\item odabrati rječnik i mod učenja
 					\item odgovarati na pitanja
 					\item obrisati svoj korisnički račun
@@ -49,11 +52,17 @@
 				
 				\begin{packed_enum}
 					
+					\item prijaviti se
+					\item odjaviti se
 					\item dodati riječ u rječnik
 					\item urediti komponente riječi
 					\item ukloniti riječ iz baze
 					\item kreirati novi rječnik
 					\item obrisati rječnik
+					\item dodati novi jezik
+					\item obrisati postojeći jezik
+					\item urediti rječnik
+					\item urediti jezik
 					\item dodati novog administratora
 					\item obrisati postojećeg korisnika
 					\item izmijeniti osobne podatke postojećeg korisnika
@@ -104,7 +113,7 @@
 					\noindent \underbar{\textbf{UC1 - Registracija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Učenik
+						\item \textbf{Glavni sudionik: }Neregistrirani korisnik
 						\item  \textbf{Cilj:} Kreiranje novog korisničkog računa kojim se omogućuje pristup sustavu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -113,9 +122,9 @@
 						\item[] \begin{packed_enum}
 	
 							\item Korisnik odabire opciju registracije
-							\item Sustav prikazuje formu za unos podataka (ime, prezime, elektronička pošta, zaporka)
+							\item Sustav prikazuje formu za unos podataka (ime, prezime, elektronička pošta)
 							\item Korisnik unosi podatke i potvrđuje registraciju
-							\item Sustav pohranjuje podatke i novom korisniku šalje elektroničku poštu s inicijalnom lozinkom
+							\item Sustav pohranjuje podatke i novom korisniku šalje elektroničku poštu s inicijalnom zaporkom i otvara stranicu za prijavu
 							
 						\end{packed_enum}
 						
@@ -126,14 +135,14 @@
 							\item[3.a] Korisnik odustaje od registracije
 							\item[] \begin{packed_enum}
 								
-								\item Sustav se vraća na početnu stranicu
+								\item Sustav se vraća na stranicu za prijavu
 								
 							\end{packed_enum}
 							
 							\item[3.b] Nevažeća adresa elektroničke pošte
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika kako je nepravilno unesena adresa elektroničke pošte te prikazuje važeći oblik adrese elektroničke pošte
+								\item Sustav obavještava korisnika kako je nepravilno unesena adresa elektroničke pošte
 								
 							\end{packed_enum}
 							
@@ -157,12 +166,12 @@
 						\item \textbf{Glavni sudionik: }Učenik, administrator riječi
 						\item  \textbf{Cilj:} Pristupiti sustavu učenja
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} UC1 (Registracija) za učenika
+						\item  \textbf{Preduvjet:} UC1 (Registracija) za učenika, UC14 (Dodavanje novog administratora) za administratora riječi
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire opciju prijava
+							\item Korisnik otvara aplikaciju
 							\item Sustav prikazuje formu za unos podataka
 							\item Korisnik unosi podatke i potvrđuje prijavu
 							\item Sustav otvara stranicu s ponuđenim jezicima
@@ -175,7 +184,7 @@
 							\item[3.a] Korisnik odustaje od prijave
 							\item[] \begin{packed_enum}
 								
-								\item Sustav prikazuje početnu stranicu
+								\item Sustav i dalje prikazuje stranicu za prijavu
 								
 							\end{packed_enum}
 							
@@ -209,7 +218,7 @@
 						\item[] \begin{packed_enum}
 							
 							\item Korisnik odabire opciju "Odjava"
-							\item Sustav prikazuje početnu stranicu
+							\item Sustav prikazuje stranicu za prijavu
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -293,6 +302,13 @@
 							\item[] \begin{packed_enum}
 								
 								\item Sustav stvara posude za odabrani rječnik
+								
+							\end{packed_enum}
+							
+							\item[2.b] Korisnik je administrator riječi
+							\item[] \begin{packed_enum}
+								
+								\item Sustav ne stvara posude već odmah prikazuje stranicu za odabrani rječnik
 								
 							\end{packed_enum}
 							
@@ -511,7 +527,7 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC8 - Brisanje korisničkog računa}}
+					\noindent \underbar{\textbf{UC8 - Brisanje vlastitog korisničkog računa}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Učenik, administrator riječi
@@ -691,7 +707,7 @@
 						\item Administrator riječi odabire rječnik u kojem se nalazi riječ koju želi urediti
 						\item Sustav otvara odabrani rječnik
 						\item Administrator riječi odabire opciju "Uredi" za riječ koju želi urediti
-						\item Sustav otvara formu za upis podatak o riječi
+						\item Sustav otvara formu za upis podataka o riječi
 						\item Administrator riječi mijenja podatke koje želi primijeniti i odabire opciju "Spremi"
 						\item Sustav sprema promjene i prikazuje početnu stranicu
 					\end{packed_enum}
@@ -790,7 +806,7 @@
 					\end{packed_item}
 				\end{packed_item}
 				
-				\noindent \underbar{\textbf{UC15 - Prikaz podataka korisničkog računa}}
+				\noindent \underbar{\textbf{UC15 - Prikaz podataka vlastitog korisničkog računa}}
 				\begin{packed_item}
 					
 					\item \textbf{Glavni sudionik: }Učenik, administrator riječi
@@ -802,13 +818,13 @@
 					\item[] \begin{packed_enum}
 						
 						\item Korisnik odabire opciju prikaza osobnih podataka
-						\item Sustav dohvaća podatke o korisniku i prikazuje ih korisniku (ime, prizme, adresa elektroničke pošte, zaporka) 
+						\item Sustav dohvaća podatke o korisniku i prikazuje ih korisniku (ime, prezime, adresa elektroničke pošte, gumb za brisanje računa) 
 						
 					\end{packed_enum}
 					
 				\end{packed_item}
 				
-				\noindent \underbar{\textbf{UC16 - Izmjena podataka korisničkog računa}}
+				\noindent \underbar{\textbf{UC16 - Izmjena podataka vlastitog korisničkog računa}}
 				\begin{packed_item}
 					
 					\item \textbf{Glavni sudionik: }Učenik, administrator riječi
@@ -819,8 +835,8 @@
 					
 					\item[] \begin{packed_enum}
 						
-						\item Korisnik na stranici s osobnim podacima odabire opciju "Uredi" za podatak koji se želi izmijeniti
-						\item Sustav otvara formu za uređivanje podatka
+						\item Korisnik na stranici s osobnim podacima odabire opciju "Uredi"
+						\item Sustav otvara formu za uređivanje podataka
 						\item Korisnik popunjava formu te odabire opciju "Spremi"
 						\item Sustav pohranjuje izmijenjene podatke o korisniku
 						
@@ -967,42 +983,7 @@
 					\end{packed_item}
 				\end{packed_item}
 				
-				\noindent \underbar{\textbf{UC20 - Uklanjanje administratora riječi}}
-				\begin{packed_item}
-					
-					\item \textbf{Glavni sudionik: }Administrator riječi
-					\item  \textbf{Cilj:} Obrisati korisnički račun administratora riječi
-					\item  \textbf{Sudionici:} Baza podataka
-					\item  \textbf{Preduvjet:} UC14 (Dodavanje novog administratora)
-					\item  \textbf{Opis osnovnog tijeka:}
-					
-					\item[] \begin{packed_enum}
-						
-						\item Administrator riječi odabire opciju "Obrisi administratora"
-						\item Sustav otvara stranicu s popisom administratora riječi
-						\item Administrator riječi odabire korisnički račun administratora riječi kojeg želi ukloniti
-						\item Sustav prikazuje prozor s upitom "Jeste li sigurni da želite obrisati odabranog administratora riječi?"
-						\item Administrator riječi odabire opciju "Da"
-						\item Sustav sprema promjene i prikazuje stranicu s popisom administratora riječi
-						
-					\end{packed_enum}
-					
-					\item  \textbf{Opis mogućih odstupanja:}
-					
-					\item[] \begin{packed_item}
-						
-						\item[4.a] Administrator riječi odustaje od brisanja korisničkog računa administratora riječi
-						\item[] \begin{packed_enum}
-							
-							\item Sustav prikazuje stranicu s popisom administratora riječi
-							
-						\end{packed_enum}
-						
-						
-					\end{packed_item}
-				\end{packed_item}
-				
-				\noindent \underbar{\textbf{UC21 - Uređivanje rječnika}}
+				\noindent \underbar{\textbf{UC20 - Uređivanje rječnika}}
 				\begin{packed_item}
 					
 					\item \textbf{Glavni sudionik: }Administrator riječi
@@ -1044,7 +1025,160 @@
 					\end{packed_item}
 				\end{packed_item}
 				
+				\noindent \underbar{\textbf{UC21 - Uređivanje jezika}}
+				\begin{packed_item}
+					
+					\item \textbf{Glavni sudionik: }Administrator riječi
+					\item  \textbf{Cilj:} Uređivanje podataka o jeziku i svih dostupnih jezika
+					\item  \textbf{Sudionici:} Baza podataka
+					\item  \textbf{Preduvjet:} UC18 (Dodavanje jezika)
+					\item  \textbf{Opis osnovnog tijeka:}
+					
+					\item[] \begin{packed_enum}
+						
+						\item Administrator riječi na početnoj stranici odabire opciju uređivanja jezika
+						\item Sustav otvara stranicu s popisom jezika i njihovim podacima
+						\item Administrator riječi odabire jezik i podatak koji želi urediti
+						\item Administrator riječi upisuje novi podatak i odabire opciju "Spremi"
+						\item Sustav pohranjuje promjene i prikazuje početnu stranicu 
+						
+					\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						
+						\item[5.a] Administrator riječi odustaje od promjena
+						\item[] \begin{packed_enum}
+							
+							\item Sustav prikazuje početnu stranicu
+							
+						\end{packed_enum}
+						
+						\item[5.b] Administrator riječi neispravno upisuje podatke
+						\item[] \begin{packed_enum}
+							
+							\item Sustav obavještava administratora riječi kako je podatak neispravno unešen
+							\item Sustav ostavlja otvorenu formu za upis podataka o rječniku
+							
+						\end{packed_enum}
+					\end{packed_item}
+				\end{packed_item}
 				
+				\noindent \underbar{\textbf{UC22 - Upravljanje korisničkim računima}}
+				\begin{packed_item}
+					
+					\item \textbf{Glavni sudionik: }Administrator riječi
+					\item  \textbf{Cilj:} Upravljanje korisničkim računima
+					\item  \textbf{Sudionici:} Baza podataka
+					\item  \textbf{Preduvjet:} UC2 (Prijava)
+					\item  \textbf{Opis osnovnog tijeka:}
+					
+					\item[] \begin{packed_enum}
+						
+						\item Administrator riječi odabire opciju upravljanja korisničkim računima
+						\item Sustav administratoru riječi prikazuje formu koja sadrži polje za upis adrese elektroničke pošte učenika čiji račun se urediti 
+						\item Administrator riječi upisuje adresu elektroničke pošte
+						\item Sustav odgovara formom u kojoj se kao moguće opcije nudi uređivanje ili brisanje korisničkog računa
+						\item Administrator riječi odabire željenu opciju
+						
+					\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						\item[3.a] Ne postoji korisnički račun s upisanom adresom elektroničke pošte 
+						\item[] \begin{packed_enum}
+							
+							\item Sustav obavještava administratora riječi kako upisana adresa elektroničke pošte nije ispravna
+							\item Sustav ostavlja otvorenu formu za upis adrese elektroničke pošte
+							
+						\end{packed_enum}
+						
+						\item[5.a] Administrator riječi odustaje od upravljanja korisničkih računa
+						\item[] \begin{packed_enum}
+							
+							\item Sustav prikazuje početnu stranicu
+							
+						\end{packed_enum}
+					\end{packed_item}
+				\end{packed_item}
+				
+				\noindent \underbar{\textbf{UC23 - Uređivanje korisničkih računa}}
+				\begin{packed_item}
+					
+					\item \textbf{Glavni sudionik: }Administrator riječi
+					\item  \textbf{Cilj:} Urediti podatke učeničkih korisničkih računa
+					\item  \textbf{Sudionici:} Baza podataka
+					\item  \textbf{Preduvjet:} UC22 (Upravljanje učeničkim korisničkim računima)
+					\item  \textbf{Opis osnovnog tijeka:}
+					
+					\item[] \begin{packed_enum}
+						
+						\item Sustav prikazuje popis dotadašnjih podataka korisničkog računa te formu za upis novih podataka
+						\item Administrator riječi upisuje novi željeni podatak
+						\item Administrator riječi odabire opciju "Spremi"
+						\item Sustav pohranjuje nove podatke o korisničkom računu i prikazuje početnu stranicu
+						
+					\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						
+						\item[3.a] Administrator riječi odustaje od promjena
+						\item[] \begin{packed_enum}
+							
+							\item Sustav prikazuje početnu stranicu
+							
+						\end{packed_enum}
+						
+						\item[3.b] Administrator riječi neispravno upisuje podatke
+						\item[] \begin{packed_enum}
+							
+							\item Sustav obavještava administratora riječi kako je podatak neispravno unešen
+							\item Sustav ostavlja otvorenu formu za upis podataka o rječniku
+							
+						\end{packed_enum}
+					\end{packed_item}
+				\end{packed_item}
+				
+				\noindent \underbar{\textbf{UC24 - Brisanje korisničkih računa}}
+				\begin{packed_item}
+					
+					\item \textbf{Glavni sudionik: }Administrator riječi
+					\item  \textbf{Cilj:} Brisanje korisničkih računa
+					\item  \textbf{Sudionici:} Baza podataka
+					\item  \textbf{Preduvjet:} UC22 (Upravljanje učeničkim korisničkim računima)
+					\item  \textbf{Opis osnovnog tijeka:}
+					
+					\item[] \begin{packed_enum}
+						
+						\item Administrator riječi odabire opciju "Obriši"
+						\item Sustav prikazuje prozor s upitom "Jeste li sigurni da želite obrisati odabrani korisnički račun?"
+						\item Administrator riječi odabire opciju "Da"
+						\item Sustav sprema promjene i prikazuje početnu stranicu
+						
+					\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						
+						\item[2.a] Administrator riječi odustaje od brisanja korisničkog računa administratora riječi (odabire opciju "Odustani")
+						\item[] \begin{packed_enum}
+							
+							\item Sustav prikazuje stranicu s popisom administratora riječi
+							
+						\end{packed_enum}
+					\end{packed_item}
+				\end{packed_item}
+				
+				\newpage
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					

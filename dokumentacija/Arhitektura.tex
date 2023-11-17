@@ -26,8 +26,18 @@
 		
 		\textbf{Baza podataka} je podsustav koji služi za pohranu svih potrebnih podataka. Backend strana Web aplikacije pristupa joj te upravlja podacima. Zbog učestalosti pristupa podacima u bazi podataka, od velike je važnosti da ona radi brzo i efikasno te je stoga bitno bazu podataka oblikovati efikasno i normalizirano.\\
 		
+		Arhitekturni stil koji je odabran za izradu sustava je model-pogled-nadglednik (engl. Model-View-Controller ili kraće MVC). MVC, ujedno i oblikovni obrazac, karakterizira njegova tri sloja model, view i controller.  
+		
+		\begin{itemize}
+			\item \textbf{Model} je glavna komponenta ovog arhitekturnog stila. Sadrži razrede koji su vrlo slični tablicama u bazi podataka. Razredi modela opisuju strukture podataka te sadrže pravila i logiku rada aplikacije.
+			\item \textbf{View} je komponenta koja se jedina ne nalazi na poslužiteljskoj strani. Ona služi za interakciju sustava s korisnikom, kako kroz zahtjeve korisnika, tako i kroz reprezentaciju odgovora poslužitelja krajnjem korisniku.
+			\item \textbf{Controller} je komponenta koja upravlja zahtjevima krajnjeg korisnika na temelju modela. Također, ova komponenta upravlja odgovorima koji se dalje šalju do komponente View.
+		\end{itemize}
+		
 		
 		U izgradnji sustava koristi se objektno orijentirana paradigma. Za ovaj sustav to je programski jezik Java te radni okvir Spring koji je korišten za izradu backenda. Za izradu frontend dijela sustava, odnosno Web aplikacije upotrebljava se programski jezik JavaScript te biblioteka React. Uz to, za vanjsku komunikaciju kao pomoć u radu aplikacije, koristi se vanjski rječnik uz pomoć aplikacijskog sučelja.\\
+		
+		\newpage
 
 				
 		\section{Baza podataka}
