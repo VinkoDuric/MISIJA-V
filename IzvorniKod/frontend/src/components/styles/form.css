@@ -1,0 +1,32 @@
+button {
+  display: block;
+  padding: .9em 1.7em;
+  border-radius: 5px;
+  border-style: none;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.accentBtn {
+  color: white;
+  background-color: var(--theme-color-dark);
+}
+
+.accentBtn:hover {
+  background-color: var(--theme-color-mid-dark);
+}
+
+.accentBtn:active {
+  background-color: var(--theme-color-mid);
+}
+
+.infoInputText {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  font-size: 1.1rem;
+  padding: .5rem;
+  color: var(--default-text);
+  margin-bottom: 1rem;
+  width: 100%;
+}

@@ -1,0 +1,147 @@
+.changePassCard-user {
+  width: 550px;
+  background-color: white;
+  margin: auto;
+  border-radius: 5px;
+  justify-items: center;
+  overflow: clip;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 /0.1);
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.homeCard_second-user {
+  width: 500px;
+  height: 450px;
+  background-color: var(--theme-color-mid);
+  background-size: cover;
+  margin: auto;
+  border-radius: 5px;
+  display: flex;
+  overflow: clip;
+  position: relative;
+}
+
+.row-user1 {
+  display: grid;
+  grid-template-areas: "logo pozdrav";
+  grid-template-columns: 1fr 1fr;
+}
+
+.text_second-user {
+  grid-area: pozdrav;
+  font-size: medium;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.flag-user {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 2rem;
+  max-width: 120px;
+}
+
+.row_second-user {
+  grid-area: odjava;
+  display: flex;
+  justify-content: center;
+  padding-right: 20px;
+  height: 2rem;
+}
+
+.button_second-user1 {
+  background-color: var(--theme-color-mid-dark);
+  width: 100px;
+  padding: 0.5rem;
+  font-size: small;
+  cursor: pointer;
+  height: 40px;
+  width: 80px;
+}
+
+.logo-user {
+  width: 90%;
+  grid-area: logo;
+  margin: 2rem;
+}
+
+.text-user {
+  font-size: medium;
+  font-weight: bold;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--theme-color-mid-dark);
+}
+
+@media screen and (max-width: 650px) {
+  .changePassCard-user {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    margin: auto;
+    border-radius: 5px;
+    justify-items: center;
+    overflow: clip;
+    box-shadow: 0 0 10px var(--shadow-color);
+    position: relative;
+  }
+
+  body {
+    background-image: url("/public/images/background.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 0;
+  }
+
+  .button_second-user1 {
+    font-size: medium;
+    padding: 0 0rem;
+    font-size: small;
+  }
+
+  .button_second-user {
+    margin: auto;
+  }
+
+  .logo-user {
+    grid-area: logo;
+    margin: 2rem;
+    width: 90%;
+  }
+
+  .text-user {
+    font-size: medium;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    color: var(--theme-color-mid-dark);
+  }
+
+  .row_second-user {
+    display: flex;
+    margin-left: 40px;
+    justify-content: center;
+    width: 150px;
+    flex-direction: column;
+    height: 1rem;
+  }
+
+  .button_second-user {
+    margin-top: 5px;
+    padding: 0.5rem;
+    font-size: small;
+  }
+}
