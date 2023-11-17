@@ -18,7 +18,7 @@ export function Button({
   className,
   onClick,
 }: ButtonProps) {
-  const btnClass = type == ButtonType.ACCENT ? "accentBtn" : "";
+  const btnClass = type === ButtonType.ACCENT ? "accentBtn" : "";
   return (
     <button onClick={onClick} className={`${btnClass} ${className}`}>
       {children}

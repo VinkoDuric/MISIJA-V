@@ -1,6 +1,5 @@
-.homeCard-user {
+.changePassCard-user {
   width: 550px;
-  height: 600px;
   background-color: white;
   margin: auto;
   border-radius: 5px;
@@ -8,6 +7,7 @@
   overflow: clip;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 /0.1);
   position: relative;
+  padding-bottom: 20px;
 }
 
 .homeCard_second-user {
@@ -85,7 +85,7 @@
 }
 
 @media screen and (max-width: 650px) {
-  .homeCard-user {
+  .changePassCard-user {
     display: flex;
     flex-direction: column;
     width: 100%;

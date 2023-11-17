@@ -1,46 +1,53 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/form";
-import { useEffect, useState } from "react";
+import { useUserContext } from "../userContext";
 import "./styles/changepass.css";
+import { FormEvent, useState } from "react";
 
-interface ChangePass {
-  email: string;
-  firstName: string;
-  lastName: string;
-}
 
 export default function ChangePass() {
   let navigate = useNavigate();
-  let [serverText, setServerText] = useState<String | null>(null);
-  let [userName, setUserName] = useState<String | null>(null);
+  let { userInfo, updateUserInfo } = useUserContext(); 
+  let [error, setError] = useState<boolean>(false);
 
-  const [user, setUser] = useState<ChangePass | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(process.env.API_BASE_LOCAL + "api/v1/user")
-      .then((res) => res.json())
-      .then((data) => setUser(data))
-      .catch(() =>
-        setUser({
-          email: "fejk@email.com",
-          firstName: "Ante",
-          lastName: "Horvat",
-        })
-      )
-      .finally(() => setIsLoading(false));
-  }, []);
+    formData.forEach((value, property) => console.log(value, property));
+    let inputData = Object.fromEntries(Array.from(formData));
 
-  function onLogoutClick() {
-    fetch("/api/v1/auth/logout").then(() => {
-      navigate("/");
+    if (inputData.password1 != inputData.password2) {
+      setError(true);
+      return;
+    }
+
+    let data = {
+      email: userInfo?.email,
+      firstName: userInfo?.firstName,
+      lastName: userInfo?.lastName,
+      password: inputData.password1
+    }
+
+    fetch('/api/v1/account', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers: new Headers({'Content-Type': 'application/json'})
+    }).then(response => {
+      console.log(response);
+      if (response.ok) {
+        return response.json()
+      }
+    }).then(json => {
+      console.log(json);
+      updateUserInfo(json);
+      navigate('/home');
     });
   }
 
   return (
     <>
-      <div className="homeCard-user">
+      <div className="changePassCard-user">
         <div className="row-user1">
           <img
             alt="FlipMemoLogo"
@@ -50,7 +57,7 @@ export default function ChangePass() {
           />
 
           <div className="text-user">
-            <p>Hey, {user?.firstName}</p>
+            <p>Hey, {userInfo?.firstName}</p>
           </div>
         </div>
         <div className="homeCard_second-user">
@@ -63,25 +70,26 @@ export default function ChangePass() {
           >
             <div>Informacije korisničkog računa: </div>
             <div style={{ padding: "10px" }}></div>
-            <div>Ime: {user?.firstName}</div>
+            <div>Ime: {userInfo?.firstName}</div>
             <div style={{ padding: "10px" }}></div>
-            <div>Prezime: {user?.lastName}</div>
+            <div>Prezime: {userInfo?.lastName}</div>
             <div style={{ padding: "10px" }}></div>
-            <div>Email: {user?.email}</div>
+            <div>Email: {userInfo?.email}</div>
             <div style={{ padding: "10px" }}></div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                 }}
               >
-                <label htmlFor="newPassword">Unesi novu lozinku</label>
-                <input id="newPassword"></input>
+                <label htmlFor="newPassword">Unesite novu lozinku</label>
+                <input id="newPassword" type="password" name="password1"></input>
                 <div style={{ padding: "10px" }}></div>
 
-                <label htmlFor="repeatPassword">Ponovi novu lozinku</label>
-                <input id="repeatPassword"></input>
+                <label htmlFor="repeatPassword">Ponovite novu lozinku</label>
+                <input id="repeatPassword" type="password" name="password2"></input>
+                {error === true && <span style={{ color: "red" }}>Unesene lozinke su različite</span>}
                 <div style={{ padding: "20px" }}></div>
                 <Button className="button_second-user1">Potvrdi</Button>
               </div>

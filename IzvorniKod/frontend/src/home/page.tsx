@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/form";
 import { useEffect, useState } from "react";
 import "./styles/home.css";
+import { useUserContext } from "../userContext";
 
 export default function Home() {
+  let {userInfo, updateUserInfo} = useUserContext();
   let navigate = useNavigate();
   let [serverText, setServerText] = useState<String | null>(null);
   let [userName, setUserName] = useState<String | null>(null);
@@ -32,6 +34,8 @@ export default function Home() {
 
   function onLogoutClick() {
     fetch("/api/v1/auth/logout").then(() => {
+      console.log("logout");
+      updateUserInfo(null);
       navigate("/");
     });
   }

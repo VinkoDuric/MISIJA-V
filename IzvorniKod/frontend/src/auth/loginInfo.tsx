@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import styles from './styles/login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { Button, Checkbox, InputText, InputPassword } from '../components/form';
-import { useRoleContext, Role } from '../roleContext';
+import { useUserContext, Role, UserInfo } from '../userContext';
 
 export default function LoginInfo() {
-  const { role, updateRole } = useRoleContext();
+  const { userInfo, updateUserInfo } = useUserContext();
 
   const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -23,9 +23,13 @@ export default function LoginInfo() {
     });
 
     if (response.status === 200) {
-      let role = (await response.json()).role;
-      navigate('/home');
-      updateRole(role as Role);
+      let json = await response.json();
+      updateUserInfo(json);
+      if (json.role !== 'UNVERIFIED_USER') {
+        navigate('/home');
+      } else {
+        navigate('/changepass');
+      }
     }
     else
       setError(true);
