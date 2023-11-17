@@ -1,36 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/form";
-import { useEffect, useState } from "react";
 import "./styles/home.css";
 import { useUserContext } from "../userContext";
 
 export default function Home() {
   let {userInfo, updateUserInfo} = useUserContext();
   let navigate = useNavigate();
-  let [serverText, setServerText] = useState<String | null>(null);
-  let [userName, setUserName] = useState<String | null>(null);
-
-  useEffect(() => {
-    fetch("/api/v1/secured/admin")
-      .then((response) => {
-        if (response.ok) {
-          return response.text();
-        }
-        throw new Error("Failed authentication");
-      })
-      .then((text) => setServerText(text))
-      .catch((error) => console.log(error));
-
-    fetch("/api/v1/user/name")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Failed to fetch user name");
-      })
-      .then((data) => setUserName(data.name))
-      .catch((error) => console.log(error));
-  }, []);
 
   function onLogoutClick() {
     fetch("/api/v1/auth/logout").then(() => {
@@ -41,9 +16,7 @@ export default function Home() {
   }
 
   function onLogIn() {
-    fetch("/api/v1/account").then(() => {
-      navigate("/user");
-    });
+    navigate("/user");
   }
 
   return (
@@ -66,7 +39,7 @@ export default function Home() {
             </Button>
           </div>
           <div className="text">
-            <p>Hey, {userName || "Korisnik"}</p>
+            <p>Hey, {userInfo?.firstName || "Korisnik"}</p>
           </div>
         </div>
         <div className="homeCard_second">

@@ -51,9 +51,7 @@
   grid-area: odjava;
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  padding-right: 20px;
   height: 2rem;
 }
 

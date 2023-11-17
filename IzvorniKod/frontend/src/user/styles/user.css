@@ -1,6 +1,6 @@
 .homeCard-user {
   width: 550px;
-  height: 600px;
+  padding-bottom: 20px;
   background-color: white;
   margin: auto;
   border-radius: 5px;
@@ -26,6 +26,7 @@
   display: grid;
   grid-template-areas: "logo odjava";
   grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 
 .card-user {
@@ -74,20 +75,15 @@
   grid-area: odjava;
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
   height: 2rem;
 }
 
 .button_second-user {
   width: 100px;
-  margin: 5px auto;
-  margin-left: 4rem;
   padding: 0.5rem;
   font-size: small;
   cursor: pointer;
-  background-color: var(--theme-color-mid);
+  background-color: var(--theme-color-dark);
 }
 
 

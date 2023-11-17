@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/form";
 import { useEffect, useState } from "react";
+import { useUserContext } from "../userContext";
 import "./styles/user.css";
 
 interface User {
@@ -11,54 +12,9 @@ interface User {
 
 export default function User() {
   let navigate = useNavigate();
-  let [serverText, setServerText] = useState<String | null>(null);
-  let [userName, setUserName] = useState<String | null>(null);
 
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  let {userInfo} = useUserContext();
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(process.env.API_BASE_LOCAL + "api/v1/user")
-      .then((res) => res.json())
-      .then((data) => setUser(data))
-      .catch(() =>
-        setUser({
-          email: "fejk@email.com",
-          firstName: "Ante",
-          lastName: "Horvat",
-        })
-      )
-      .finally(() => setIsLoading(false));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/v1/secured/admin")
-      .then((response) => {
-        if (response.ok) {
-          return response.text();
-        }
-        throw new Error("Failed authentication");
-      })
-      .then((text) => setServerText(text))
-      .catch((error) => console.log(error));
-
-    fetch("/api/v1/user/name")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Failed to fetch user name");
-      })
-      .then((data) => setUserName(data.name))
-      .catch((error) => console.log(error));
-  }, []);
-
-  function onLogoutClick() {
-    fetch("/api/v1/auth/logout").then(() => {
-      navigate("/");
-    });
-  }
 
   function goBack() {
     fetch("/api/v1/account").then(() => {
@@ -93,11 +49,11 @@ export default function User() {
           >
             <div style={{fontWeight: "bold"}}>Informacije korisničkog računa: </div>
             <div style={{ padding: "20px"}}></div>
-            <div>Ime: {user?.firstName}</div>
+            <div>Ime: {userInfo?.firstName}</div>
             <div style={{ padding: "10px" }}></div>
-            <div>Prezime: {user?.lastName}</div>
+            <div>Prezime: {userInfo?.lastName}</div>
             <div style={{ padding: "10px" }}></div>
-            <div>Email: {user?.email}</div>
+            <div>Email: {userInfo?.email}</div>
             <div style={{ padding: "10px" }}></div>
             <div style={{ padding: "20px" }}></div>
             <Button className="button_edit">Uredi</Button>
