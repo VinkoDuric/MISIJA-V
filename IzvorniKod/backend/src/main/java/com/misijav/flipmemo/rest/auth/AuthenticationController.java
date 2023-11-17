@@ -65,7 +65,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("logout")
-    public void login(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = getAuthCookie(request);
 
         if (cookie == null) {
@@ -73,25 +73,35 @@ public class AuthenticationController {
         }
         accountService.logout();
 
+        // Clear existing authentication cookie
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        response.setStatus(HttpStatus.OK.value());
+
+        // Create new cookie to invalidate session
+        ResponseCookie invalidatedCookie = ResponseCookie.from("auth", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/api/v1")
+                .maxAge(0)
+                .sameSite("Lax")
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, invalidatedCookie.toString());
+
         logger.info("User logged out successfully.");
+        return ResponseEntity.ok("User logged out successfully.");
     }
 
     @GetMapping("refresh")
-    public ResponseEntity<?> refresh(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> refresh(HttpServletRequest request) {
+        logger.info("Refreshing page");
         Cookie cookie = getAuthCookie(request);
 
         if (cookie == null) {
             throw new BadCredentialsException("Login before you can refresh connection.");
         }
 
-        cookie.setMaxAge((int)Duration.ofMinutes(15).getSeconds());
-        response.addCookie(cookie);
-        response.setStatus(HttpStatus.OK.value());
-
-        // send user data to frontend
+        // send user data and cookie to frontend
         AuthenticationResponse responseData = authenticationService.refresh(
             SecurityContextHolder.getContext().getAuthentication());
 

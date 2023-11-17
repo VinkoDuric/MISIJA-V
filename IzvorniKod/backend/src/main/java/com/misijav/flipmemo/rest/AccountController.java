@@ -3,29 +3,23 @@ package com.misijav.flipmemo.rest;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Account;
 import com.misijav.flipmemo.model.Roles;
+import com.misijav.flipmemo.rest.auth.AuthenticationRequest;
 import com.misijav.flipmemo.rest.auth.AuthenticationResponse;
 import com.misijav.flipmemo.service.AccountService;
 import com.misijav.flipmemo.service.AuthenticationService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/account")
@@ -42,31 +36,48 @@ public class AccountController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> DELETE(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> DELETE(@AuthenticationPrincipal UserDetails userDetails,
+                                    HttpServletResponse response) {
         Account requester = (Account) userDetails;
 
+        // delete user account
         logger.info("Received request to delete account from user with email: {}", requester.getEmail());
         accountService.deleteAccount(requester.getId());
         logger.info("Account with email {} deleted successfully.", requester.getEmail());
 
-        return ResponseEntity.ok().build();
+        // Create new cookie to invalidate session
+        ResponseCookie invalidatedCookie = ResponseCookie.from("auth", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/api/v1")
+                .maxAge(0)
+                .sameSite("Lax")
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, invalidatedCookie.toString());
+
+        return ResponseEntity.ok("User account " + requester.getEmail() + " deleted successfully.");
     }
 
     @PutMapping
-    public ResponseEntity<?> PUT(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    @AuthenticationPrincipal UserDetails userDetails,
-                                    @RequestBody AccountModificationRequest accRequest) {
+    public ResponseEntity<?> PUT(@AuthenticationPrincipal UserDetails userDetails,
+                                 @RequestBody AccountModificationRequest accModifyRequest,
+                                 HttpServletResponse response) {
         Account requester = (Account) userDetails;
 
+        // update user data
         logger.info("Received request to modify account from user {}", requester.getEmail());
-        accountService.updateAccount(requester.getId(), accRequest);
-        logger.info("Successfully modified user account {}", requester.getEmail());
+        accountService.updateAccount(requester.getId(), accModifyRequest);
+        logger.info("Successfully modified user account {} to {}", requester.getEmail(), accModifyRequest.email());
 
-        // send user data to frontend
-        AuthenticationResponse responseData = authenticationService.refresh(
-                SecurityContextHolder.getContext().getAuthentication());
+        // create auth request with new user data
+        AuthenticationRequest authenticationRequest = new AuthenticationRequest(accModifyRequest.email(),
+                accModifyRequest.password());
 
+        // log in user with new credentials
+        AuthenticationResponse responseData = authenticationService.login(authenticationRequest);
+
+        // create new cookie
         ResponseCookie cookie = ResponseCookie.from("auth", responseData.token())
                 .httpOnly(true)
                 .secure(false)

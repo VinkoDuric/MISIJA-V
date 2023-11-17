@@ -22,7 +22,7 @@ public class AccountServiceJpa implements AccountService {
     private final AccountRepository accountRepository;
     private  final PasswordEncoder passwordEncoder;
 
-@Autowired
+    @Autowired
     public AccountServiceJpa(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
@@ -60,11 +60,13 @@ public class AccountServiceJpa implements AccountService {
         account.setFirstName(request.firstName());
         account.setLastName(request.lastName());
 
+        // change password
         account.setPassword(passwordEncoder.encode(request.password()));
-        if (account.getTokenVersion() == 0) {
+        // first password change
+        if (account.getRole().equals(Roles.UNVERIFIED_USER)) {
             account.setRole(Roles.USER);
         }
-        account.setTokenVersion(account.getTokenVersion() + 1);
+        account.incrementTokenVersion();
 
         // Save the updated user account to the database
         accountRepository.save(account);
