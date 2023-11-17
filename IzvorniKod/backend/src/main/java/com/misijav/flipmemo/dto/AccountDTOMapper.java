@@ -1,6 +1,5 @@
 package com.misijav.flipmemo.dto;
 
-import com.misijav.flipmemo.dto.AccountDTO;
 import com.misijav.flipmemo.model.Account;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,8 @@ public class AccountDTOMapper implements Function<Account, AccountDTO> {
                 account.getEmail(),
                 account.getFirstName(),
                 account.getLastName(),
-                account.getRole()
+                account.getRole(),
+                account.getTokenVersion()
         );
     }
 

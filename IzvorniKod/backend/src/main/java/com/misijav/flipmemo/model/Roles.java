@@ -1,5 +1,5 @@
 package com.misijav.flipmemo.model;
 
 public enum Roles {
-    ADMIN, USER
+    ADMIN, USER, UNVERIFIED_USER
 }

@@ -3,7 +3,7 @@ package com.misijav.flipmemo.service;
 import com.misijav.flipmemo.rest.auth.AuthenticationRequest;
 import com.misijav.flipmemo.rest.auth.AuthenticationResponse;
 import com.misijav.flipmemo.rest.auth.RegistrationRequest;
-import com.misijav.flipmemo.rest.auth.RegistrationResponse;
+import org.springframework.security.core.Authentication;
 
 public interface AuthenticationService {
 
@@ -18,6 +18,13 @@ public interface AuthenticationService {
      * Invalidate cookie tokens for currently logged in user.
      */
     void logout();
+
+    /**
+     * Refreshes the authentication token for the given user.
+     * @param authentication the current authentication object
+     * @return an updated authentication response
+     */
+    AuthenticationResponse refresh(Authentication authentication);
 
     /**
      * Register a new user.

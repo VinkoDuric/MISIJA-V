@@ -4,12 +4,15 @@ import com.misijav.flipmemo.service.AuthenticationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -19,6 +22,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/auth")
 public class AuthenticationController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Autowired
     private final AuthenticationService authenticationService;
@@ -43,6 +47,7 @@ public class AuthenticationController {
 
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
+        logger.info("Received login request for user with email: {}", request.email());
         AuthenticationResponse responseData = authenticationService.login(request);
         ResponseCookie cookie = ResponseCookie.from("auth", responseData.token())
                 .httpOnly(true)
@@ -54,12 +59,13 @@ public class AuthenticationController {
 
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
+        logger.info("Login successful for user with email: {}", request.email());
         return ResponseEntity.ok()
                 .body(responseData.account());
     }
 
     @GetMapping("logout")
-    public void login(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = getAuthCookie(request);
 
         if (cookie == null) {
@@ -67,27 +73,47 @@ public class AuthenticationController {
         }
         accountService.logout();
 
+        // Clear existing authentication cookie
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        response.setStatus(HttpStatus.OK.value());
+
+        // Create new cookie to invalidate session
+        ResponseCookie invalidatedCookie = ResponseCookie.from("auth", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/api/v1")
+                .maxAge(0)
+                .sameSite("Lax")
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, invalidatedCookie.toString());
+
+        logger.info("User logged out successfully.");
+        return ResponseEntity.ok("User logged out successfully.");
     }
 
     @GetMapping("refresh")
-    public void refresh(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> refresh(HttpServletRequest request) {
+        logger.info("Refreshing page");
         Cookie cookie = getAuthCookie(request);
 
         if (cookie == null) {
             throw new BadCredentialsException("Login before you can refresh connection.");
         }
 
-        cookie.setMaxAge((int)Duration.ofMinutes(15).getSeconds());
-        response.addCookie(cookie);
-        response.setStatus(HttpStatus.OK.value());
+        // send user data and cookie to frontend
+        AuthenticationResponse responseData = authenticationService.refresh(
+            SecurityContextHolder.getContext().getAuthentication());
+
+        return ResponseEntity.ok()
+                .body(responseData.account());
     }
 
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequest request) {
+        logger.info("Received registration request for user with email: {}", request.email());
         authenticationService.register(request);
+        logger.info("Registration successful for user with email: {}", request.email());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new RegistrationResponse("You have been successfully registered. " +
                         "To activate your account check your email and confirm your registration."));

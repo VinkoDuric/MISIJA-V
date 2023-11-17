@@ -7,6 +7,6 @@ public record AccountDTO(
         String email,
         String firstName,
         String lastName,
-        Roles role
-) {
-}
+        Roles role,
+        Long tokenVersion
+) {}
