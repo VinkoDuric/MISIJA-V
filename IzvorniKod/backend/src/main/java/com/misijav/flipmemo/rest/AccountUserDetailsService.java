@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private final AccountService accountService;
 
+    @Autowired
     public AccountUserDetailsService(AccountService accountService) {
         this.accountService = accountService;
     }
