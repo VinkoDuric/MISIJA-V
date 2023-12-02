@@ -8,6 +8,7 @@ FROM ubuntu:latest AS spring_build
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 COPY ./backend /backend
+COPY /etc/secrets/.env ./.env
 COPY ./build.sh /
 RUN ./build.sh
 COPY --from=node_build /frontend/build/ /backend/src/main/resources/public
