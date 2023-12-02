@@ -165,7 +165,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
         // TODO change login address
-        String loginAddress = "https://www.fer.unizg.hr/";
+        String loginAddress = "https://misija-v.onrender.com/";
         String htmlMsg = "<h2>Dear " + userFirstName + ",</h2>\n\n" +
                 "<p>Thank you for registering an account on <strong>FlipMemo</strong>, the language learning application.</p>" +
                 "\n\n<p style=\"margin: 5px 0;\"><strong>Your login credentials:</strong></p>" +
@@ -179,7 +179,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
             helper.setText(htmlMsg, true);
             helper.setTo(userEmail);
             helper.setSubject("FlipMemo - Registration Successful");
-            helper.setFrom("flipmemo@talentsecho.com");
+            helper.setFrom("misijav.flipmemo@gmail.com");
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
