@@ -1,12 +1,13 @@
 #!/bin/bash
 
-if [ -f .env ] then
+if [ -f .env ]; then
     source .env
 else
     source /etc/secrets/.env
 fi
 
 env
+exit 1
 
 cat << EOF > backend/src/main/resources/application.properties
 spring.datasource.url=$POSTGRES_URL
