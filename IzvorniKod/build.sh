@@ -7,7 +7,6 @@ else
 fi
 
 env
-exit 1
 
 cat << EOF > backend/src/main/resources/application.properties
 spring.datasource.url=$POSTGRES_URL
