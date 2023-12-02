@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source .env
+
 cat << EOF > backend/src/main/resources/application.properties
 spring.datasource.url=$POSTGRES_URL
 spring.datasource.username=$POSTGRES_USERNAME
