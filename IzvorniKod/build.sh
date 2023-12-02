@@ -1,6 +1,11 @@
 #!/bin/bash
 
-source .env
+if [ -f .env ] then
+    source .env
+else
+    source /etc/secrets/.env
+fi
+
 env
 
 cat << EOF > backend/src/main/resources/application.properties
