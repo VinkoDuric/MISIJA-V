@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source .env
+env
 
 cat << EOF > backend/src/main/resources/application.properties
 spring.datasource.url=$POSTGRES_URL
@@ -19,3 +20,5 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties..mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 EOF
+
+cat backend/src/main/resources/application.properties
