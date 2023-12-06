@@ -21,6 +21,7 @@ code {
   --theme-color-light: #fdfbe2;
   --shadow-color: #5a719d;
   --default-text: #263257;
+  --text-grey: rgb(153, 153, 153);
 }
 
 * {
