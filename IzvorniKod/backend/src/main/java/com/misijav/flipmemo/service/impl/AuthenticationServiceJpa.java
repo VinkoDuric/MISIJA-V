@@ -78,11 +78,15 @@ public class AuthenticationServiceJpa implements AuthenticationService {
 
     @Override
     public AuthenticationResponse refresh(Authentication authentication) {
-        Account principal = (Account)authentication.getPrincipal();
-        Optional<Account> savedAccount = accountRepository.findByEmail(principal.getEmail());
-        String token = jwtUtil.issueToken(principal.getUsername(), savedAccount.get().getTokenVersion());
-        AccountDTO accountDTO = accountDTOMapper.apply(principal);
-        return new AuthenticationResponse(token, accountDTO);
+        Optional<Account> savedAccount = accountRepository.findByEmail(authentication.getName());
+
+        if (savedAccount.isPresent()) {
+            String token = jwtUtil.issueToken(authentication.getName(), savedAccount.get().getTokenVersion());
+            AccountDTO accountDTO = accountDTOMapper.apply(savedAccount.get());
+            return new AuthenticationResponse(token, accountDTO);
+        } else {
+            throw new RequestValidationException("User account not found.");
+        }
     }
 
     @Override
@@ -164,7 +168,6 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     private void sendVerificationEmail(String userFirstName, String userEmail, String userPassword) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        // TODO change login address
         String loginAddress = "https://misija-v.onrender.com/";
         String htmlMsg = "<h2>Dear " + userFirstName + ",</h2>\n\n" +
                 "<p>Thank you for registering an account on <strong>FlipMemo</strong>, the language learning application.</p>" +

@@ -25,5 +25,5 @@ public interface AccountService {
      * @param id account's id
      * @param request account's updated data
      */
-    void updateAccount(Long id, AccountModificationRequest request);
+    Account updateAccount(Long id, AccountModificationRequest request);
 }
