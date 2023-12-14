@@ -304,10 +304,19 @@
 		\section{Dijagram stanja}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
+			%\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
 			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/StatemachineDiagram.PNG}
+				\caption{Dijagram stanja - prikaz stanja sustava nakon prijave}
+				\label{fig:statemachineDiagram}
+			\end{figure}
+			
+			\newpage
+			
+			Slika 4.4 prikazuje dijagram stanja za velik dio sustava. Na dijagramu je prikazano u kojim se stanjima sustav može naći od trenutka prijave (ulaska u sustav) do odjave (napuštanja sustava) korisnika ovisno o tome koja je uloga korisnika, odnosno je li korisnik učenik ili administrator riječi. Prije samo ulaska u sustav, potrebno je provjeriti radi li se o korisniku koji se prvi put prijavljuje u sustav. Ako je to slučaj, tada se korisniku prikazuje stranica za prvu promjenu lozinke iz koje nije moguće izaći dok se ne upiše nova zaporka. Nakon uspješne promjene zaporke, korisnik kao i svi drugi pristupa sustavu u cijelosti. Ovisno o tome koje je vrste korisnički račun, korisniku se prikazuje početna stranica. Učenik s glavne stranice može otići na prikaz svojih podataka gdje iste može izmijeniti ili obrisati svoj račun, može se odjaviti ili može odabrati jedan od ponuđenih jezika. Odabirom jezika, sustav je u stanju prikaza rječnika korisniku. Ako korisnik odabere neki od rječnika, ulazi u stanje biranja jednog od modova učenja nakon čega se prikazuju pitanja. Pitanja se prikazuju dok to korisnik traži i dok postoje nenaučene riječi u posudama. Složeno stanje \textit{Odgovor na pitanje} prikazuje što sve sustav radi tijekom korisnikovog odgovaranja na pitanje. S druge strane, ako je korisnik administrator riječi, tada on kao i učenik može izmijeniti podatke vlastitog računa ili obrisati vlastiti račun ili odjaviti se iz sustava. Nadalje, administrator riječi može upravljati korisničkim računima. Ulaskom u stanje \textit{Upravljanje korisničkim računima} korisnik može birati između opcija dodavanja novog administratora riječi, izmjene nekog podatka za druge korisničke račune u sustavu ili može obrisati neki od korisničkih računa. Administrator riječi također može s početne stranice otići na kreiranje jezika, uređivanje jezike ili može odabrati neki od jezika na što se, slično kao i učeniku, otvara stranica s rječnicima za odabrani jezik. Ulaskom u \textit{Prikaz rječnika} administrator riječi može kreirati novi rječnik, urediti neki od postojećih rječnika, urediti neku od riječi u rječnicima i ukloniti rječnik ili riječ. Uz to, administrator riječi može odabirom opcije "Dodaj riječ" dodati novu riječ u sustav. Pri tome, može se poslužiti vanjskim rječnikom za lakše pronalaženje riječi koju želi dodati.
 			
 			\eject 
 		
