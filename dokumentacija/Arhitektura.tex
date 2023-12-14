@@ -322,9 +322,19 @@
 		
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			 %\textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/ActivityDiagram.PNG}
+				\caption{Dijagram aktivnosti - proces dodavanja nove riječi}
+				\label{fig:activityDiagram}
+			\end{figure}
+			
+			\newpage
+			
+			Slika 4.5 prikazuje dijagram aktivnosti. Na dijagramu je prikazan proces dodavanja nove riječi. Dijagram je podijeljen na particije koje odgovaraju aktorima koji sudjeluju u prikazanom procesu. Aktivnost započinje tako što administrator riječi odabire jezik. Uz to, nužan uvjet koji mora biti zadovoljen za odabir jezika je uspješna prijava u sustav, odnosno administrator riječi uspješno otvara početnu stranicu. Odabirom jezika, administrator riječi zapravo šalje zahtjev aplikaciji, a ona bazi podataka, za dohvat rječnika dostupnih za odabrani jezik. Nakon prikaza stranice sa svim rječnicima, administrator riječi odabire opciju dodavanja nove riječi. Pri dodavanju nove riječi, administrator riječi može potražiti pomoć od vanjskog rječnika upisom dijela riječi koju bi želio dodati te pokretanjem pretrage. Aplikacija pokreće pretragu riječi te dok traje spajanje aplikacije na vanjski servis administratoru riječi prikazuje poruku kako je pretraga u tijeku. uspješnim spajanjem aplikacije na vanjski rječnik i provedbom pretrage, aplikacija obrađuje rezultate pretrage te na koncu obavještava administratora riječi o rezultatima pretrage. Zatim, neovisno o tome je li administrator riječi odabrao opciju pomoći pri pretrazi, on ispunjava formu za novu riječ. Ispravnim popunjavanjem forme te odabirom rječnika, riječ se sprema u neki od rječnika čime završava aktivnost dodavanja riječi.
 			
 			\eject
 		\section{Dijagram komponenti}
