@@ -1,4 +1,4 @@
-import styles from "./styles/home.module.css"; 
+import styles from "./styles/home.module.css";
 import { useUserContext } from "../userContext";
 import { faBars, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { IconButton } from "../components/buttons";
@@ -7,47 +7,62 @@ import { Dictionaries } from "./dictionaries";
 import { Menu } from "./menu";
 import { useState } from "react";
 
-export default function Home() {
-  let {userInfo} = useUserContext();
+export enum HomePage {
+    LANGUAGES,
+    DICTIONARIES
+}
 
-  let [menuOpen, setMenuOpen] = useState<boolean>(false);
-  let [title, setTitle] = useState<string>('');
-  let [caption, setCaption] = useState<string|null>(null);
+type HomeProps = {
+    page: HomePage;
+}
 
-  function onMenuClick() {
-      setMenuOpen(open => !open);
-  }
+export default function Home({ page }: HomeProps) {
+    let { userInfo } = useUserContext();
 
-  function updateHomeText(title: string, caption: string|null) {
-    setTitle(title);
-    setCaption(caption);
-  }
+    let [menuOpen, setMenuOpen] = useState<boolean>(false);
+    let [title, setTitle] = useState<string>('');
+    let [caption, setCaption] = useState<string | null>(null);
 
-  return (
-    <div className={styles.contentWindow}>
+    function onMenuClick() {
+        setMenuOpen(open => !open);
+    }
 
-      <div className={styles.contentWindowHeader}>
-        <img
-          alt="FlipMemoLogo"
-          className={styles.logo}
-          src="images/logo.svg"
-        />
-        <div className={styles.title}>{title}</div>
-        <div className={styles.menu} onClick={onMenuClick}>
-          <IconButton icon={menuOpen? faHouse : faBars}/>
-        </div>
-      </div>
-      <div className={styles.contentWindowMain}>
-        { caption !== null && <div className={styles.pageText}>{caption}</div> }
-        { menuOpen === false &&
-            <>
-                <Languages updateHomeText={updateHomeText}/>
-                <Dictionaries/>
-            </>
+    function updateHomeText(title: string, caption: string | null) {
+        setTitle(title);
+        setCaption(caption);
+    }
+
+    function renderContent(): JSX.Element {
+        switch (page) {
+            case HomePage.LANGUAGES: {
+                return <Languages updateHomeText={updateHomeText} />;
+            }
+            case HomePage.DICTIONARIES: {
+                return <Dictionaries updateHomeText={updateHomeText} />;
+            }
         }
-        { menuOpen === true && <Menu updateHomeText={updateHomeText} /> }
-        <div className={styles.userName}>{userInfo?.firstName || "Ivan Cvrk"}</div>
-      </div>
-    </div>
-  );
+    }
+
+    return (
+        <div className={`${styles.contentWindow}`}>
+
+            <div className={styles.contentWindowHeader}>
+                <img
+                    alt="FlipMemoLogo"
+                    className={styles.logo}
+                    src="/images/logo.svg"
+                />
+                <div className={styles.title}>{title}</div>
+                <div className={styles.menu} onClick={onMenuClick}>
+                    <IconButton icon={menuOpen ? faHouse : faBars} />
+                </div>
+            </div>
+            <div className={styles.contentWindowMain}>
+                {caption !== null && <div className={styles.pageText}>{caption}</div>}
+                {menuOpen === false && renderContent()}
+                {menuOpen === true && <Menu updateHomeText={updateHomeText} />}
+                <div className={styles.userName}>{userInfo?.firstName || "Ivan Cvrk"}</div>
+            </div>
+        </div>
+    );
 }

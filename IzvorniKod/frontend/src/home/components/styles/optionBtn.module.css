@@ -4,13 +4,20 @@
     padding: 0.75rem 1.5rem;
     font-size: 1.1rem;
     text-align: center;
-    background-color: var(--theme-color-mid-dark);
+    background-color: var(--btn-grey);
     color: rgba(50, 50, 50, 0.79);
     border-radius: 5px;
     font-weight: normal;
 }
 
 .optionWrapper:hover {
-    background-color: var(--theme-color-dark);
+    background-color: var(--btn-grey-hover);
 }
 
+.optionWrapper:last-child {
+    background-color: var(--theme-color-mid-dark);
+}
+
+.optionWrapper:last-child:hover {
+    background-color: var(--theme-color-dark);
+}

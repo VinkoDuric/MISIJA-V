@@ -26,6 +26,8 @@ code {
   --theme-color-mid-dark-complement: #447FFF;
   --theme-color-mid-complement: #9eb0fa;
   --theme-color-light-complement: #e2e4fd;
+  --btn-grey: #d0d0d0;
+  --btn-grey-hover: #a8a8a8;
 }
 
 * {
@@ -46,3 +48,4 @@ body {
   color: var(--theme-color-dark);
   margin: 1.4rem 0;
 }
+
