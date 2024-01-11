@@ -1,0 +1,16 @@
+.optionWrapper {
+    flex-basis: 100%;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    text-align: center;
+    background-color: var(--theme-color-mid-dark);
+    color: rgba(50, 50, 50, 0.79);
+    border-radius: 5px;
+    font-weight: normal;
+}
+
+.optionWrapper:hover {
+    background-color: var(--theme-color-dark);
+}
+

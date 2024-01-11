@@ -16,10 +16,10 @@
 }
 
 .logo {
-    width: 36px;
+    height: 27px;
 }
 
-.settings {
+.menu {
     color: var(--text-grey);
     font-size: x-large;
     display: flex;
