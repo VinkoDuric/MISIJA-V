@@ -39,9 +39,19 @@
 		
 		\section{Dijagram razmještaja}
 			
-			\textbf{\textit{dio 2. revizije}}
+			%\textbf{\textit{dio 2. revizije}}
 			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+			 %\textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+			 
+			 \begin{figure}[H]
+			 	\includegraphics[width=\textwidth]{slike/DeploymentDiagram.PNG}
+			 	\caption{Dijagram razmještaja}
+			 	\label{fig:deploymentDiagram}
+			 \end{figure}
+			 
+			 \newpage
+			 
+			 Slika 5.1 prikazuje dijagram razmještaja. Dijagram razmještaja prikazuje raspodjelu programskih komponenti kao što su izvršne datoteke i virtualna izvršna okruženja. Dijagram se sastoji od dvaju glavnih čvorova nazvanih Klijent i Render. Čvor Klijent predstavlja uređaj kojim klijent, odnosno korisnik pokušava pristupiti sustavu. Čvor se sastoji od jednog artefakta, Web preglednika. Web preglednik je izvršna datoteka kojom korisnik šalje sve zahtjeve u sustav i prima odgovore iz sustava. Drugi čvor na dijagramu je Render. Render je poslužiteljsko računalo/a koja su smještena u oblaku. Cijela aplikacija je smještena unutar kontejnera Docker u oblaku Render. Kontejner Docker je virtualno izvršno okruženje. Pripadni čvor Docker container je ugniježđen unutar čvora Render. Frontend dio aplikacije implementiran je kao React aplikacija, backend dio implementiran je koristeći Java Spring radni okvir, a baza podataka koja služi da pohranu svih potrebnih podataka implementirana je kao PostgreSQL. Komunikacija između korisnika, odnosno web preglednika i aplikacije odvija se preko HTTPS protokola, protokola na aplikacijskom sloju. Svaki od artefakata koji zajedno čine aplikaciju, međusobno komuniciraju. Komunikacija između frontend i backend dijela aplikacije izvodi se preko HTTP protokola, dok se komunikacija između Java Spring backenda i baze podataka izvodi s pomoću protokola nižih slojeva, točnije TCP/IP protokolima.
 			
 			\eject 
 		
