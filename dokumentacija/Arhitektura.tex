@@ -339,6 +339,17 @@
 			\eject
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			 %\textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			 
+			 \begin{figure}[H]
+			 	\includegraphics[width=\textwidth]{slike/ComponentDiagram.PNG}
+			 	\caption{Dijagram komponenti}
+			 	\label{fig:componentDiagram}
+			 \end{figure}
+			 
+			 \newpage
+			 
+			 Slika 4.6 prikazuje dijagram komponenti. Dijagram komponenti prikazuje povezanost i organizaciju komponenti programske potpore. Glavne komponente od kojih se dijagram sastoji su Web preglednik, Web aplikacija, WordDictionary i baza podataka PostgreSQL. Sama Web aplikacija se sastoji od frontend i backend dijela. Klijent pristupa sustavu preko svog web preglednika. Web aplikacija, točnije frontend dio web aplikacija pruža sučelje koristeći REST API web pregledniku, a time i klijentu. Backend dio aplikacije komunicira s dvije komponente, komponentom WordDictionary i bazom podataka. Komponenta WordDictionary je vanjski rječnik preko kojeg web aplikacija pretražuje riječi koje se zatim mogu dodati u rječnike. Komunikacija između komponente WordDictionary i backend dijela web aplikacije ostvaruje se preko pripadnog Twinword API kojeg komponenta WordDictionary nudi web aplikaciji. Druga komponenta s kojom backend komunicira je PostgreSQL baza podataka. Baza podataka služi za pohranu svih podataka u sustavu. Komunikacije te dvije komponente ostvaruje se preko Hibernate API sučelja koje baza podataka nudi aplikaciji. Dijelovi web aplikacije ne rade neovisno, već postoji međusobna komunikacije te dvije komponente. Komunikacija se ostvaruje preko REST API-a. Frontend šalje backendu zahtjeve i podatke za obradu. Frontend dio sastoji se od glavne stranice i nekoliko rutera. Ruteri unutar aplikacije najopćenitije mogu se podijeliti na FirstLogIn koji se odnosi na stranicu koja se korisniku prikazuje prilikom prve prijave u sustav, Učenik i Administrator riječi koji služe za prikaz svih funkcionalnosti korisniku ovisno o tome kojeg je tipa korisnik. Svaki od rutera može komunicirati s backend dijelom aplikacije. S druge strane, backend dio od nešto više različitih komponenti. Backend dio aplikacije izgrađen je s pomoću Java Spring radnog okvira pa tako backend dio sadrži komponente poput Controller, Service, DAO. Komponenta Controller komunicira s frontend dijelom aplikacije te obradu dalje prosljeđuje kroz Service komponentu. Service komponenta sadrži poslovnu logiku aplikacije te može pristupati podacima iz baze podataka preko komponente DAO. DAO (Data Access Object) predstavlja Repository sloj u Spring aplikaciji i ona izravno može pristupati bazi podataka. Osim opisanih komponenti, backend dio aplikacije sadrži još neke komponente. DTO (Data Transfer Object) komponenta je koja služi za pretvorbu Modela u objekt. Model komponenta predstavlja sve entitete baze podataka. Osim ovih komponenti, dijagram komponenti sadrži i klasu DictionaryService koja je izdvojena iz komponente Service te predstavlja razred kojim se ostvaruje komunikacija s vanjskim rječnikom, odnosno komponentom WordDictionary.
+			 
