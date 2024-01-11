@@ -1,31 +1,6 @@
 import "./styles/form.css";
 import { ChangeEvent, useState } from "react";
 
-export enum ButtonType {
-  ACCENT,
-}
-
-interface ButtonProps {
-  children: string;
-  type?: ButtonType;
-  className?: string;
-  onClick?: () => void;
-}
-
-export function Button({
-  children,
-  type = ButtonType.ACCENT,
-  className,
-  onClick,
-}: ButtonProps) {
-  const btnClass = type === ButtonType.ACCENT ? "accentBtn" : "";
-  return (
-    <button onClick={onClick} className={`${btnClass} ${className}`}>
-      {children}
-    </button>
-  );
-}
-
 interface CheckboxProps {
   label: string;
   name: string;

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Button, InputPassword, InputText } from "../components/form";
+import { Button } from "../components/buttons";
+import { InputPassword, InputText } from "../components/form";
 import { useUserContext } from "../userContext";
 import styles from "./styles/changepass.module.css";
 import { FormEvent, useState } from "react";

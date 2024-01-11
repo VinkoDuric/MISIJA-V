@@ -21,7 +21,11 @@ code {
   --theme-color-light: #fdfbe2;
   --shadow-color: #5a719d;
   --default-text: #263257;
-  --text-grey: rgb(153, 153, 153);
+  --text-grey: rgb(126, 126, 126);
+  --theme-color-dark-complement: #40a1f9;
+  --theme-color-mid-dark-complement: #447FFF;
+  --theme-color-mid-complement: #9eb0fa;
+  --theme-color-light-complement: #e2e4fd;
 }
 
 * {

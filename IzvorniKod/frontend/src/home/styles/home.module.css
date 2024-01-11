@@ -1,0 +1,55 @@
+.contentWindow {
+    max-width: 1010px;
+    background-color: white;
+    margin: auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.contentWindowHeader {
+    margin:auto;
+    display: grid;
+    padding: 1.5rem 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.logo {
+    width: 36px;
+}
+
+.settings {
+    color: var(--text-grey);
+    font-size: x-large;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--text-grey);
+}
+.pageText {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-grey);
+}
+
+.userName {
+    margin-top: 1.9rem;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-grey)
+}
+
+.contentWindowMain {
+    padding: 0rem 2rem 1.5rem 2rem;
+}
+
+.gridWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 170px);
+    gap: 1.5rem;
+}

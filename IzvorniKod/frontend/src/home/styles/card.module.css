@@ -1,0 +1,44 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    height: fit-content;
+    font-size: 1.1rem;
+    border-width: 1px; 
+    border-color: var(--theme-color-mid-dark);
+    box-shadow: 0 3px 10px 3px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    margin: 0.2rem;
+    color: var(--text-grey)
+}
+
+.card:hover {
+    margin: 0rem;
+}
+
+.cardHover {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0%; 
+}
+
+.cardHover:hover {
+    opacity: 5%;
+}
+
+.caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    text-align: center;
+    vertical-align: center;
+}
