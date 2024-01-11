@@ -5,6 +5,7 @@ import { useUserContext } from "../userContext";
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { IconButton } from "../components/buttons";
 import { Languages } from "./languages";
+import { Dictionaries } from "./dictionaries";
 
 export default function Home() {
   let {userInfo, updateUserInfo} = useUserContext();
@@ -38,6 +39,7 @@ export default function Home() {
       <div className={styles.contentWindowMain}>
         <div className={styles.pageText}>Odaberite jezik koji želite vježbati.</div>
         <Languages/>
+        <Dictionaries/>
         <div className={styles.userName}>{userInfo?.firstName || "Ivan Cvrk"}</div>
       </div>
     </div>

@@ -50,7 +50,7 @@ const App = function () {
           <Route path="/" element={<Auth page={AuthPages.LOGIN} />} />
         )}
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter>  
   );
 };
 
