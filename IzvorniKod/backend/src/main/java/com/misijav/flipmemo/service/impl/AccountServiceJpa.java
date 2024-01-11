@@ -9,6 +9,8 @@ import com.misijav.flipmemo.model.Roles;
 import com.misijav.flipmemo.rest.AccountModificationRequest;
 import com.misijav.flipmemo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +85,16 @@ public class AccountServiceJpa implements AccountService {
 
         // Save the updated user account to the database and return the updated Account value
         return accountRepository.save(account);
+    }
+
+    @Override
+    public void updateRole(String email, Roles role) {
+
+        Account target = this.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User " + email + " not found."));
+
+        target.setRole(role);
+        accountRepository.save(target);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.misijav.flipmemo.service;
 
 import com.misijav.flipmemo.model.Account;
+import com.misijav.flipmemo.model.Roles;
 import com.misijav.flipmemo.rest.AccountModificationRequest;
 
 import java.util.Optional;
@@ -26,4 +27,11 @@ public interface AccountService {
      * @param request account's updated data
      */
     Account updateAccount(Long id, AccountModificationRequest request);
+
+    /**
+     * Update role of an existing account
+     * @param email account's email
+     * @param role account's role
+     */
+    void updateRole(String email, Roles role);
 }

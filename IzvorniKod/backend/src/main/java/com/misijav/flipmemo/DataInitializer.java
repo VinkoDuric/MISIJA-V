@@ -28,5 +28,13 @@ public class DataInitializer {
                 Roles.ADMIN);
 
         racunRepo.save(racun);
+        Account racun2 = new Account(
+                "bala@gmail.com",
+                "Ivica",
+                "Ivic",
+                pwdEncoder.encode("password"),
+                Roles.USER);
+
+        racunRepo.save(racun2);
     }
 }
