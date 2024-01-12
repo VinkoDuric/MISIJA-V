@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, redirect } from "react-router-dom";
 import "./index.css";
 import Auth from "./auth/page";
-import Home from "./home/page";
+import Home, { HomePage } from "./home/page";
 import User from "./user/page";
 import reportWebVitals from "./reportWebVitals";
 import AuthPages from "./auth/authpages";
@@ -34,6 +34,12 @@ const App = function () {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Auth page={AuthPages.LOGIN} />} />
+
+        {/* TODO: move this to be available only when logged in */}
+        <Route path="/home" element={<Home page={HomePage.LANGUAGES} />} />
+        <Route path="/home/:lang" element={<Home page={HomePage.DICTIONARIES} />} />
+        <Route path="/changepass" element={<ChangePass />} />
+
         <Route path="/signin" element={<Auth page={AuthPages.SIGNIN} />} />
         {
           userInfo !== null && Role[userInfo.role] === Role.UNVERIFIED_USER && (
@@ -42,15 +48,14 @@ const App = function () {
         }
         {userInfo !== null && Role[userInfo.role] !== Role.UNVERIFIED_USER  && (
           <>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home page={HomePage.LANGUAGES} />} />
             <Route path="/user" element={<User />} />
           </>
         ) || (
           <Route path="/" element={<Auth page={AuthPages.LOGIN} />} />
         )}
       </Routes>
-    </BrowserRouter>  
+    </BrowserRouter>
   );
 };
 

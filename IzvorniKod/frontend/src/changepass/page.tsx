@@ -4,7 +4,7 @@ import { InputPassword } from "../components/form";
 import { useUserContext } from "../userContext";
 import styles from "./styles/changepass.module.css";
 import { FormEvent, useState } from "react";
-import { CardWindow } from "../components/cardWindow";
+import { AppCard } from "../components/structure";
 
 
 export default function ChangePass() {
@@ -48,7 +48,7 @@ export default function ChangePass() {
     }
 
     return (
-        <CardWindow>
+        <AppCard>
             <div className={styles.heading}>Čestitamo na prvoj prijavi!</div>
             <div className={styles.text}>
                 Nakon prve prijave nužna je promjena lozinke.
@@ -60,6 +60,6 @@ export default function ChangePass() {
                 {error === true && <div className={styles.errorMsg}>Unesene lozinke su različite</div>}
                 <Button className={styles.submitBtn}>Potvrdi</Button>
             </form>
-        </CardWindow>
+        </AppCard>
     );
 }

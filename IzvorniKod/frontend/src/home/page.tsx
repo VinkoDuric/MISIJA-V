@@ -6,6 +6,7 @@ import { Languages } from "./languages";
 import { Dictionaries } from "./dictionaries";
 import { Menu } from "./menu";
 import { useState } from "react";
+import { AppWindow } from "../components/structure";
 
 export enum HomePage {
     LANGUAGES,
@@ -44,25 +45,15 @@ export default function Home({ page }: HomeProps) {
     }
 
     return (
-        <div className={`${styles.contentWindow}`}>
-
-            <div className={styles.contentWindowHeader}>
-                <img
-                    alt="FlipMemoLogo"
-                    className={styles.logo}
-                    src="/images/logo.svg"
-                />
-                <div className={styles.title}>{title}</div>
-                <div className={styles.menu} onClick={onMenuClick}>
-                    <IconButton icon={menuOpen ? faHouse : faBars} />
-                </div>
-            </div>
-            <div className={styles.contentWindowMain}>
-                {caption !== null && <div className={styles.pageText}>{caption}</div>}
-                {menuOpen === false && renderContent()}
-                {menuOpen === true && <Menu updateHomeText={updateHomeText} />}
-                <div className={styles.userName}>{userInfo?.firstName || "Ivan Cvrk"}</div>
-            </div>
-        </div>
+        <AppWindow
+            title={title}
+            footer={userInfo?.firstName || "Ivan Cvrk"}
+            icon={menuOpen ? faHouse : faBars}
+            handleIconClick={onMenuClick}
+            >
+            {caption !== null && <div className={styles.pageCaption}>{caption}</div>}
+            {menuOpen === false && renderContent()}
+            {menuOpen === true && <Menu updateHomeText={updateHomeText} />}
+        </AppWindow>
     );
 }
