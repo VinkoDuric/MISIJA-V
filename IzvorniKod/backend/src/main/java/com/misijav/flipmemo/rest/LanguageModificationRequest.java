@@ -1,7 +1,7 @@
 package com.misijav.flipmemo.rest;
 
 public record LanguageModificationRequest(
-        Long id,
+        String langCode,
         String languageName,
         String languageImage
 ) {}

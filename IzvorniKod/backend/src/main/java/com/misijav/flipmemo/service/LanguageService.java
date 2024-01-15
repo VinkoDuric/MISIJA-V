@@ -15,25 +15,25 @@ public interface LanguageService {
     Language addLanguage(Language language);
 
     /**
-     * Find a language by id.
-     * @param id language's id
+     * Find a language by code.
+     * @param langCode language's code
      * @return language if it's found
      */
-    Optional<Language> findByLanguageId(Long id);
+    Optional<Language> findByLangCode(String langCode);
 
     /**
-     * Delete language by id.
-     * @param id language's id
+     * Delete language by code.
+     * @param langCode language's code
      */
-    void deleteLanguage(Long id);
+    void deleteLanguage(String langCode);
 
     /**
-     * Update a language by id.
-     * @param id language's id
+     * Update a language by code.
+     * @param langCode language's code
      * @param request language's updated data
      * @return updated language
      */
-    Language updateLanguage(Long id, LanguageModificationRequest request);
+    Language updateLanguage(String langCode, LanguageModificationRequest request);
 
     /**
      * Get all languages.

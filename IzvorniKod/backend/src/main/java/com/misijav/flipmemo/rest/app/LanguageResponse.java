@@ -1,7 +1,7 @@
 package com.misijav.flipmemo.rest.app;
 
 public record LanguageResponse(
-        Long id,
+        String langCode,
         String languageName,
         String languageImage
 ) {}

@@ -27,22 +27,22 @@ public class LanguageServiceJpa implements LanguageService {
     }
 
     @Override
-    public Optional<Language> findByLanguageId(Long id) {
-        return languageRepository.findByLanguageId(id);
+    public Optional<Language> findByLangCode(String langCode) {
+        return languageRepository.findByLangCode(langCode);
     }
 
     @Override
-    public void deleteLanguage(Long id) {
-        Language language = languageRepository.findByLanguageId(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Language not found with id " + id));
+    public void deleteLanguage(String langCode) {
+        Language language = languageRepository.findByLangCode(langCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Language not found with code " + langCode));
 
         languageRepository.delete(language);
     }
 
     @Override
-    public Language updateLanguage(Long id, LanguageModificationRequest request) {
-        Language language = languageRepository.findByLanguageId(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Language not found with id " + id));
+    public Language updateLanguage(String langCode, LanguageModificationRequest request) {
+        Language language = languageRepository.findByLangCode(langCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Language not found with code " + langCode));
 
         if(request.languageName() != null && !request.languageName().isEmpty()) {
             if (languageRepository.findByLanguageName(request.languageName()).isPresent() &&

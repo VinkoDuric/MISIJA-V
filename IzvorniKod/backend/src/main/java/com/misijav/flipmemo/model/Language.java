@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String langCode;
 
     @NotEmpty
     private String languageName;
@@ -21,8 +21,8 @@ public class Language {
         this.languageImage = languageImage;
     }
 
-    public Long getId() {
-        return id;
+    public String getLangCode() {
+        return langCode;
     }
 
     public String getLanguageName() {
@@ -44,7 +44,7 @@ public class Language {
     @Override
     public String toString() {
         return "Language{" +
-                "id=" + id +
+                "langCode=" + langCode +
                 ", languageName='" + languageName + '\'' +
                 ", languageImage='" + languageImage +
                 '}';

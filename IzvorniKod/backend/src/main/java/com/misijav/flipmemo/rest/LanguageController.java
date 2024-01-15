@@ -44,15 +44,15 @@ public class LanguageController {
         }
     }
 
-    @PutMapping("/modifyLanguage/{lang-id}")
+    @PutMapping("/modifyLanguage/{lang-code}")
     public void updateLang(@RequestBody LanguageModificationRequest langModifyRequest,
-                           @PathVariable Long id) {
-        languageService.updateLanguage(id, langModifyRequest);
+                           @PathVariable String langCode) {
+        languageService.updateLanguage(langCode, langModifyRequest);
     }
 
-    @DeleteMapping("/deleteLanguage/{lang-id}")
-    public void deleteLang(@PathVariable Long id) {
-        languageService.deleteLanguage(id);
+    @DeleteMapping("/deleteLanguage/{lang-code}")
+    public void deleteLang(@PathVariable String langCode) {
+        languageService.deleteLanguage(langCode);
     }
 
 
