@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Card } from "./components/card";
-import { HomeHooks } from "./homeHooks";
+import { useHomeContext } from "./homeContext";
 import styles from "./styles/home.module.css";
 
-export function Dictionaries({ updateHomeText }: HomeHooks) {
+export function Dictionaries() {
     let { lang } = useParams();
+    const { updateHomeText } = useHomeContext();
+
     useEffect(() => {
         // TODO: dohvati puno ime jezika i sve rječnike koji mu pripadaju
         updateHomeText(lang ?? '', 'Odaberite rječnik i pokrenite rješavanje kviza.');

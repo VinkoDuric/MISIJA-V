@@ -1,19 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Card } from "./components/card";
-import { HomeHooks } from "./homeHooks";
+import { useHomeContext } from "./homeContext";
 import styles from "./styles/home.module.css";
 
-export function Languages({ updateHomeText }: HomeHooks) {
+export function Languages() {
     const navigate = useNavigate();
+    const { updateHomeText } = useHomeContext();
     useEffect(() => {
         updateHomeText('Odabir jezika', 'Odaberite jezik koji želite vježbati.');
     }, []);
 
     function openLang(lang: string) {
-        console.log(lang)
         return () => {
-            console.log('lang')
             navigate(`/home/${lang}`);
         }
     }
