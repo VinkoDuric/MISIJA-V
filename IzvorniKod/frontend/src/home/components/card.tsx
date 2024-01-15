@@ -1,27 +1,46 @@
 import styles from './styles/card.module.css';
 import { FC } from 'react';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface CardInput {
+interface CardProps {
     caption: string;
-    imageSrc: string;
     onClick?: () => void;
+};
+
+interface ImgCardProps extends CardProps {
+    imageSrc: string;
 }
 
-const Card: FC<CardInput> = ({imageSrc, caption, onClick}) => {
+const ImgCard: FC<ImgCardProps> = ({ imageSrc, caption, onClick }) => {
 
     return (
         <div className={styles.card}>
-          <div className={styles.cardHover} onClick={onClick}></div>
-          <img
-            alt={caption}
-            src={imageSrc}
-            className={styles.cardImg}
-            width={"100%"}
-          />
-          <div className={styles.caption}>{caption}</div>
+            <div className={styles.cardHover} onClick={onClick}></div>
+            <img
+                alt={caption}
+                src={imageSrc}
+                className={styles.cardImg}
+                width={"100%"}
+            />
+            <div className={styles.caption}>{caption}</div>
         </div>
     )
+};
+
+interface IconCardProps extends CardProps {
+    icon: IconDefinition;
 }
 
+const IconCard: FC<IconCardProps> = ({ icon, onClick, caption }) => {
 
-export { Card };
+    return (
+        <div className={styles.card}>
+            <div className={styles.cardHover} onClick={onClick}></div>
+            <div className={styles.iconWrap}><FontAwesomeIcon icon={icon} size="4x"/></div>
+            <div className={styles.caption}>{caption}</div>
+        </div>
+    )
+};
+
+export { ImgCard, IconCard };

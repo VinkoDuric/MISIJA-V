@@ -1,5 +1,5 @@
 import { OptionBtn } from "./components/optionBtn";
-import styles from "./styles/menu.module.css";
+import styles from "./styles/home.module.css";
 import { useUserContext } from "../userContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

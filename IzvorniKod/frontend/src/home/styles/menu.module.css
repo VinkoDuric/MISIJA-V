@@ -1,9 +1,0 @@
-.menuWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: fit-content;
-    min-width: 30%;
-    margin: auto;
-}
