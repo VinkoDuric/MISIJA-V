@@ -31,7 +31,7 @@ export function Menu({ closeMenu }: MenuProps) {
             <OptionBtn onClick={() => { closeMenu(); }}>Upravljanje računom</OptionBtn>
             <OptionBtn onClick={() => { }}>Dodaj admina</OptionBtn>
             <OptionBtn onClick={() => { }}>Dodaj riječ</OptionBtn>
-            <OptionBtn onClick={onLogoutClick}>Odjava</OptionBtn>
+            <OptionBtn accent={true} onClick={onLogoutClick}>Odjava</OptionBtn>
         </div>
     );
 }

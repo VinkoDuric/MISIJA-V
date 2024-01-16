@@ -14,10 +14,10 @@
     background-color: var(--btn-grey-hover);
 }
 
-.optionWrapper:last-child {
+.accentColor {
     background-color: var(--theme-color-mid-dark);
 }
 
-.optionWrapper:last-child:hover {
+.accentColor:hover {
     background-color: var(--theme-color-dark);
 }
