@@ -1,14 +1,15 @@
-.nameForm {
+.autocomplete {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
-.nameText {
+.input {
     margin: 0;
 }
 
-.saveBtn {
+.btn {
     height: 100%;
     padding-top: auto;
     padding-bottom: auto;

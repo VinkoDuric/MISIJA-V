@@ -4,8 +4,9 @@ import { InputText } from "../components/form";
 import { Button, ButtonType } from "../components/buttons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles/dictionary.module.css"
-import { ItemsList } from "./components/listItems";
+import { ItemsList } from "./components/itemsList";
 import { useParams } from "react-router-dom";
+import { Autocomplete } from "./components/autocomplete";
 
 export function Dictionary() {
     let { dict } = useParams();
@@ -19,15 +20,13 @@ export function Dictionary() {
         updateHomeText('Uređivanje rječnika', 'Uredite postojeći rječnik.');
     }, []);
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
-        // TODO: rename dict
-    }
-
     function handleItemClick(arg: number) {
+        // TODO: open word editing
         console.log("Handle item click for argument: " + arg)
     }
 
     function handleItemIconClick(arg: number) {
+        // TODO: remove word
         console.log("Handle Icon click for argument: " + arg);
     }
 
@@ -37,12 +36,14 @@ export function Dictionary() {
         { clickArg: 3, text: 'rijec3' },
     ]
 
+    function handleSubmit(text: string) {
+        // TODO: rename dict
+        console.log('submited: ' + text);
+    }
+
     return (
         <div>
-            <form onSubmit={handleSubmit} className={styles.nameForm}>
-                <InputText name='dictionaryName' className={styles.nameText} placeholder='Ime rječnika' />
-                <Button type={ButtonType.ACCENT} className={styles.saveBtn}>spremi</Button>
-            </form>
+            <Autocomplete placeholder='Ime rječnika' btnText='spremi' handleSubmit={handleSubmit}/>
             <ItemsList items={words} icon={faTrash} handleIconClick={handleItemIconClick} handleClick={handleItemClick} />
         </div>
     );
