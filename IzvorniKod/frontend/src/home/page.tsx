@@ -5,6 +5,7 @@ import { Menu } from "./menu";
 import { ReactNode, useState } from "react";
 import { AppWindow } from "../components/structure";
 import { HomeContextProvider, useHomeContext } from "./homeContext";
+import { StudyMode } from "./studyMode";
 
 type HomeProps = {
     children: ReactNode;
