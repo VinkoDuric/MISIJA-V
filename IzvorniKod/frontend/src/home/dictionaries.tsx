@@ -1,4 +1,4 @@
-import { faTrashCan, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Role, useUserContext } from "../userContext";
@@ -20,7 +20,7 @@ export function Dictionaries() {
         console.log("admin icon clicked");
     }
 
-    let icon: IconDefinition|undefined = faTrashCan;
+    let icon: IconDefinition|undefined = faTrash;
 
     if (userInfo === null || Role[userInfo.role] !== Role.ADMIN) {
         icon = undefined;

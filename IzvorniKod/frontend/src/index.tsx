@@ -12,7 +12,7 @@ import { UserContextProvider, useUserContext, Role } from "./userContext";
 import ChangePass from "./changepass/page";
 import { Languages } from "./home/languages";
 import { Dictionaries } from "./home/dictionaries";
-import { AddDictionary } from "./home/addDictionary";
+import { Dictionary } from "./home/dictionary";
 import { AddLanguage } from "./home/addLanguage";
 
 const App = function() {
@@ -50,7 +50,7 @@ const App = function() {
                 <Route path="/home" element={<Home><Languages /></Home>} />
                 <Route path="/home/:lang" element={<Home><Dictionaries /></Home>} />
                 <Route path="/changepass" element={<ChangePass />} />
-                <Route path="/add/dictionary" element={<Home><AddDictionary /></Home>} />
+                <Route path="/dictionary/:dict?" element={<Home><Dictionary /></Home>} />
                 <Route path="/add/language" element={<Home><AddLanguage /></Home>} />
 
                 <Route path="/signin" element={<Auth page={AuthPages.SIGNIN} />} />

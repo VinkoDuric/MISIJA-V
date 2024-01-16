@@ -53,7 +53,7 @@ export function AddLanguage() {
             </div>
             <div className={styles.languagesWrapper}>
                 {
-                    langs !== null && Object.entries(langs).filter(([langCode, lang]) => lang.name.includes(input ?? '')).map(([langCode, lang]) =>
+                    langs !== null && Object.entries(langs).filter(([, lang]) => lang.name.includes(input ?? '')).map(([langCode, lang]) =>
                         <Language onClick={onLangClick} key={langCode} code={langCode} image={`/flags/${lang.flag.toLowerCase()}.png`} name={lang.name} />
                     )
                 }

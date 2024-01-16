@@ -1,0 +1,15 @@
+.nameForm {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.nameText {
+    margin: 0;
+}
+
+.saveBtn {
+    height: 100%;
+    padding-top: auto;
+    padding-bottom: auto;
+}
