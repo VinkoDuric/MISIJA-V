@@ -5,8 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Language {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotEmpty
     private String langCode;
 
     @NotEmpty

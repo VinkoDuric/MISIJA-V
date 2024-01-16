@@ -1,7 +1,7 @@
 package com.misijav.flipmemo.rest;
 
-import com.misijav.flipmemo.dao.LanguageRepository;
 import com.misijav.flipmemo.model.Language;
+import com.misijav.flipmemo.service.DictionaryService;
 import com.misijav.flipmemo.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,12 @@ import java.util.List;
 public class LanguageController {
 
     private final LanguageService languageService;
+    private final DictionaryService dictionaryService;
 
     @Autowired
-    public LanguageController(LanguageService languageService) {
+    public LanguageController(LanguageService languageService, DictionaryService dictionaryService) {
         this.languageService = languageService;
+        this.dictionaryService = dictionaryService;
     }
 
     @GetMapping
@@ -44,16 +46,19 @@ public class LanguageController {
         }
     }
 
-    @PutMapping("/modifyLanguage/{lang-code}")
+    @PutMapping("/{lang-code}")
     public void updateLang(@RequestBody LanguageModificationRequest langModifyRequest,
                            @PathVariable String langCode) {
         languageService.updateLanguage(langCode, langModifyRequest);
     }
 
-    @DeleteMapping("/deleteLanguage/{lang-code}")
+    @DeleteMapping("/{lang-code}")
     public void deleteLang(@PathVariable String langCode) {
         languageService.deleteLanguage(langCode);
     }
 
-
+    @GetMapping("/{lang-code}")
+    public void getLangDictionaries(@PathVariable String langCode) {
+        dictionaryService.getDictsByLangCode(langCode);
+    }
 }
