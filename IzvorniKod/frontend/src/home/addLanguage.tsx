@@ -42,6 +42,7 @@ export function AddLanguage() {
     }, []);
 
     function onLangClick(langCode: string) {
+        // TODO: add language to app
         console.log('Language picked: ' + langCode);
         navigate('/home');
     }

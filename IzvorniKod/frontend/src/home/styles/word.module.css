@@ -1,0 +1,24 @@
+.wordWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    color: var(--text-grey);
+}
+
+.sectionTitle {
+    font-weight: normal;
+    margin: 0.5rem 0;
+}
+
+.sectionText {
+    margin-bottom: 1rem;
+}
+
+.marginTop {
+    margin-top: 1.5rem;
+}
+
+.saveBtn {
+    margin: auto;
+    margin-top: 2rem;
+}

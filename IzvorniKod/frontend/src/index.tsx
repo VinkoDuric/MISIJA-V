@@ -14,6 +14,7 @@ import { Languages } from "./home/languages";
 import { Dictionaries } from "./home/dictionaries";
 import { Dictionary } from "./home/dictionary";
 import { AddLanguage } from "./home/addLanguage";
+import { Word } from "./home/word";
 
 const App = function() {
     const { userInfo, updateUserInfo } = useUserContext();
@@ -52,6 +53,7 @@ const App = function() {
                 <Route path="/changepass" element={<ChangePass />} />
                 <Route path="/dictionary/:dict?" element={<Home><Dictionary /></Home>} />
                 <Route path="/add/language" element={<Home><AddLanguage /></Home>} />
+                <Route path="/word/:wordId?" element={<Home><Word /></Home>} />
 
                 <Route path="/signin" element={<Auth page={AuthPages.SIGNIN} />} />
                 {

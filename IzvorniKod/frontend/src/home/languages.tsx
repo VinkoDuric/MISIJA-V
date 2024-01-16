@@ -14,6 +14,7 @@ export function Languages() {
     const { updateHomeText } = useHomeContext();
     useEffect(() => {
         updateHomeText('Odabir jezika', 'Odaberite jezik koji želite vježbati.');
+        // TODO: Load all active languages
     }, []);
 
     function openLang(lang: string) {
