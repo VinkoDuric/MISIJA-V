@@ -11,10 +11,8 @@ type HomeProps = {
 }
 
 function HomePage({ children }: HomeProps) {
-    let { userInfo } = useUserContext();
+    let { userInfo, updateUserInfo } = useUserContext();
     let { text, updateHomeText } = useHomeContext();
-
-    console.log('text: ', text)
 
     let [menuOpen, setMenuOpen] = useState<boolean>(false);
 
@@ -25,7 +23,7 @@ function HomePage({ children }: HomeProps) {
     return (
         <AppWindow
             title={text.title}
-            footer={userInfo?.firstName || "Ivan Cvrk"}
+            footer={userInfo?.firstName + ' ' + userInfo?.lastName}
             icon={menuOpen ? faHouse : faBars}
             handleIconClick={onMenuClick}
         >

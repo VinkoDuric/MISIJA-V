@@ -2,21 +2,29 @@ import styles from './styles/card.module.css';
 import { FC } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 interface CardProps {
     caption: string;
-    onClick?: () => void;
+    handleClick?: () => void;
+    adminIcon?: IconDefinition;
+    handleAdminIconClick?: () => void;
 };
 
 interface ImgCardProps extends CardProps {
     imageSrc: string;
 }
 
-const ImgCard: FC<ImgCardProps> = ({ imageSrc, caption, onClick }) => {
+const ImgCard: FC<ImgCardProps> = ({ imageSrc, caption, handleClick, adminIcon, handleAdminIconClick }) => {
 
     return (
         <div className={styles.card}>
-            <div className={styles.cardHover} onClick={onClick}></div>
+            <div className={styles.cardHover} onClick={handleClick}>
+            {
+                adminIcon !== undefined && 
+                <FontAwesomeIcon icon={adminIcon} className={styles.adminIcon} onClick={handleAdminIconClick}/>
+            }
+            </div>
             <img
                 alt={caption}
                 src={imageSrc}
@@ -32,11 +40,16 @@ interface IconCardProps extends CardProps {
     icon: IconDefinition;
 }
 
-const IconCard: FC<IconCardProps> = ({ icon, onClick, caption }) => {
+const IconCard: FC<IconCardProps> = ({ icon, handleClick, caption, adminIcon, handleAdminIconClick }) => {
 
     return (
         <div className={styles.card}>
-            <div className={styles.cardHover} onClick={onClick}></div>
+            <div className={styles.cardHover} onClick={handleClick}>
+            {
+                adminIcon !== undefined && 
+                <FontAwesomeIcon icon={adminIcon} className={styles.adminIcon} onClick={handleAdminIconClick}/>
+            }
+            </div>
             <div className={styles.iconWrap}><FontAwesomeIcon icon={icon} size="4x"/></div>
             <div className={styles.caption}>{caption}</div>
         </div>

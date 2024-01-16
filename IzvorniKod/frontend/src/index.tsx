@@ -12,11 +12,11 @@ import { UserContextProvider, useUserContext, Role } from "./userContext";
 import ChangePass from "./changepass/page";
 import { Languages } from "./home/languages";
 import { Dictionaries } from "./home/dictionaries";
-import { AddDictionary } from "./home/addLanguage";
+import { AddDictionary } from "./home/addDictionary";
+import { AddLanguage } from "./home/addLanguage";
 
 const App = function() {
     const { userInfo, updateUserInfo } = useUserContext();
-
     useEffect(() => {
         fetch("/api/v1/auth/refresh").then((response) => {
             if (response.ok) {
@@ -31,6 +31,14 @@ const App = function() {
                 console.log("Handled error: " + err);
                 redirect('/login');
             });
+
+        {/* TODO: delete this part of code for setting the user manually */}
+        let userInfo2 = userInfo;
+        if (userInfo === null) {
+            userInfo2 = {id: 0, firstName: 'Ivan', lastName: 'Cvrk', role: 'ADMIN', email: 'ivan.cvrk@gmail.com', tokenVersion: 0};
+        }
+        updateUserInfo(userInfo2)
+
     }, []);
 
     return (
@@ -43,6 +51,7 @@ const App = function() {
                 <Route path="/home/:lang" element={<Home><Dictionaries /></Home>} />
                 <Route path="/changepass" element={<ChangePass />} />
                 <Route path="/add/dictionary" element={<Home><AddDictionary /></Home>} />
+                <Route path="/add/language" element={<Home><AddLanguage /></Home>} />
 
                 <Route path="/signin" element={<Auth page={AuthPages.SIGNIN} />} />
                 {
