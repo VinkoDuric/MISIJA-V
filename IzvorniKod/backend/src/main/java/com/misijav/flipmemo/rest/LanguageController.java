@@ -25,7 +25,7 @@ public class LanguageController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Language>> getAllLangs() {
+    public ResponseEntity<List<Language>> GET() {
         List<Language> languages = languageService.getAllLanguages();
 
         if (!languages.isEmpty()) {
@@ -36,7 +36,7 @@ public class LanguageController {
     }
 
     @PostMapping
-    public ResponseEntity<Language> addLanguage(@RequestBody Language language) {
+    public ResponseEntity<Language> POST(@RequestBody Language language) {
         Language addedLanguage = languageService.addLanguage(language);
 
         if (addedLanguage != null) {
@@ -47,18 +47,18 @@ public class LanguageController {
     }
 
     @PutMapping("/{lang-code}")
-    public void updateLang(@RequestBody LanguageModificationRequest langModifyRequest,
+    public void PUT(@RequestBody LanguageModificationRequest langModifyRequest,
                            @PathVariable String langCode) {
         languageService.updateLanguage(langCode, langModifyRequest);
     }
 
     @DeleteMapping("/{lang-code}")
-    public void deleteLang(@PathVariable String langCode) {
+    public void DELETE(@PathVariable String langCode) {
         languageService.deleteLanguage(langCode);
     }
 
     @GetMapping("/{lang-code}")
-    public void getLangDictionaries(@PathVariable String langCode) {
+    public void GET(@PathVariable String langCode) {
         dictionaryService.getDictsByLangCode(langCode);
     }
 }

@@ -39,7 +39,7 @@ public class AdminController {
     @Autowired
     AccountRepository racunRepo;
     @PutMapping("/makeAdmin/{email}")
-    public void makeAdmin(@AuthenticationPrincipal UserDetails userDetails,
+    public void PUT(@AuthenticationPrincipal UserDetails userDetails,
                                           @PathVariable String email) {
         Account requester = (Account) userDetails;
         logger.info("Received request to modify role to ADMIN for account {} from admin {}", email, requester.getEmail());

@@ -25,7 +25,7 @@ public class DictionaryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Dictionary>> getAllDictionaries() {
+    public ResponseEntity<List<Dictionary>> GET() {
         List<Dictionary> dictionaries = dictionaryService.getAllDicts();
 
         if (!dictionaries.isEmpty()) {
@@ -36,7 +36,7 @@ public class DictionaryController {
     }
 
     @PostMapping
-    public ResponseEntity<Dictionary> addDictionary(@RequestBody Dictionary dictionary) {
+    public ResponseEntity<Dictionary> POST(@RequestBody Dictionary dictionary) {
         Dictionary addedDict = dictionaryService.addDictionary(dictionary);
 
         if(addedDict != null) {
@@ -47,18 +47,18 @@ public class DictionaryController {
     }
 
     @PutMapping("/{dict-id}")
-    public void updateDict(@RequestBody DictionaryModificationRequest dictionaryModificationRequest,
+    public void PUT(@RequestBody DictionaryModificationRequest dictionaryModificationRequest,
                            @PathVariable(value = "dict-id") Long id) {
         dictionaryService.updateDictionary(id, dictionaryModificationRequest);
     }
 
     @DeleteMapping("/{dict-id}")
-    public void deleteDict(@PathVariable(value = "dict-id") Long id){
+    public void DELETE(@PathVariable(value = "dict-id") Long id){
         dictionaryService.deleteDictionary(id);
     }
 
     @GetMapping("/{dict-id}")
-    public ResponseEntity<ArrayList<Word>> getDict(@PathVariable(value = "dict-id") Long id) {
+    public ResponseEntity<ArrayList<Word>> GET(@PathVariable(value = "dict-id") Long id) {
         Optional<Dictionary> dictionary = dictionaryService.findByDictId(id);
 
         if(dictionary.isPresent()) {
@@ -71,7 +71,7 @@ public class DictionaryController {
     }
 
     @PostMapping("/{dict-id}")
-    public void addWordToDictionary(
+    public void POST(
             @PathVariable(value = "dict-id") Long id,
             @RequestBody Word word) {
 
@@ -83,7 +83,7 @@ public class DictionaryController {
     }
 
     @DeleteMapping("/{dict-id}/{word-id}")
-    public void deleteWordFromDict(@PathVariable(value = "dict-id") Long id,
+    public void DELETE(@PathVariable(value = "dict-id") Long id,
                                    @PathVariable(value = "word-id") Long wordId) {
         dictionaryService.deleteWordFromDict(id, wordId);
     }
