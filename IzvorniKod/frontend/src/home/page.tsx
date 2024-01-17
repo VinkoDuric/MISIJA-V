@@ -32,7 +32,6 @@ function HomePage({ children }: HomeProps) {
             {text.caption !== null && <div className={styles.pageCaption}>{text.caption}</div>}
             {menuOpen === false && children}
             {menuOpen === true && <Menu closeMenu={() => setMenuOpen(false)} />}
-            {<Quiz/>}
         </AppWindow>
     );
 }
