@@ -5,10 +5,12 @@ interface OptionProps {
     children: ReactNode | string;
     onClick: () => void;
     accent?: boolean;
+    answer?: boolean;
+    submit?: boolean;
 }
 
-export function OptionBtn({accent, children, onClick}: OptionProps) {
+export function OptionBtn({accent, answer, submit, children, onClick}: OptionProps) {
     return (
-        <button className={`${styles.optionWrapper} ${accent && styles.accentColor}`} onClick={onClick}> {children} </button>
+        <button className={`${styles.optionWrapper} ${accent && styles.accentColor}  ${answer && styles.answerColor} ${submit && styles.submitColor}`} onClick={onClick}> {children} </button>
     );
 }

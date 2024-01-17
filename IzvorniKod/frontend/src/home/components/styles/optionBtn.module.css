@@ -21,3 +21,23 @@
 .accentColor:hover {
     background-color: var(--theme-color-dark);
 }
+
+.answerColor{
+    background-color: var(--theme-color-mid-dark);
+    width:100%;
+    height: fit-content;
+}
+
+.answerColor:hover {
+    background-color: var(--theme-color-dark);
+}
+
+.submitColor{
+    background-color: var(--theme-color-mid-dark);
+    width:fit-content;
+    height: fit-content;
+}
+
+.submitColor:hover {
+    background-color: var(--theme-color-dark);
+}

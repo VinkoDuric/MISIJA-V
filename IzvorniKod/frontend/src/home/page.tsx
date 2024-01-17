@@ -6,6 +6,7 @@ import { ReactNode, useState } from "react";
 import { AppWindow } from "../components/structure";
 import { HomeContextProvider, useHomeContext } from "./homeContext";
 import { StudyMode } from "./studyMode";
+import { Quiz } from "./quiz";
 
 type HomeProps = {
     children: ReactNode;
@@ -31,6 +32,7 @@ function HomePage({ children }: HomeProps) {
             {text.caption !== null && <div className={styles.pageCaption}>{text.caption}</div>}
             {menuOpen === false && children}
             {menuOpen === true && <Menu closeMenu={() => setMenuOpen(false)} />}
+            {<Quiz/>}
         </AppWindow>
     );
 }
