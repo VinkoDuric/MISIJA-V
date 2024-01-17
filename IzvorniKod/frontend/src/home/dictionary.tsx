@@ -36,14 +36,14 @@ export function Dictionary() {
         { clickArg: 3, text: 'rijec3' },
     ]
 
-    function handleSubmit(text: string) {
-        // TODO: rename dict
+    function handleSubmit(text: number|string) {
+        // TODO: rename dict, only string will be sent because there are no options
         console.log('submited: ' + text);
     }
 
     return (
         <div>
-            <Autocomplete placeholder='Ime rječnika' btnText='spremi' handleSubmit={handleSubmit}/>
+            <Autocomplete placeholder="Ime rječnika" btnText="spremi" handleSubmit={handleSubmit}/>
             <ItemsList items={words} icon={faTrash} handleIconClick={handleItemIconClick} handleClick={handleItemClick} />
         </div>
     );

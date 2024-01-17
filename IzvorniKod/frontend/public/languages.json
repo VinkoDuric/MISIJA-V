@@ -1,602 +1,752 @@
-{
-    "aa": {
+[
+    {
         "name": "afarski",
-        "flag": "dj"
+        "flag": "dj",
+        "code": "aa"
     },
-    "af": {
+    {
         "name": "afrikaans",
-        "flag": "za"
+        "flag": "za",
+        "code": "af"
     },
-    "ak": {
+    {
         "name": "akanski",
-        "flag": "gh"
+        "flag": "gh",
+        "code": "ak"
     },
-    "am": {
+    {
         "name": "amharski",
-        "flag": "et"
+        "flag": "et",
+        "code": "am"
     },
-    "ar": {
+    {
         "name": "arapski",
-        "flag": "UG"
+        "flag": "UG",
+        "code": "ar"
     },
-    "as": {
+    {
         "name": "asamski",
-        "flag": "IN"
+        "flag": "IN",
+        "code": "as"
     },
-    "av": {
+    {
         "name": "avarski",
-        "flag": "TR"
+        "flag": "TR",
+        "code": "av"
     },
-    "ay": {
+    {
         "name": "ajmarski",
-        "flag": "PE"
+        "flag": "PE",
+        "code": "ay"
     },
-    "az": {
+    {
         "name": "azerski",
-        "flag": "az"
+        "flag": "az",
+        "code": "az"
     },
-    "ba": {
+    {
         "name": "ba\u0161kirski",
-        "flag": "RU"
+        "flag": "RU",
+        "code": "ba"
     },
-    "be": {
+    {
         "name": "bjeloruski",
-        "flag": "by"
+        "flag": "by",
+        "code": "be"
     },
-    "bg": {
+    {
         "name": "bugarski",
-        "flag": "bg"
+        "flag": "bg",
+        "code": "bg"
     },
-    "bh": {
+    {
         "name": "biharski",
-        "flag": "IN"
+        "flag": "IN",
+        "code": "bh"
     },
-    "bi": {
+    {
         "name": "bislama",
-        "flag": "vu"
+        "flag": "vu",
+        "code": "bi"
     },
-    "bm": {
+    {
         "name": "bambarski",
-        "flag": "ml"
+        "flag": "ml",
+        "code": "bm"
     },
-    "bn": {
+    {
         "name": "bengalski",
-        "flag": "bd"
+        "flag": "bd",
+        "code": "bn"
     },
-    "br": {
+    {
         "name": "bretonski",
-        "flag": "FR"
+        "flag": "FR",
+        "code": "br"
     },
-    "bs": {
+    {
         "name": "bo\u0161nja\u010dki",
-        "flag": "ba"
+        "flag": "ba",
+        "code": "bs"
     },
-    "ca": {
+    {
         "name": "katalonski",
-        "flag": "ad"
+        "flag": "ad",
+        "code": "ca"
     },
-    "ce": {
+    {
         "name": "\u010de\u010denski",
-        "flag": "RU"
+        "flag": "RU",
+        "code": "ce"
     },
-    "co": {
+    {
         "name": "korzikanski",
-        "flag": "IT"
+        "flag": "IT",
+        "code": "co"
     },
-    "cs": {
+    {
         "name": "\u010de\u0161ki",
-        "flag": "cz"
+        "flag": "cz",
+        "code": "cs"
     },
-    "cu": {
+    {
         "name": "staroslavenski jezik",
-        "flag": "XX"
+        "flag": "XX",
+        "code": "cu"
     },
-    "cv": {
+    {
         "name": "\u010duva\u0161ki",
-        "flag": "RU"
+        "flag": "RU",
+        "code": "cv"
     },
-    "da": {
+    {
         "name": "danski",
-        "flag": "dk"
+        "flag": "dk",
+        "code": "da"
     },
-    "de": {
+    {
         "name": "njema\u010dki",
-        "flag": "de"
+        "flag": "de",
+        "code": "de"
     },
-    "dv": {
+    {
         "name": "divehi",
-        "flag": "mv"
+        "flag": "mv",
+        "code": "dv"
     },
-    "dz": {
+    {
         "name": "dzongkha",
-        "flag": "bt"
+        "flag": "bt",
+        "code": "dz"
     },
-    "ee": {
+    {
         "name": "ewe",
-        "flag": "TG"
+        "flag": "TG",
+        "code": "ee"
     },
-    "el": {
+    {
         "name": "novogr\u010dki",
-        "flag": "gr"
+        "flag": "gr",
+        "code": "el"
     },
-    "en": {
+    {
         "name": "engleski",
-        "flag": "gb"
+        "flag": "gb",
+        "code": "en"
     },
-    "es": {
+    {
         "name": "\u0161panjolski",
-        "flag": "es"
+        "flag": "es",
+        "code": "es"
     },
-    "et": {
+    {
         "name": "estonski",
-        "flag": "ee"
+        "flag": "ee",
+        "code": "et"
     },
-    "eu": {
+    {
         "name": "baskijski",
-        "flag": "FR"
+        "flag": "FR",
+        "code": "eu"
     },
-    "fa": {
+    {
         "name": "perzijski",
-        "flag": "ir"
+        "flag": "ir",
+        "code": "fa"
     },
-    "ff": {
+    {
         "name": "fulbe (fulanski)",
-        "flag": "NG"
+        "flag": "NG",
+        "code": "ff"
     },
-    "fi": {
+    {
         "name": "finski",
-        "flag": "fi"
+        "flag": "fi",
+        "code": "fi"
     },
-    "fj": {
+    {
         "name": "fid\u017eijski",
-        "flag": "fj"
+        "flag": "fj",
+        "code": "fj"
     },
-    "fo": {
+    {
         "name": "ferojski",
-        "flag": "FO"
+        "flag": "FO",
+        "code": "fo"
     },
-    "fr": {
+    {
         "name": "francuski",
-        "flag": "fr"
+        "flag": "fr",
+        "code": "fr"
     },
-    "gd": {
+    {
         "name": "\u0161kotski gaelski",
-        "flag": "GB"
+        "flag": "GB",
+        "code": "gd"
     },
-    "gl": {
+    {
         "name": "galicijski",
-        "flag": "ES"
+        "flag": "ES",
+        "code": "gl"
     },
-    "gn": {
+    {
         "name": "guaran\u00ed",
-        "flag": "PY"
+        "flag": "PY",
+        "code": "gn"
     },
-    "gu": {
+    {
         "name": "gud\u017earatski",
-        "flag": "in"
+        "flag": "in",
+        "code": "gu"
     },
-    "gv": {
+    {
         "name": "manski",
-        "flag": "IM"
+        "flag": "IM",
+        "code": "gv"
     },
-    "ha": {
+    {
         "name": "hauski",
-        "flag": "TG"
+        "flag": "TG",
+        "code": "ha"
     },
-    "he": {
+    {
         "name": "hebrejski",
-        "flag": "il"
+        "flag": "il",
+        "code": "he"
     },
-    "hi": {
+    {
         "name": "hindski",
-        "flag": "in"
+        "flag": "in",
+        "code": "hi"
     },
-    "ho": {
+    {
         "name": "hiri motu jezik",
-        "flag": "pg"
+        "flag": "pg",
+        "code": "ho"
     },
-    "hr": {
+    {
         "name": "hrvatski",
-        "flag": "hr"
+        "flag": "hr",
+        "code": "hr"
     },
-    "ht": {
+    {
         "name": "hai\u0107anski",
-        "flag": "ht"
+        "flag": "ht",
+        "code": "ht"
     },
-    "hu": {
+    {
         "name": "ma\u0111arski",
-        "flag": "hu"
+        "flag": "hu",
+        "code": "hu"
     },
-    "hy": {
+    {
         "name": "armenski",
-        "flag": "am"
+        "flag": "am",
+        "code": "hy"
     },
-    "hz": {
+    {
         "name": "herero jezik",
-        "flag": "NA"
+        "flag": "NA",
+        "code": "hz"
     },
-    "id": {
+    {
         "name": "indonezijski",
-        "flag": "id"
+        "flag": "id",
+        "code": "id"
     },
-    "ig": {
+    {
         "name": "igbo",
-        "flag": "ng"
+        "flag": "ng",
+        "code": "ig"
     },
-    "is": {
+    {
         "name": "islandski",
-        "flag": "is"
+        "flag": "is",
+        "code": "is"
     },
-    "it": {
+    {
         "name": "talijanski",
-        "flag": "it"
+        "flag": "it",
+        "code": "it"
     },
-    "iu": {
+    {
         "name": "Inuktitut",
-        "flag": "CA"
+        "flag": "CA",
+        "code": "iu"
     },
-    "ja": {
+    {
         "name": "japanski",
-        "flag": "jp"
+        "flag": "jp",
+        "code": "ja"
     },
-    "jv": {
+    {
         "name": "javanski",
-        "flag": "SR"
+        "flag": "SR",
+        "code": "jv"
     },
-    "ka": {
+    {
         "name": "gruzijski",
-        "flag": "ge"
+        "flag": "ge",
+        "code": "ka"
     },
-    "kg": {
+    {
         "name": "kongo",
-        "flag": "cg"
+        "flag": "cg",
+        "code": "kg"
     },
-    "kk": {
+    {
         "name": "kaza\u0161ki",
-        "flag": "kz"
+        "flag": "kz",
+        "code": "kk"
     },
-    "kl": {
+    {
         "name": "grenlandski",
-        "flag": "GL"
+        "flag": "GL",
+        "code": "kl"
     },
-    "km": {
+    {
         "name": "kmerski",
-        "flag": "kh"
+        "flag": "kh",
+        "code": "km"
     },
-    "kn": {
+    {
         "name": "Kannada",
-        "flag": "IN"
+        "flag": "IN",
+        "code": "kn"
     },
-    "kr": {
+    {
         "name": "Kanuri",
-        "flag": "ne"
+        "flag": "ne",
+        "code": "kr"
     },
-    "ks": {
+    {
         "name": "ka\u0161mirski",
-        "flag": "IN"
+        "flag": "IN",
+        "code": "ks"
     },
-    "ku": {
+    {
         "name": "kurdski",
-        "flag": "iq"
+        "flag": "iq",
+        "code": "ku"
     },
-    "kv": {
+    {
         "name": "Komi",
-        "flag": "RU"
+        "flag": "RU",
+        "code": "kv"
     },
-    "ky": {
+    {
         "name": "kirgiski",
-        "flag": "kg"
+        "flag": "kg",
+        "code": "ky"
     },
-    "la": {
+    {
         "name": "latinski",
-        "flag": "va"
+        "flag": "va",
+        "code": "la"
     },
-    "lb": {
+    {
         "name": "luksembur\u0161ki",
-        "flag": "lu"
+        "flag": "lu",
+        "code": "lb"
     },
-    "lg": {
+    {
         "name": "Ganda",
-        "flag": "UG"
+        "flag": "UG",
+        "code": "lg"
     },
-    "ln": {
+    {
         "name": "Lingala",
-        "flag": "cg"
+        "flag": "cg",
+        "code": "ln"
     },
-    "lo": {
+    {
         "name": "Lao",
-        "flag": "la"
+        "flag": "la",
+        "code": "lo"
     },
-    "lt": {
+    {
         "name": "litavski",
-        "flag": "lt"
+        "flag": "lt",
+        "code": "lt"
     },
-    "lv": {
+    {
         "name": "latvijski",
-        "flag": "lv"
+        "flag": "lv",
+        "code": "lv"
     },
-    "mg": {
+    {
         "name": "malga\u0161ki",
-        "flag": "mg"
+        "flag": "mg",
+        "code": "mg"
     },
-    "mh": {
+    {
         "name": "Marshallese",
-        "flag": "mh"
+        "flag": "mh",
+        "code": "mh"
     },
-    "mi": {
+    {
         "name": "maorski",
-        "flag": "nz"
+        "flag": "nz",
+        "code": "mi"
     },
-    "mk": {
+    {
         "name": "makedonski",
-        "flag": "mk"
+        "flag": "mk",
+        "code": "mk"
     },
-    "ml": {
+    {
         "name": "malajlamski",
-        "flag": "MY"
+        "flag": "MY",
+        "code": "ml"
     },
-    "mn": {
+    {
         "name": "mongolski",
-        "flag": "mn"
+        "flag": "mn",
+        "code": "mn"
     },
-    "mr": {
+    {
         "name": "Marathi",
-        "flag": "IN"
+        "flag": "IN",
+        "code": "mr"
     },
-    "mt": {
+    {
         "name": "malte\u0161ki",
-        "flag": "mt"
+        "flag": "mt",
+        "code": "mt"
     },
-    "my": {
+    {
         "name": "burmanski",
-        "flag": "mm"
+        "flag": "mm",
+        "code": "my"
     },
-    "na": {
+    {
         "name": "Nauru",
-        "flag": "NR"
+        "flag": "NR",
+        "code": "na"
     },
-    "nb": {
+    {
         "name": "knji\u0161ki norve\u0161ki (bokm\u00e5l)",
-        "flag": "no"
+        "flag": "no",
+        "code": "nb"
     },
-    "nd": {
+    {
         "name": "North Ndebele",
-        "flag": "zw"
+        "flag": "zw",
+        "code": "nd"
     },
-    "ne": {
+    {
         "name": "Nepali",
-        "flag": "np"
+        "flag": "np",
+        "code": "ne"
     },
-    "nl": {
+    {
         "name": "nizozemski",
-        "flag": "nl"
+        "flag": "nl",
+        "code": "nl"
     },
-    "nn": {
+    {
         "name": "novonorve\u0161ki (nynorsk)",
-        "flag": "no"
+        "flag": "no",
+        "code": "nn"
     },
-    "no": {
+    {
         "name": "norve\u0161ki",
-        "flag": "no"
+        "flag": "no",
+        "code": "no"
     },
-    "nr": {
+    {
         "name": "South Ndebele",
-        "flag": "za"
+        "flag": "za",
+        "code": "nr"
     },
-    "ny": {
+    {
         "name": "Chichewa",
-        "flag": "mw"
+        "flag": "mw",
+        "code": "ny"
     },
-    "oc": {
+    {
         "name": "okcitanski",
-        "flag": "FR"
+        "flag": "FR",
+        "code": "oc"
     },
-    "or": {
+    {
         "name": "Oriya",
-        "flag": "IN"
+        "flag": "IN",
+        "code": "or"
     },
-    "pa": {
+    {
         "name": "pend\u017eabski",
-        "flag": "in"
+        "flag": "in",
+        "code": "pa"
     },
-    "pl": {
+    {
         "name": "poljski",
-        "flag": "pl"
+        "flag": "pl",
+        "code": "pl"
     },
-    "ps": {
+    {
         "name": "pa\u0161tunski",
-        "flag": "af"
+        "flag": "af",
+        "code": "ps"
     },
-    "pt": {
+    {
         "name": "portugalski",
-        "flag": "pt"
+        "flag": "pt",
+        "code": "pt"
     },
-    "qu": {
+    {
         "name": "ke\u010duanski",
-        "flag": "XX"
+        "flag": "XX",
+        "code": "qu"
     },
-    "rm": {
+    {
         "name": "retoromanski",
-        "flag": "ch"
+        "flag": "ch",
+        "code": "rm"
     },
-    "rn": {
+    {
         "name": "Kirundi",
-        "flag": "bi"
+        "flag": "bi",
+        "code": "rn"
     },
-    "ro": {
+    {
         "name": "rumunjski",
-        "flag": "ro"
+        "flag": "ro",
+        "code": "ro"
     },
-    "ru": {
+    {
         "name": "ruski",
-        "flag": "ru"
+        "flag": "ru",
+        "code": "ru"
     },
-    "rw": {
+    {
         "name": "Kinyarwanda",
-        "flag": "rw"
+        "flag": "rw",
+        "code": "rw"
     },
-    "sa": {
+    {
         "name": "sanskrt",
-        "flag": "IN"
+        "flag": "IN",
+        "code": "sa"
     },
-    "sc": {
+    {
         "name": "sardski",
-        "flag": "IT"
+        "flag": "IT",
+        "code": "sc"
     },
-    "sd": {
+    {
         "name": "Sindhi",
-        "flag": "PK"
+        "flag": "PK",
+        "code": "sd"
     },
-    "se": {
+    {
         "name": "sjeverni sami jezik",
-        "flag": "SE"
+        "flag": "SE",
+        "code": "se"
     },
-    "sg": {
+    {
         "name": "Sango",
-        "flag": "cf"
+        "flag": "cf",
+        "code": "sg"
     },
-    "si": {
+    {
         "name": "Sinhalese",
-        "flag": "lk"
+        "flag": "lk",
+        "code": "si"
     },
-    "sk": {
+    {
         "name": "slova\u010dki",
-        "flag": "sk"
+        "flag": "sk",
+        "code": "sk"
     },
-    "sl": {
+    {
         "name": "slovenski",
-        "flag": "si"
+        "flag": "si",
+        "code": "sl"
     },
-    "sm": {
+    {
         "name": "samoanski",
-        "flag": "WS"
+        "flag": "WS",
+        "code": "sm"
     },
-    "sn": {
+    {
         "name": "Shona",
-        "flag": "zw"
+        "flag": "zw",
+        "code": "sn"
     },
-    "sq": {
+    {
         "name": "albanski",
-        "flag": "al"
+        "flag": "al",
+        "code": "sq"
     },
-    "sr": {
+    {
         "name": "srpski",
-        "flag": "rs"
+        "flag": "rs",
+        "code": "sr"
     },
-    "ss": {
+    {
         "name": "Swati",
-        "flag": "sz"
+        "flag": "sz",
+        "code": "ss"
     },
-    "st": {
+    {
         "name": "Sotho",
-        "flag": "ls"
+        "flag": "ls",
+        "code": "st"
     },
-    "sv": {
+    {
         "name": "\u0161vedski",
-        "flag": "se"
+        "flag": "se",
+        "code": "sv"
     },
-    "sw": {
+    {
         "name": "svahili",
-        "flag": "UG"
+        "flag": "UG",
+        "code": "sw"
     },
-    "ta": {
+    {
         "name": "tamilski",
-        "flag": "lk"
+        "flag": "lk",
+        "code": "ta"
     },
-    "te": {
+    {
         "name": "telu\u0161ki",
-        "flag": "in"
+        "flag": "in",
+        "code": "te"
     },
-    "tg": {
+    {
         "name": "tad\u017ei\u010dki",
-        "flag": "tj"
+        "flag": "tj",
+        "code": "tg"
     },
-    "th": {
+    {
         "name": "Thai",
-        "flag": "th"
+        "flag": "th",
+        "code": "th"
     },
-    "tk": {
+    {
         "name": "turkmenski",
-        "flag": "tm"
+        "flag": "tm",
+        "code": "tk"
     },
-    "tl": {
+    {
         "name": "Tagalog",
-        "flag": "ph"
+        "flag": "ph",
+        "code": "tl"
     },
-    "tn": {
+    {
         "name": "Tswana",
-        "flag": "bw"
+        "flag": "bw",
+        "code": "tn"
     },
-    "to": {
+    {
         "name": "Tonga",
-        "flag": "TO"
+        "flag": "TO",
+        "code": "to"
     },
-    "tr": {
+    {
         "name": "turski",
-        "flag": "tr"
+        "flag": "tr",
+        "code": "tr"
     },
-    "ts": {
+    {
         "name": "Tsonga",
-        "flag": "za"
+        "flag": "za",
+        "code": "ts"
     },
-    "tt": {
+    {
         "name": "tatarski",
-        "flag": "RU"
+        "flag": "RU",
+        "code": "tt"
     },
-    "tw": {
+    {
         "name": "Twi",
-        "flag": "GH"
+        "flag": "GH",
+        "code": "tw"
     },
-    "ty": {
+    {
         "name": "tahi\u0107anski",
-        "flag": "PF"
+        "flag": "PF",
+        "code": "ty"
     },
-    "ug": {
+    {
         "name": "ujgurski",
-        "flag": "CN"
+        "flag": "CN",
+        "code": "ug"
     },
-    "uk": {
+    {
         "name": "ukrajinski",
-        "flag": "ua"
+        "flag": "ua",
+        "code": "uk"
     },
-    "ur": {
+    {
         "name": "urdski",
-        "flag": "pk"
+        "flag": "pk",
+        "code": "ur"
     },
-    "uz": {
+    {
         "name": "Uzbek",
-        "flag": "uz"
+        "flag": "uz",
+        "code": "uz"
     },
-    "ve": {
+    {
         "name": "Venda",
-        "flag": "za"
+        "flag": "za",
+        "code": "ve"
     },
-    "vi": {
+    {
         "name": "vijetnamski",
-        "flag": "vn"
+        "flag": "vn",
+        "code": "vi"
     },
-    "wo": {
+    {
         "name": "Wolof",
-        "flag": "sn"
+        "flag": "sn",
+        "code": "wo"
     },
-    "xh": {
+    {
         "name": "Xhosa",
-        "flag": "za"
+        "flag": "za",
+        "code": "xh"
     },
-    "yo": {
+    {
         "name": "Yoruba",
-        "flag": "NG"
+        "flag": "NG",
+        "code": "yo"
     },
-    "za": {
+    {
         "name": "Zhuang",
-        "flag": "CN"
+        "flag": "CN",
+        "code": "za"
     },
-    "zh": {
+    {
         "name": "kineski",
-        "flag": "cn"
+        "flag": "cn",
+        "code": "zh"
     },
-    "zu": {
+    {
         "name": "Zulu",
-        "flag": "za"
+        "flag": "za",
+        "code": "zu"
     }
-}
+]

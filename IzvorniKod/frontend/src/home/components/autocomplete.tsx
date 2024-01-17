@@ -1,42 +1,52 @@
-import { useRef, useState } from 'react';
+import { RefObject, useState } from 'react';
 import { Button, ButtonType } from '../../components/buttons';
 import { InputText } from '../../components/form';
-import { ItemsList } from './itemsList';
+import { ItemsList, ItemsListElement } from './itemsList';
 import styles from './styles/autocomplete.module.css'
 
 type AutocompleteProps = {
     placeholder: string;
+    inputRef?: RefObject<HTMLInputElement>;
     btnText?: string;
-    options?: Array<string>;
-    handleSubmit: (text: string) => void;
+    options?: ItemsListElement[];
+    handleSubmit: (clickArg: number|string) => void;
+    handleInputChange?: (text: string) => void;
+    className?: string;
 }
 
-export function Autocomplete({ placeholder, btnText, options, handleSubmit }: AutocompleteProps) {
-    let inputRef = useRef<HTMLInputElement>(null);
+export function Autocomplete({ placeholder, btnText, options, handleSubmit, handleInputChange, className, inputRef }: AutocompleteProps) {
 
     let [inputText, setInputText] = useState<string>('');
 
     function handleItemClick(arg: number) {
-        if (options) {
-            handleSubmit(options[arg])
-        }
+        handleSubmit(arg);
     }
 
     function onBtnClick() {
         handleSubmit(inputText);
     }
 
+    function inputChange(text: string) {
+        setInputText(text);
+        if (handleInputChange) {
+            handleInputChange(text);
+        }
+    }
+
     return (
         <div>
             {/* TODO: show options where arg is id of item */}
-            <ItemsList items={[{ clickArg: 0, text: 'abc' }]} handleClick={handleItemClick} />
-            <div className={styles.autocomplete}>
-                <InputText onChange={setInputText} name='dictionaryName' className={styles.input} placeholder={placeholder} />
+            <div className={styles.autocomplete + ' ' + className}>
+                <InputText inputRef={inputRef} onChange={inputChange} name="dictionaryName" className={styles.input} placeholder={placeholder} />
                 {
                     (btnText !== undefined) &&
                     <Button type={ButtonType.ACCENT} onClick={onBtnClick} className={styles.btn}>{btnText}</Button>
                 }
             </div>
+            {
+                options !== undefined && options.length > 0 &&
+                <ItemsList className={styles.itemsList} items={options} handleClick={handleItemClick} />
+            }
         </div>
     );
 }

@@ -30,17 +30,22 @@ function Item({ text, icon, clickArg, handleIconClick, handleClick }: ItemProps)
     );
 }
 
+export type ItemsListElement = {
+ clickArg: number, text: string 
+};
+
 type ItemsListProps = {
-    items: Array<{ clickArg: number, text: string }>;
+    items: Array<ItemsListElement>;
     icon?: IconDefinition;
     handleIconClick?: ItemClickCallback;
     handleClick: ItemClickCallback;
+    className?: string;
 };
 
-export function ItemsList({ items, icon, handleIconClick, handleClick }: ItemsListProps) {
+export function ItemsList({items, icon, handleIconClick, handleClick, className }: ItemsListProps) {
 
     return (
-        <div className={styles.itemsList}>
+        <div className={`${styles.itemsList} ${className}`}>
             {
                 items.map(item =>
                     <Item

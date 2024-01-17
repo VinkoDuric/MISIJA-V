@@ -18,6 +18,10 @@
     margin-top: 1.5rem;
 }
 
+.marginTopSmall {
+    margin-top: .5rem;
+}
+
 .saveBtn {
     margin: auto;
     margin-top: 2rem;

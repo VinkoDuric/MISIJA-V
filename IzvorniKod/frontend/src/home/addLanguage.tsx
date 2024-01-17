@@ -1,39 +1,18 @@
 import styles from './styles/addLanguage.module.css'
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHomeContext } from "./homeContext";
 import { InputText } from "../components/form";
 import { useNavigate } from 'react-router-dom';
-
-type LanguageProps = {
-    code: string;
-    image: string;
-    name: string;
-    onClick: (langCode: string) => void;
-};
-
-function Language({ code, image, name, onClick }: LanguageProps) {
-
-    return (
-        <div className={styles.language} onClick={() => onClick(code)}>
-            <img src={image} alt={name} width='50px' />
-            <div className={styles.langName}>{name}</div>
-        </div>
-    );
-}
-
-type LangsRecord = Record<string, {
-    name: string;
-    flag: string;
-}>;
+import { LanguageList } from './components/languageList';
 
 export function AddLanguage() {
     const { updateHomeText } = useHomeContext();
-    const [langs, setLangs] = useState<LangsRecord | null>(null);
+    const [langs, setLangs] = useState<LanguageData[] | null>(null);
     const [input, setInput] = useState<string|null>(null);
     const navigate = useNavigate();
 
     async function fetchLanguages() {
-        fetch('/languages.json').then(res => res.json()).then(langs => setLangs(langs));
+        fetch('/languages.json').then(res => res.json()).then((langs: LanguageData[]) => setLangs(langs));
     }
 
     useEffect(() => {
@@ -50,15 +29,9 @@ export function AddLanguage() {
     return (
         <div>
             <div>
-                <InputText name='lang' placeholder='Ime jezika' onChange={setInput} />
+                <InputText name="lang" placeholder="Ime jezika" onChange={setInput} />
             </div>
-            <div className={styles.languagesWrapper}>
-                {
-                    langs !== null && Object.entries(langs).filter(([, lang]) => lang.name.includes(input ?? '')).map(([langCode, lang]) =>
-                        <Language onClick={onLangClick} key={langCode} code={langCode} image={`/flags/${lang.flag.toLowerCase()}.png`} name={lang.name} />
-                    )
-                }
-            </div>
+            <LanguageList languages={langs?.filter(lang => lang.name.includes(input??'')) ?? null} onLangClick={onLangClick}/>
         </div>
     );
 }

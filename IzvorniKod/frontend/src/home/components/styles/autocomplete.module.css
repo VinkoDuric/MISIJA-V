@@ -9,6 +9,10 @@
     margin: 0;
 }
 
+.itemsList {
+    margin-bottom: 1rem;
+}
+
 .btn {
     height: 100%;
     padding-top: auto;

@@ -1,5 +1,5 @@
 import "./styles/form.css";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, RefObject, useState } from "react";
 
 interface CheckboxProps {
   label: string;
@@ -40,18 +40,18 @@ export function Checkbox({
 
 interface InputTextProps {
   name: string;
-  value?: string;
   onChange?: (newValue: string) => void;
   placeholder?: string;
   className?: string;
+  inputRef?: RefObject<HTMLInputElement>;
 }
 
 export function InputText({
-  value,
   name,
   onChange,
   placeholder,
   className,
+  inputRef
 }: InputTextProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -62,8 +62,8 @@ export function InputText({
 
   return (
     <input
+      ref={inputRef}
       type="text"
-      value={value}
       name={name}
       onChange={handleInputChange}
       placeholder={placeholder}
@@ -73,11 +73,11 @@ export function InputText({
 }
 
 export function InputPassword({
-  value,
   name,
   onChange,
   placeholder,
   className,
+  inputRef
 }: InputTextProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -88,8 +88,8 @@ export function InputPassword({
 
   return (
     <input
+      ref={inputRef}
       type="password"
-      value={value}
       name={name}
       onChange={handleInputChange}
       placeholder={placeholder}
