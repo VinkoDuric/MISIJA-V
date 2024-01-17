@@ -5,9 +5,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+@Entity
 public class Dictionary {
 
     @Id
@@ -19,8 +19,10 @@ public class Dictionary {
 
     private String dictImage;
 
+    @ManyToOne  // TODO check if this is the right one
     private Language dictLang;
 
+    @ManyToMany  // TODO check if this is the right one
     private ArrayList<Word> dictWords;
 
     private Dictionary() {}

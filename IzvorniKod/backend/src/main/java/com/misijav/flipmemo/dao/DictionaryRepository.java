@@ -11,7 +11,7 @@ public interface DictionaryRepository extends CrudRepository<Dictionary, Long> {
 
     Optional<Dictionary> findByDictName(String dictName);
 
-    Optional<Dictionary> findByDictId(Long id);
+    Optional<Dictionary> findDictById(Long id);
 
-    List<Dictionary> findByLanguage(Language language);
+    List<Dictionary> findByDictLang(Language language);
 }

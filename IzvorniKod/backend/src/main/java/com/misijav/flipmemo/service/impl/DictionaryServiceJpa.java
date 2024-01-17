@@ -11,9 +11,11 @@ import com.misijav.flipmemo.model.Word;
 import com.misijav.flipmemo.rest.DictionaryModificationRequest;
 import com.misijav.flipmemo.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class DictionaryServiceJpa implements DictionaryService {
     private final DictionaryRepository dictionaryRepository;
     private final WordRepository wordRepository;
@@ -33,12 +35,12 @@ public class DictionaryServiceJpa implements DictionaryService {
 
     @Override
     public Optional<Dictionary> findByDictId(Long id) {
-        return dictionaryRepository.findByDictId(id);
+        return dictionaryRepository.findDictById(id);
     }
 
     @Override
     public void deleteDictionary(Long id) {
-        Dictionary dictionary = dictionaryRepository.findByDictId(id)
+        Dictionary dictionary = dictionaryRepository.findDictById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found with id " + id));
 
         dictionaryRepository.delete(dictionary);
@@ -46,7 +48,7 @@ public class DictionaryServiceJpa implements DictionaryService {
 
     @Override
     public Dictionary updateDictionary(Long id, DictionaryModificationRequest request) {
-        Dictionary dictionary = dictionaryRepository.findByDictId(id)
+        Dictionary dictionary = dictionaryRepository.findDictById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found with id " + id));
 
         if(request.dictName() != null && request.dictName().isEmpty()) {
@@ -79,7 +81,7 @@ public class DictionaryServiceJpa implements DictionaryService {
 
     @Override
     public void addWordToDict(Long id, Word word) {
-        Optional<Dictionary> optionalDictionary = dictionaryRepository.findByDictId(id);
+        Optional<Dictionary> optionalDictionary = dictionaryRepository.findDictById(id);
 
         if (optionalDictionary.isPresent()) {
             Dictionary dictionary = optionalDictionary.get();
@@ -90,7 +92,7 @@ public class DictionaryServiceJpa implements DictionaryService {
 
     @Override
     public void deleteWordFromDict(Long id, Long wordId) {
-        Optional<Dictionary> optionalDictionary = dictionaryRepository.findByDictId(id);
+        Optional<Dictionary> optionalDictionary = dictionaryRepository.findDictById(id);
         Optional<Word> optionalWord = wordRepository.findWordById(wordId);
 
         if (optionalDictionary.isPresent() && optionalWord.isPresent()) {
@@ -111,7 +113,7 @@ public class DictionaryServiceJpa implements DictionaryService {
 
         if (optionalLanguage.isPresent()) {
             Language language = optionalLanguage.get();
-            return dictionaryRepository.findByLanguage(language);
+            return dictionaryRepository.findByDictLang(language);
         } else {
             return Collections.emptyList();
         }

@@ -7,11 +7,13 @@ import com.misijav.flipmemo.model.Language;
 import com.misijav.flipmemo.rest.LanguageModificationRequest;
 import com.misijav.flipmemo.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class LanguageServiceJpa implements LanguageService {
 
     private final LanguageRepository languageRepository;

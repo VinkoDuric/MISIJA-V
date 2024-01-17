@@ -1,7 +1,6 @@
 package com.misijav.flipmemo.rest;
 
 import com.misijav.flipmemo.model.Dictionary;
-import com.misijav.flipmemo.model.Language;
 import com.misijav.flipmemo.model.Word;
 import com.misijav.flipmemo.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,17 +48,17 @@ public class DictionaryController {
 
     @PutMapping("/{dict-id}")
     public void updateDict(@RequestBody DictionaryModificationRequest dictionaryModificationRequest,
-                           @PathVariable Long id) {
+                           @PathVariable(value = "dict-id") Long id) {
         dictionaryService.updateDictionary(id, dictionaryModificationRequest);
     }
 
     @DeleteMapping("/{dict-id}")
-    public void deleteDict(@PathVariable Long id){
+    public void deleteDict(@PathVariable(value = "dict-id") Long id){
         dictionaryService.deleteDictionary(id);
     }
 
     @GetMapping("/{dict-id}")
-    public ResponseEntity<ArrayList<Word>> getDict(@PathVariable Long id) {
+    public ResponseEntity<ArrayList<Word>> getDict(@PathVariable(value = "dict-id") Long id) {
         Optional<Dictionary> dictionary = dictionaryService.findByDictId(id);
 
         if(dictionary.isPresent()) {
@@ -73,7 +72,7 @@ public class DictionaryController {
 
     @PostMapping("/{dict-id}")
     public void addWordToDictionary(
-            @PathVariable Long id,
+            @PathVariable(value = "dict-id") Long id,
             @RequestBody Word word) {
 
         Optional<Dictionary> optionalDictionary = dictionaryService.findByDictId(id);
@@ -84,14 +83,8 @@ public class DictionaryController {
     }
 
     @DeleteMapping("/{dict-id}/{word-id}")
-    public void deleteWordFromDict(@PathVariable Long id,
-                                   @PathVariable Long wordId) {
+    public void deleteWordFromDict(@PathVariable(value = "dict-id") Long id,
+                                   @PathVariable(value = "word-id") Long wordId) {
         dictionaryService.deleteWordFromDict(id, wordId);
     }
 }
-
-
-
-
-
-
