@@ -1,10 +1,11 @@
-package com.misijav.flipmemo.rest;
+package com.misijav.flipmemo.rest.word;
 
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Word;
 import com.misijav.flipmemo.service.WordService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,20 +20,18 @@ public class WordController {
     }
 
     @PostMapping
-    public ResponseEntity<?> POST(@RequestBody Word word) {
+    public ResponseEntity<?> POST(@RequestBody WordRequest wordRequest) {
         // Add new word to the repository
-        wordService.addWord(word);
-        return ResponseEntity.ok().build();
+        wordService.addWord(wordRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Word added successfully.");
     }
 
     @PutMapping
     public ResponseEntity<?> PUT(@Valid @RequestBody WordModificationRequest wordModifyRequest) {
         Long wordId = wordModifyRequest.id();
-
         // Update an existing word
-        Word updatedWord = wordService.updateWord(wordId, wordModifyRequest);
-
-        return ResponseEntity.ok().body(updatedWord);
+        wordService.updateWord(wordId, wordModifyRequest);
+        return ResponseEntity.ok().body("Word updated successfully.");
     }
 
     // get word information
@@ -41,5 +40,11 @@ public class WordController {
         Word word = wordService.getWordById(wordId)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found for this id: " + wordId));
         return ResponseEntity.ok().body(word);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> DELETE(@Valid @RequestBody WordModificationRequest request) {
+        wordService.deleteWord(request.id());
+        return ResponseEntity.ok().body("Word deleted successfully.");
     }
 }

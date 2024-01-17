@@ -1,7 +1,8 @@
 package com.misijav.flipmemo.service;
 
 import com.misijav.flipmemo.model.Word;
-import com.misijav.flipmemo.rest.WordModificationRequest;
+import com.misijav.flipmemo.rest.word.WordModificationRequest;
+import com.misijav.flipmemo.rest.word.WordRequest;
 
 import java.util.Optional;
 
@@ -16,17 +17,16 @@ public interface WordService {
 
     /**
      * Adds a new word to the repository.
-     * @param word The Word object to be added.
+     * @param request The WordRequest object containing wordName and wordDescription.
      */
-    void addWord(Word word);
+    void addWord(WordRequest request);
 
     /**
      * Updates an existing word.
      * @param id The ID of the word to update.
      * @param request The updated details of the word.
-     * @return The updated Word object.
      */
-    Word updateWord(Long id, WordModificationRequest request);
+    void updateWord(Long id, WordModificationRequest request);
 
     /**
      * Deletes a word by its ID.

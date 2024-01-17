@@ -1,4 +1,4 @@
-package com.misijav.flipmemo.rest;
+package com.misijav.flipmemo.rest.word;
 
 import jakarta.validation.constraints.NotNull;
 
