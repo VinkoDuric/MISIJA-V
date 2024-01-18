@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/v1/dictionaries")
@@ -41,12 +38,12 @@ public class DictionaryController {
     }
 
     @PostMapping
-    public ResponseEntity<?> POST(@RequestBody DictionaryRequest request) {
-        logger.info("Received request to add new dictionary with name {}.", request.dictImage());
-        Dictionary createdDict = dictionaryService.addDictionary(request);
-        logger.info("Dictionary with name {} and langCode {} added successfully.",
-                request.dictImage(), request.langCode());
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdDict);
+    public Map<String, Long> POST(@RequestBody DictionaryRequest request) {
+        logger.info("Received request to add new dictionary with name {}.", request.dictName());
+        Long addedDictId = dictionaryService.addDictionary(request);
+        logger.info("Dictionary with name {} and langCode {} added successfully.", request.dictName(), request.langCode());
+
+        return Map.of("dictionaryId", addedDictId);
     }
 
     @PutMapping("/{dict-id}")
@@ -65,14 +62,14 @@ public class DictionaryController {
     }
 
     @GetMapping("/{dict-id}")
-    public ResponseEntity<ArrayList<Word>> GET(@PathVariable(value = "dict-id") Long id) {
-        logger.info("Received request to display directory with id {}.", id);
+    public ResponseEntity<List<Word>> GET(@PathVariable(value = "dict-id") Long id) {
+        logger.info("Received request to display dictionary with id {}.", id);
         Optional<Dictionary> dictionary = dictionaryService.findByDictId(id);
 
         if(dictionary.isPresent()) {
             Dictionary dict = dictionary.get();
-            ArrayList<Word> words = dict.getDictWords();
-            return new ResponseEntity<ArrayList<Word>>(words, HttpStatus.OK);
+            List<Word> words = dict.getDictWords();
+            return new ResponseEntity<>(words, HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
         }

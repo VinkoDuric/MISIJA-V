@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface WordRepository extends CrudRepository<Word, Long> {
 
-    Optional<Word> findByWordName(String wordName);
+    Optional<Word> findByOriginalWord(String wordName);
 
     Optional<Word> findWordByWordId(Long id);
 }

@@ -10,71 +10,78 @@ public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long wordId;
-    private String wordName;
+
+    private String wordLanguageCode;
+    private String originalWord;
+    private String translatedWord;
+
     private String wordDescription;
 
+    @ElementCollection
+    private List<String> wordSynonyms = new ArrayList<>();
+
     @ManyToMany
-    /*
-    @JoinTable(
-            name = "dictionaryWord",
-            joinColumns = @JoinColumn(name = "wordId"),
-            inverseJoinColumns = @JoinColumn(name = "dictionaryId")
-    ) */
     private List<Dictionary> dictionaries = new ArrayList<>();
 
     @ManyToMany(mappedBy = "words")
-    private List<Pot> pots = new ArrayList<>();
+    private List<Pot> pots;
 
-    protected Word() {}
+    public Word() {}
 
-    public Word(String wordName, String wordDescription) {
-        this.wordName = wordName;
+    public Word(String wordLanguageCode, String originalWord, String translatedWord, String wordDescription) {
+        this.wordLanguageCode = wordLanguageCode;
+        this.originalWord = originalWord;
+        this.translatedWord = translatedWord;
         this.wordDescription = wordDescription;
     }
 
     public Long getWordId() { return wordId; }
 
-    public String getWordName() { return wordName; }
+    public String getWordLanguageCode() { return wordLanguageCode; }
+
+    public String getOriginalWord() { return originalWord; }
+
+    public String getTranslatedWord() { return translatedWord; }
+
+    public List<String> getWordSynonyms() { return wordSynonyms; }
 
     public String getWordDescription() { return wordDescription; }
 
-    public ArrayList<Dictionary> getDictionaries() {
-        return (ArrayList<Dictionary>) dictionaries;
+    public List<Dictionary> getDictionaries() { return dictionaries; }
+
+    public List<Pot> getPots() {
+        return pots;
     }
 
-    public ArrayList<Pot> getPots() {
-        return (ArrayList<Pot>) pots;
-    }
+    public void setWordLanguageCode(String wordLanguage) { this.wordLanguageCode = wordLanguage; }
 
-    public void setWordName(String wordName) { this.wordName = wordName; }
+    public void setOriginalWord(String originalWord) { this.originalWord = originalWord; }
 
-    public void setWordDescription(String wordDescription) {
-        this.wordDescription = wordDescription;
-    }
+    public void setTranslatedWord(String translatedWord) { this.translatedWord = translatedWord; }
 
-    public void setDictionaries(ArrayList<Dictionary> dictionaries) {
-        this.dictionaries = dictionaries;
-    }
+    public void setSynonyms(List<String> wordSynonyms) { this.wordSynonyms = wordSynonyms; }
 
-    public void setPots(ArrayList<Pot> pots) {
-        this.pots = pots;
-    }
+    public void setDictionaries(List<Dictionary> dictionaries) { this.dictionaries = dictionaries; }
+
+    public void setPots(List<Pot> pots) { this.pots = pots; }
+
+    public void setWordDescription(String wordDescription) { this.wordDescription = wordDescription; }
+
+    public void addDictionary(Dictionary dictionary) { this.dictionaries.add(dictionary); }
+
+    public void addWordSynonym(String synonym) { this.wordSynonyms.add(synonym); }
 
     @Override
     public String toString() {
         return "Word{" +
                 "wordId=" + wordId +
-                ", wordName='" + wordName + '\'' +
+                ", wordLanguage='" + wordLanguageCode + '\'' +
+                ", originalWord='" + originalWord + '\'' +
+                ", translatedWord='" + translatedWord + '\'' +
                 ", wordDescription='" + wordDescription + '\'' +
+                ", wordSynonyms=" + wordSynonyms +
                 ", dictionaries=" + dictionaries +
                 ", pots=" + pots +
                 '}';
-    }
-
-    public void addDictionary(Dictionary dictionary) {
-        if (dictionaries == null) {
-            dictionaries = new ArrayList<>();
-        }
-        dictionaries.add(dictionary);
     }
 }

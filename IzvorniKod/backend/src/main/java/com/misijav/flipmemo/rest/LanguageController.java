@@ -1,5 +1,8 @@
 package com.misijav.flipmemo.rest;
 
+import com.misijav.flipmemo.dto.DictionaryDTO;
+import com.misijav.flipmemo.dto.DictionaryDTOMapper;
+import com.misijav.flipmemo.model.Dictionary;
 import com.misijav.flipmemo.model.Language;
 import com.misijav.flipmemo.service.DictionaryService;
 import com.misijav.flipmemo.service.LanguageService;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/languages")
@@ -40,17 +44,11 @@ public class LanguageController {
     }
 
     @PostMapping
-    public ResponseEntity<Language> POST(@RequestBody Language language) {
+    public ResponseEntity<Language> POST(@RequestBody LanguageModificationRequest language) {
         logger.info("Received request to add new language.");
-        Language addedLanguage = languageService.addLanguage(language);
-        logger.info("Language with name {} and code {} added successfully.",
-                language.getLanguageName(), language.getLangCode());
-
-        if (addedLanguage != null) {
-            return new ResponseEntity<>(addedLanguage, HttpStatus.CREATED);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        languageService.addLanguage(language);
+        logger.info("Language with name {} and code {} added successfully.",language.languageName(), language.langCode());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{lang-code}")
@@ -69,8 +67,10 @@ public class LanguageController {
     }
 
     @GetMapping("/{lang-code}")
-    public void GET(@PathVariable(value = "lang-code") String langCode) {
+    public List<DictionaryDTO> GET(@PathVariable(value = "lang-code") String langCode) {
         logger.info("Received request to display language with code: {}.", langCode);
-        dictionaryService.getDictsByLangCode(langCode);
+        List<Dictionary> dictionaries = dictionaryService.getDictsByLangCode(langCode);
+        DictionaryDTOMapper mapper = new DictionaryDTOMapper();
+        return dictionaries.stream().map(mapper).collect(Collectors.toList());
     }
 }

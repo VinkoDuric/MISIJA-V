@@ -1,8 +1,10 @@
 package com.misijav.flipmemo.service.impl;
 
+import com.misijav.flipmemo.dao.DictionaryRepository;
 import com.misijav.flipmemo.dao.LanguageRepository;
 import com.misijav.flipmemo.exception.ResourceConflictException;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
+import com.misijav.flipmemo.model.Dictionary;
 import com.misijav.flipmemo.model.Language;
 import com.misijav.flipmemo.rest.LanguageModificationRequest;
 import com.misijav.flipmemo.service.LanguageService;
@@ -17,15 +19,22 @@ import java.util.Optional;
 public class LanguageServiceJpa implements LanguageService {
 
     private final LanguageRepository languageRepository;
+    private final DictionaryRepository dictionaryRepository;
 
     @Autowired
-    public LanguageServiceJpa(LanguageRepository languageRepository) {
+    public LanguageServiceJpa(LanguageRepository languageRepository, DictionaryRepository dictionaryRepository) {
         this.languageRepository = languageRepository;
+        this.dictionaryRepository = dictionaryRepository;
     }
 
     @Override
-    public Language addLanguage(Language language) {
-        return languageRepository.save(language);
+    public void addLanguage(LanguageModificationRequest language) {
+        Optional<Language> existingLang = languageRepository.findByLangCode(language.langCode());
+        if (existingLang.isPresent()) {
+            throw new ResourceConflictException("Language with code <" + language.langCode() +"> already exists.");
+        }
+        Language lang = new Language(language.langCode(), language.languageName(), language.languageImage());
+        languageRepository.save(lang);
     }
 
     @Override
@@ -38,6 +47,8 @@ public class LanguageServiceJpa implements LanguageService {
         Language language = languageRepository.findByLangCode(langCode)
                 .orElseThrow(() -> new ResourceNotFoundException("Language not found with code " + langCode));
 
+        List<Dictionary> dictionaries = dictionaryRepository.findByDictLang(language);
+        dictionaries.forEach(dictionaryRepository::delete);
         languageRepository.delete(language);
     }
 

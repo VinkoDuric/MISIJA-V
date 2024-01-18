@@ -9,10 +9,9 @@ import java.util.Optional;
 public interface LanguageService {
     /**
      * Add new language.
-     * @param language new language
-     * @return added language
+     * @param language new language request
      */
-    Language addLanguage(Language language);
+    void addLanguage(LanguageModificationRequest language);
 
     /**
      * Find a language by code.

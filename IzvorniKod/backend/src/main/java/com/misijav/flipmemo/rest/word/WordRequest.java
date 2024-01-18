@@ -3,7 +3,10 @@ package com.misijav.flipmemo.rest.word;
 import java.util.List;
 
 public record WordRequest(
-    String wordName,
+    String wordLanguageCode,
+    String originalWord,
+    String translatedWord,
     String wordDescription,
+    List<String> wordSynonyms,
     List<Long> dictionaryIds
 ) {}

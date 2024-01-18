@@ -30,14 +30,16 @@ public class DictionaryServiceJpa implements DictionaryService {
     }
 
     @Override
-    public Dictionary addDictionary(DictionaryRequest request) {
+    public Long addDictionary(DictionaryRequest request) {
         Language dictLang = languageRepository.findByLangCode(request.langCode())
                 .orElseThrow(() -> new ResourceNotFoundException("Language not found for this langCode: " + request.langCode()));
 
-        Dictionary newDictionary = new Dictionary(request.dictName(),
-                request.dictImage(), dictLang);
+        Dictionary newDictionary = new Dictionary();
+        newDictionary.setDictName(request.dictName());
+        newDictionary.setDictLang(dictLang);
+        Dictionary addedDict = dictionaryRepository.save(newDictionary);
 
-        return dictionaryRepository.save(newDictionary);
+        return addedDict.getDictionaryId();
     }
 
     @Override
@@ -116,13 +118,10 @@ public class DictionaryServiceJpa implements DictionaryService {
 
     @Override
     public List<Dictionary> getDictsByLangCode(String langCode) {
-        Optional<Language> optionalLanguage = languageRepository.findByLangCode(langCode);
+        Language language = languageRepository.findByLangCode(langCode).orElseThrow(
+                () -> new ResourceNotFoundException("Language with code " + langCode + " not found.")
+        );
 
-        if (optionalLanguage.isPresent()) {
-            Language language = optionalLanguage.get();
-            return dictionaryRepository.findByDictLang(language);
-        } else {
-            return Collections.emptyList();
-        }
+        return dictionaryRepository.findByDictLang(language);
     }
 }

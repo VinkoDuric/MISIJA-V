@@ -13,9 +13,9 @@ public interface DictionaryService {
     /**
      * Add new dictionary.
      * @param request new dictionary request
-     * @return added dictionary
+     * @return added dictionary id
      */
-    Dictionary addDictionary(DictionaryRequest request);
+    Long addDictionary(DictionaryRequest request);
 
     /**
      * Find a dictionary by id.

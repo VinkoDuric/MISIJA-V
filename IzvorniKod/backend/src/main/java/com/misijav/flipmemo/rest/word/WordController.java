@@ -1,5 +1,7 @@
 package com.misijav.flipmemo.rest.word;
 
+import com.misijav.flipmemo.dto.WordDTO;
+import com.misijav.flipmemo.dto.WordDTOMapper;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Word;
 import com.misijav.flipmemo.service.WordService;
@@ -25,10 +27,12 @@ public class WordController {
 
     @PostMapping
     public ResponseEntity<?> POST(@RequestBody WordRequest wordRequest) {
-        logger.info("Received request to add new word with name {} to dictionary.", wordRequest.wordName());
+        logger.info("Received request to add new word with name {} to dictionary.", wordRequest.originalWord());
         Word createdWord = wordService.addWord(wordRequest);  // add new word to dictionary/ies
-        logger.info("Word with name {} added successfully to dictionary.", wordRequest.wordName());
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdWord);
+        WordDTOMapper mapper = new WordDTOMapper();
+        WordDTO wordDTO = mapper.apply(createdWord);
+        logger.info("Word with name {} added successfully to dictionary.", wordRequest.originalWord());
+        return ResponseEntity.status(HttpStatus.CREATED).body(wordDTO);
     }
 
     @PutMapping
@@ -44,7 +48,9 @@ public class WordController {
         logger.info("Received request to display word with id {}.", wordId);
         Word word = wordService.getWordById(wordId)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found for this id: " + wordId));
-        return ResponseEntity.ok().body(word);  // return word information
+        WordDTOMapper mapper = new WordDTOMapper();
+        WordDTO wordDTO = mapper.apply(word);
+        return ResponseEntity.ok().body(wordDTO);  // return word information
     }
 
     @DeleteMapping

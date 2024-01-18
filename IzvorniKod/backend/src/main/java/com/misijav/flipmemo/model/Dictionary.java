@@ -5,7 +5,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,16 +22,18 @@ public class Dictionary {
     @ManyToOne
     private Language dictLang;
 
-    @ManyToMany(mappedBy = "dictionaries", fetch = FetchType.LAZY)
-    private List<Word> dictWords = new ArrayList<>();
+    @ManyToMany(mappedBy = "dictionaries")
+    private List<Word> dictWords;
 
-    protected Dictionary() {}
+    public Dictionary() {}
 
     public Dictionary(String dictName, String dictImage, Language dictLang) {
         this.dictName = dictName;
         this.dictImage = dictImage;
         this.dictLang = dictLang;
     }
+
+    public Long getDictionaryId() { return this.id; }
 
     public String getDictName() {
         return dictName;
@@ -46,7 +47,7 @@ public class Dictionary {
         return dictLang;
     }
 
-    public ArrayList<Word> getDictWords() { return (ArrayList<Word>) dictWords; }
+    public List<Word> getDictWords() { return dictWords; }
 
     public void setDictName(String dictName) {
         this.dictName = dictName;
@@ -60,7 +61,7 @@ public class Dictionary {
         this.dictLang = dictLang;
     }
 
-    public void setDictWords(ArrayList<Word> dictWords) {
+    public void setDictWords(List<Word> dictWords) {
         this.dictWords = dictWords;
     }
 

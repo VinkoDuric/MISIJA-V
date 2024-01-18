@@ -42,6 +42,7 @@ public class SecurityFilterChainConfig {
             .requestMatchers(new AntPathRequestMatcher("/api/v1/secured/admin")).hasRole(Roles.ADMIN.name())
             .requestMatchers(new AntPathRequestMatcher("/api/v1/account/deleteAccount/**")).hasAnyRole(Roles.ADMIN.name())
             .requestMatchers(new AntPathRequestMatcher("/api/v1/account/modifyAccount/**")).hasAnyRole(Roles.ADMIN.name())
+            .requestMatchers(new AntPathRequestMatcher("/api/v1/admin/**")).hasRole(Roles.ADMIN.name())
             .requestMatchers(new AntPathRequestMatcher("/api/v1/word/**")).hasRole(Roles.ADMIN.name())
             .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).authenticated()
             .anyRequest().permitAll()
