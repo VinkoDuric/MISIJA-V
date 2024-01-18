@@ -17,7 +17,6 @@ import { AddLanguage } from "./home/addLanguage";
 import { Word } from "./home/word";
 import AddAdmin from "./addAdmin/addAdmin";
 
-<<<<<<< HEAD
 const App = function () {
   const { userInfo, updateUserInfo } = useUserContext();
   useEffect(() => {
@@ -36,32 +35,6 @@ const App = function () {
         console.log("Handled error: " + err);
         redirect("/login");
       });
-=======
-const App = function() {
-    const { userInfo, updateUserInfo } = useUserContext();
-    useEffect(() => {
-        let refreshSession = function() {
-            fetch("/api/v1/auth/refresh").then((response) => {
-                if (response.ok) {
-                    return response.json()
-                }
-                throw Error('Unauthenticated.');
-            }).then(userInfo => {
-                console.log(userInfo);
-                updateUserInfo(userInfo)
-            })
-                .catch(err => {
-                    console.log("Handled error: " + err);
-                    redirect('/login');
-                });
-        }
-
-        let intervalId = setInterval(refreshSession, 10*60*1000);
-
-        return () => {
-            clearInterval(intervalId);
-        }
->>>>>>> b6c77e683d87eab642442eefa9b50b624c853546
 
     {
       /* TODO: delete this part of code for setting the user manually */
@@ -85,7 +58,6 @@ const App = function() {
       <Routes>
         <Route path="/login" element={<Auth page={AuthPages.LOGIN} />} />
 
-<<<<<<< HEAD
         {/* TODO: move this to be available only when logged in */}
         <Route
           path="/home"
@@ -136,15 +108,6 @@ const App = function() {
             </Home>
           }
         />
-=======
-                {/* TODO: move this to be available only when logged in */}
-                <Route path="/home" element={<Home><Languages /></Home>} />
-                <Route path="/home/:lang" element={<Home><Dictionaries /></Home>} />
-                <Route path="/changepass" element={<ChangePass />} />
-                <Route path="/dictionary/:lang/:dict?" element={<Home><Dictionary /></Home>} />
-                <Route path="/add/language" element={<Home><AddLanguage /></Home>} />
-                <Route path="/word/:wordId?" element={<Home><Word /></Home>} />
->>>>>>> b6c77e683d87eab642442eefa9b50b624c853546
 
         <Route path="/signin" element={<Auth page={AuthPages.SIGNIN} />} />
         {userInfo !== null && Role[userInfo.role] === Role.UNVERIFIED_USER && (

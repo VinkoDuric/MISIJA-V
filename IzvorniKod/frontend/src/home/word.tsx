@@ -8,36 +8,25 @@ import { ItemsList, ItemsListElement } from "./components/itemsList";
 import { LanguageList } from "./components/languageList";
 import { convertArrayToListItems } from "./helpers";
 import { useHomeContext } from "./homeContext";
-import { backendLangDataToLangData } from "./helpers";
 import styles from './styles/word.module.css';
-
-function dictMetaToItemsListElements(dict: DictionaryMeta[]): ItemsListElement[] {
-    return dict.map(dict => ({ clickArg: dict.id, text: dict.name }));
-}
 
 export function Word() {
     const { wordId } = useParams();
-    const { updateHomeText } = useHomeContext();
+    const {updateHomeText} = useHomeContext();
 
     const [originalWord, setOriginalWord] = useState<string>('');
     const [translatedWord, setTranslatedWord] = useState<string>('');
-    const [lang, setLang] = useState<LanguageData | null>(null);
-    const [allLangs, setAllLangs] = useState<LanguageData[] | null>(null);
+    const [lang, setLang] = useState<LanguageData|null>(null);
+    const [allLangs, setAllLangs] = useState<LanguageData[]|null>(null);
     const [searchLangInput, setSearchLangInput] = useState<string>('');
     const synonimeInputRef = useRef<HTMLInputElement>(null);
     const [synonimes, setSynonimes] = useState<string[]>([]);
-    const [synonimeOptions, setSynonimeOptions] = useState<string[]>([]);
+    const [synonimeOptions, setSynonimeOptions] = useState<string[]>(['syn1']);
     const usagesInputRef = useRef<HTMLInputElement>(null);
     const [usages, setUsages] = useState<string[]>([]);
     const [usageOptions, setUsageOptions] = useState<string[]>([]);
     const [dicts, setDicts] = useState<ItemsListElement[]>([]);
-    const [dictOptions, setDictOptions] = useState<ItemsListElement[] | null>(null);
-    const [dictInput, setDictInput] = useState<string>('');
-
-    async function setupGeneral() {
-        let langs: BackendLanguageData[] = await fetch('/api/v1/languages').then(res => res.json()) || [];
-        setAllLangs(backendLangDataToLangData(langs));
-    }
+    const [dictOptions, setDictOptions] = useState<ItemsListElement[]>([]);
 
     function setupAddWord() {
         updateHomeText('Dodavanje nove riječi', 'Dodajte novu riječ u aplikaciju.');
@@ -54,23 +43,18 @@ export function Word() {
         } else {
             setupEditWord(parseInt(wordId));
         }
-        setupGeneral()
-    }, []);
 
-    // Dictionary options
-    useEffect(() => {
-        if (lang !== null) {
-            refreshDictionaryOptions();
-        }
-        return () => setDictOptions(null);
-    }, [lang])
+        fetch('/languages.json').then(res => res.json()).then((langs: LanguageData[]) => (console.log(langs), setAllLangs(langs)));
+    }, []);
 
     function onLangClick(langCode: string) {
         if (lang === null) {
             setLang(allLangs?.find(lang => lang.code === langCode) ?? null);
             setSearchLangInput('');
+            // TODO: fetch dicts
         } else {
             setLang(null);
+            // TODO: clear dicts
         }
     }
 
@@ -82,15 +66,12 @@ export function Word() {
         // Only if lang is english use api
     }
 
-    function addSynonim(submitArg: string | number) {
+    function addSynonim(submitArg: string|number) {
         if (typeof submitArg === 'string' && submitArg !== '') {
             setSynonimes([submitArg, ...synonimes]);
         }
-        else if (typeof submitArg === 'number') {
+        else if (typeof submitArg === 'number'){
             setSynonimes([synonimeOptions[submitArg], ...synonimes])
-        }
-        if (synonimeInputRef.current) {
-            synonimeInputRef.current.value = '';
         }
     }
 
@@ -114,11 +95,11 @@ export function Word() {
         setSynonimeSuggestions();
     }
 
-    function addUsage(submitArg: string | number) {
+    function addUsage(submitArg: string|number) {
         if (typeof submitArg === 'string' && submitArg !== '') {
             setUsages([submitArg, ...usages]);
         }
-        else if (typeof submitArg === 'number') {
+        else if (typeof submitArg === 'number'){
             setUsages([usageOptions[submitArg], ...usages])
         }
     }
@@ -144,42 +125,16 @@ export function Word() {
         setUsageSuggestions();
     }
 
-    async function refreshDictionaryOptions() {
-        if (lang === null) return;
-        console.log(await fetch('/api/v1/languages/' + lang.code).then(res => res.json()))
-        setDictOptions(
-            dictMetaToItemsListElements(await fetch('/api/v1/languages/' + lang.code).then(res => res.json())));
+    function addDictionary(clickArg: number) {
+        // TODO: Add dictionary to dicts
     }
 
-    function addDictionary(clickArg: number | string) {
-        if (typeof clickArg === 'string')
-            throw new Error('Autocomplete dict misusage');
-
-        if (dictOptions === null) return;
-
-        let pickedDictIdx = dictOptions?.findIndex(dict => dict.clickArg === clickArg)
-        console.log(dictOptions);
-        console.log(pickedDictIdx);
-        if (pickedDictIdx !== -1) {
-            setDicts([dictOptions[pickedDictIdx], ...dicts]);
-            dictOptions.splice(pickedDictIdx, 1)
-            setDictOptions([...dictOptions]);
-        }
+    function handleDictionaryInputChange(input: string) {
+        // TODO: filer dicionaries by name, chgange suggestions
     }
 
-    function handleAddedDictionaryClick(clickArg: number) {
-
-        if (typeof clickArg === 'string')
-            throw new Error('Autocomplete dict misusage');
-
-        if (dicts === null) return;
-
-        let pickedDictIdx = dicts?.findIndex(dict => dict.clickArg === clickArg)
-        if (pickedDictIdx !== -1) {
-            setDictOptions([dicts[pickedDictIdx], ...(dictOptions ?? [])]);
-            dicts.splice(pickedDictIdx, 1)
-            setDicts([...dicts]);
-        }
+    function handleAddedDictionaryClick(clickArg: number|string) {
+        // TODO: remove dict from list of dicts
     }
 
     return (
@@ -189,16 +144,19 @@ export function Word() {
                 <div className={styles.sectionText}>Odaberite jezik izvorne riječi.</div>
                 {
                     lang !== null &&
-                    <LanguageList languages={[lang]} onLangClick={onLangClick} />
+                    <LanguageList languages={[{code: "hr", name: "hrvatski", flag: "hr"}]} onLangClick={onLangClick} />
 
                 }
                 {
                     lang === null &&
                     <>
-                        <InputText name="jezik" onChange={setSearchLangInput} placeholder="Ime jezika" />
-                        <LanguageList
-                            languages={allLangs?.filter(lang => lang.name.includes(searchLangInput)).splice(0, 3) ?? null}
-                            onLangClick={onLangClick} />
+                        <InputText name="jezik" onChange={setSearchLangInput} placeholder="Ime jezika"/>
+                        {
+                            searchLangInput !== '' &&
+                            <LanguageList
+                                languages={allLangs?.filter(lang => lang.name.includes(searchLangInput)).splice(0, 3) ?? null}
+                                onLangClick={onLangClick} />
+                        }
                     </>
                 }
             </div>
@@ -216,10 +174,10 @@ export function Word() {
                 <Autocomplete
                     placeholder="Sinonim riječi"
                     btnText="dodaj"
-                    options={convertArrayToListItems(synonimeOptions.filter(s => !synonimes.includes(s)))}
+                    options={convertArrayToListItems(synonimeOptions)}
                     inputRef={synonimeInputRef}
                     handleSubmit={addSynonim}
-                    handleInputChange={handleSynonimInputChange} />
+                    handleInputChange={handleSynonimInputChange}/>
                 <div>Odabrani sinonimi</div>
                 <ItemsList
                     className={styles.marginTopSmall}
@@ -237,7 +195,7 @@ export function Word() {
                     inputRef={usagesInputRef}
                     options={convertArrayToListItems(usageOptions)}
                     handleSubmit={addUsage}
-                    handleInputChange={handleUsageInputChange} />
+                    handleInputChange={handleUsageInputChange}/>
                 <div>Odabrani primjeri korištenja</div>
                 <ItemsList
                     className={styles.marginTopSmall}
@@ -246,14 +204,14 @@ export function Word() {
                     icon={faTrash}
                     handleIconClick={handleUsageRemove} />
             </div>
-            <div className={styles.section + " " + styles.marginTop}>
+            <div className={styles.section + " " + styles.marginTop }>
                 <h2 className={styles.sectionTitle}>Rječnici</h2>
                 <div className={styles.sectionText}>Dodajte riječ u neki od postojećih rječnika.</div>
                 <Autocomplete
                     placeholder="Ime rječnika"
-                    options={dictOptions?.filter(option => option.text.includes(dictInput)) ?? []}
-                    handleSubmit={addDictionary}
-                    handleInputChange={setDictInput} />
+                    options={[]}
+                    handleSubmit={addSynonim}
+                    handleInputChange={handleDictionaryInputChange}/>
                 <div>Odabrani rječnici</div>
                 <ItemsList
                     className={styles.marginList}
@@ -264,4 +222,3 @@ export function Word() {
         </div>
     );
 }
-

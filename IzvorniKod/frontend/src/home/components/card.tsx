@@ -15,16 +15,6 @@ interface ImgCardProps extends CardProps {
     imageSrc: string;
 }
 
-function adminIconClick(handler: (() => void)|undefined) {
-    return (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-        e.stopPropagation();
-        if (handler) {
-            handler();
-        }
-    }
-}
-
-
 const ImgCard: FC<ImgCardProps> = ({ imageSrc, caption, handleClick, adminIcon, handleAdminIconClick }) => {
 
     return (
@@ -32,10 +22,7 @@ const ImgCard: FC<ImgCardProps> = ({ imageSrc, caption, handleClick, adminIcon, 
             <div className={styles.cardHover} onClick={handleClick}>
             {
                 adminIcon !== undefined && 
-                <FontAwesomeIcon
-                    icon={adminIcon}
-                    className={styles.adminIcon}
-                    onClick={adminIconClick(handleAdminIconClick)}/>
+                <FontAwesomeIcon icon={adminIcon} className={styles.adminIcon} onClick={handleAdminIconClick}/>
             }
             </div>
             <img
@@ -60,10 +47,7 @@ const IconCard: FC<IconCardProps> = ({ icon, handleClick, caption, adminIcon, ha
             <div className={styles.cardHover} onClick={handleClick}>
             {
                 adminIcon !== undefined && 
-                <FontAwesomeIcon
-                    icon={adminIcon}
-                    className={styles.adminIcon}
-                    onClick={adminIconClick(handleAdminIconClick)}/>
+                <FontAwesomeIcon icon={adminIcon} className={styles.adminIcon} onClick={handleAdminIconClick}/>
             }
             </div>
             <div className={styles.iconWrap}><FontAwesomeIcon icon={icon} size="4x"/></div>

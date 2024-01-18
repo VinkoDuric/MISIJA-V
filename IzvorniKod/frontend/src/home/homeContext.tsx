@@ -15,6 +15,7 @@ export const HomeContextProvider: FC<{ children: ReactNode }> = ({ children }) =
     const [caption, setCaption] = useState<string|null>(null);
 
     const updateHomeText = (title: string, caption: string) => {
+        console.log('Called updateHomeContext: ' + title + ' ' + caption);
         setTitle(title);
         setCaption(caption);
     };

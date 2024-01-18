@@ -35,6 +35,7 @@ export function Autocomplete({ placeholder, btnText, options, handleSubmit, hand
 
     return (
         <div>
+            {/* TODO: show options where arg is id of item */}
             <div className={styles.autocomplete + ' ' + className}>
                 <InputText inputRef={inputRef} onChange={inputChange} name="dictionaryName" className={styles.input} placeholder={placeholder} />
                 {
