@@ -9,5 +9,5 @@ public interface WordRepository extends CrudRepository<Word, Long> {
 
     Optional<Word> findByWordName(String wordName);
 
-    Optional<Word> findWordById(Long id);
+    Optional<Word> findWordByWordId(Long id);
 }

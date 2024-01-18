@@ -2,13 +2,18 @@ package com.misijav.flipmemo.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+
 @Entity
 public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long wordId;
     private String wordName;
     private String wordDescription;
+
+    @ManyToMany(mappedBy = "words")
+    private ArrayList<Pot> pots;
 
     private Word() {}
 
@@ -17,7 +22,7 @@ public class Word {
         this.wordDescription = wordDescription;
     }
 
-    public Long getId() { return id; }
+    public Long getWordId() { return wordId; }
 
     public String getWordName() { return wordName; }
 
@@ -32,7 +37,7 @@ public class Word {
     @Override
     public String toString() {
         return "Word{" +
-                "id=" + id +
+                "id=" + wordId +
                 ", wordName='" + wordName + '\'' +
                 ", wordDescription='" + wordDescription + '\'' +
                 '}';

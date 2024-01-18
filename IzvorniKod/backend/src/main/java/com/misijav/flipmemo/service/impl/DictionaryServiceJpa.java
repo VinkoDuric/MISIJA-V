@@ -93,7 +93,7 @@ public class DictionaryServiceJpa implements DictionaryService {
     @Override
     public void deleteWordFromDict(Long id, Long wordId) {
         Optional<Dictionary> optionalDictionary = dictionaryRepository.findDictById(id);
-        Optional<Word> optionalWord = wordRepository.findWordById(wordId);
+        Optional<Word> optionalWord = wordRepository.findWordByWordId(wordId);
 
         if (optionalDictionary.isPresent() && optionalWord.isPresent()) {
             Dictionary dictionary = optionalDictionary.get();

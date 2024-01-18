@@ -45,7 +45,7 @@ public class WordServiceJpa implements WordService {
     @Override
     public void updateWord(Long id, WordModificationRequest wordDetails) {
         // Check if word exists
-        Word word = wordRepository.findWordById(id)
+        Word word = wordRepository.findWordByWordId(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found for this id: " + id));
 
         // Update wordName if present
@@ -64,7 +64,7 @@ public class WordServiceJpa implements WordService {
      @Override
      public void deleteWord(Long id) {
          // Check if word exists
-         Word word = wordRepository.findWordById(id)
+         Word word = wordRepository.findWordByWordId(id)
                  .orElseThrow(() -> new ResourceNotFoundException("Word not found for this id: " + id));
 
          wordRepository.delete(word);
