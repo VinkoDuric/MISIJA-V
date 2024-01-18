@@ -47,7 +47,13 @@ public class Word {
 
     public String getWordDescription() { return wordDescription; }
 
-    public List<Dictionary> getDictionaries() { return dictionaries; }
+    public List<Long> getDictionaries() {
+        List<Long> dictionariesId = new ArrayList<>();
+        for (Dictionary dict : dictionaries) {
+            dictionariesId.add(dict.getDictionaryId());
+        }
+        return dictionariesId;
+    }
 
     public List<Pot> getPots() {
         return pots;
