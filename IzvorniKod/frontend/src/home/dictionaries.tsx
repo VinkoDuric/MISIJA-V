@@ -18,6 +18,7 @@ export function Dictionaries() {
 
     function handleAdminIconCLick() {
         console.log("admin icon clicked");
+        
     }
 
     let icon: IconDefinition|undefined = faTrash;

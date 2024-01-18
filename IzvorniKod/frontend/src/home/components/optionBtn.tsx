@@ -11,6 +11,7 @@ interface OptionProps {
 
 export function OptionBtn({accent, answer, submit, children, onClick}: OptionProps) {
     return (
-        <button className={`${styles.optionWrapper} ${accent && styles.accentColor}  ${answer && styles.answerColor} ${submit && styles.submitColor}`} onClick={onClick}> {children} </button>
+        <button className={`${styles.optionWrapper} ${accent && styles.accentColor}  ${answer && styles.answerColor} 
+        ${submit && styles.submitColor}`} onClick={onClick}> {children} </button>
     );
 }
