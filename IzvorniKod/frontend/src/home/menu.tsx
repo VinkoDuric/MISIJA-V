@@ -1,6 +1,6 @@
 import { OptionBtn } from "./components/optionBtn";
 import styles from "./styles/home.module.css";
-import { useUserContext } from "../userContext";
+import { Role, useUserContext } from "../userContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHomeContext } from "./homeContext";
@@ -11,6 +11,7 @@ type MenuProps = {
 
 export function Menu({ closeMenu }: MenuProps) {
     const navigate = useNavigate();
+    const { userInfo } = useUserContext();
     let { updateUserInfo } = useUserContext();
     const { updateHomeText } = useHomeContext();
 
@@ -27,10 +28,17 @@ export function Menu({ closeMenu }: MenuProps) {
 
     return (
         <div className={styles.menuWrapper}>
-            <OptionBtn onClick={() => { navigate('/home'); closeMenu(); }}>Početna stranica</OptionBtn>
-            <OptionBtn onClick={() => { closeMenu(); }}>Upravljanje računom</OptionBtn>
-            <OptionBtn onClick={() => { }}>Dodaj admina</OptionBtn>
-            <OptionBtn onClick={() => { }}>Dodaj riječ</OptionBtn>
+            <OptionBtn onClick={() => { navigate('/home'); closeMenu(); }}>Odabir jezika</OptionBtn>
+            <OptionBtn onClick={() => { }}>Upravljanje računom</OptionBtn>
+            {
+                userInfo !== null && Role[userInfo.role] === Role.ADMIN &&
+                (
+                    <>
+                        <OptionBtn onClick={() => { }}>Dodaj admina</OptionBtn>
+                        <OptionBtn onClick={() => { navigate('/word'); closeMenu(); }}>Dodaj riječ</OptionBtn>
+                    </>
+                )
+            }
             <OptionBtn accent={true} onClick={onLogoutClick}>Odjava</OptionBtn>
         </div>
     );

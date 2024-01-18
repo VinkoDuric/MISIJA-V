@@ -32,14 +32,6 @@ const App = function() {
                 console.log("Handled error: " + err);
                 redirect('/login');
             });
-
-        {/* TODO: delete this part of code for setting the user manually */}
-        let userInfo2 = userInfo;
-        if (userInfo === null) {
-            userInfo2 = {id: 0, firstName: 'Ivan', lastName: 'Cvrk', role: 'ADMIN', email: 'ivan.cvrk@gmail.com', tokenVersion: 0};
-        }
-        updateUserInfo(userInfo2)
-
     }, []);
 
     return (
@@ -51,7 +43,7 @@ const App = function() {
                 <Route path="/home" element={<Home><Languages /></Home>} />
                 <Route path="/home/:lang" element={<Home><Dictionaries /></Home>} />
                 <Route path="/changepass" element={<ChangePass />} />
-                <Route path="/dictionary/:dict?" element={<Home><Dictionary /></Home>} />
+                <Route path="/dictionary/:lang/:dict?" element={<Home><Dictionary /></Home>} />
                 <Route path="/add/language" element={<Home><AddLanguage /></Home>} />
                 <Route path="/word/:wordId?" element={<Home><Word /></Home>} />
 

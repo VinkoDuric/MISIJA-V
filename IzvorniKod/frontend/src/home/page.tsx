@@ -5,16 +5,14 @@ import { Menu } from "./menu";
 import { ReactNode, useState } from "react";
 import { AppWindow } from "../components/structure";
 import { HomeContextProvider, useHomeContext } from "./homeContext";
-import { StudyMode } from "./studyMode";
-import { Quiz } from "./quiz";
 
 type HomeProps = {
     children: ReactNode;
 }
 
 function HomePage({ children }: HomeProps) {
-    let { userInfo, updateUserInfo } = useUserContext();
-    let { text, updateHomeText } = useHomeContext();
+    let { userInfo } = useUserContext();
+    let { text } = useHomeContext();
 
     let [menuOpen, setMenuOpen] = useState<boolean>(false);
 
