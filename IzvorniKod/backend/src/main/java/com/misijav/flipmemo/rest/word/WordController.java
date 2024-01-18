@@ -22,8 +22,8 @@ public class WordController {
     @PostMapping
     public ResponseEntity<?> POST(@RequestBody WordRequest wordRequest) {
         // Add new word to the repository
-        wordService.addWord(wordRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Word added successfully.");
+        Word createdWord = wordService.addWord(wordRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdWord);
     }
 
     @PutMapping

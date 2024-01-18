@@ -26,7 +26,7 @@ public class Pot {
     private int potNumber;
     private LocalDateTime lastReviewed;
 
-    private Pot() {}
+    protected Pot() {}
 
     public Pot(Account user, int potNumber, LocalDateTime lastReviewed) {
         this.user = user;

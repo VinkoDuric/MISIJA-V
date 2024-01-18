@@ -1,4 +1,4 @@
-package com.misijav.flipmemo.rest;
+package com.misijav.flipmemo.rest.dict;
 
 import com.misijav.flipmemo.model.Dictionary;
 import com.misijav.flipmemo.model.Word;
@@ -36,14 +36,9 @@ public class DictionaryController {
     }
 
     @PostMapping
-    public ResponseEntity<Dictionary> POST(@RequestBody Dictionary dictionary) {
-        Dictionary addedDict = dictionaryService.addDictionary(dictionary);
-
-        if(addedDict != null) {
-            return new ResponseEntity<>(addedDict, HttpStatus.CREATED);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<?> POST(@RequestBody DictionaryRequest request) {
+        Dictionary createdDict = dictionaryService.addDictionary(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdDict);
     }
 
     @PutMapping("/{dict-id}")

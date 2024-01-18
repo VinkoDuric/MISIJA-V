@@ -7,6 +7,10 @@ import jakarta.validation.constraints.NotEmpty;
 public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @NotEmpty
+    @Column(unique = true)
     private String langCode;
 
     @NotEmpty
@@ -16,10 +20,13 @@ public class Language {
 
     private Language() {}
 
-    public Language(String languageName, String languageImage) {
+    public Language(String languageName, String languageImage, String langCode) {
         this.languageName = languageName;
         this.languageImage = languageImage;
+        this.langCode = langCode;
     }
+
+    public Long getId() { return id; }
 
     public String getLangCode() {
         return langCode;

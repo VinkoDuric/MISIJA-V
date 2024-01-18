@@ -1,8 +1,6 @@
-package com.misijav.flipmemo.rest;
+package com.misijav.flipmemo.rest.dict;
 
 import com.misijav.flipmemo.model.Language;
-
-import java.util.ArrayList;
 
 public record DictionaryModificationRequest(
         Long id,

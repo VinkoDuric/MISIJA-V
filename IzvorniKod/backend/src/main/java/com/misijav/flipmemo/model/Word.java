@@ -3,6 +3,7 @@ package com.misijav.flipmemo.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Word {
@@ -12,10 +13,19 @@ public class Word {
     private String wordName;
     private String wordDescription;
 
-    @ManyToMany(mappedBy = "words")
-    private ArrayList<Pot> pots;
+    @ManyToMany
+    /*
+    @JoinTable(
+            name = "dictionaryWord",
+            joinColumns = @JoinColumn(name = "wordId"),
+            inverseJoinColumns = @JoinColumn(name = "dictionaryId")
+    ) */
+    private List<Dictionary> dictionaries = new ArrayList<>();
 
-    private Word() {}
+    @ManyToMany(mappedBy = "words")
+    private List<Pot> pots = new ArrayList<>();
+
+    protected Word() {}
 
     public Word(String wordName, String wordDescription) {
         this.wordName = wordName;
@@ -28,18 +38,43 @@ public class Word {
 
     public String getWordDescription() { return wordDescription; }
 
+    public ArrayList<Dictionary> getDictionaries() {
+        return (ArrayList<Dictionary>) dictionaries;
+    }
+
+    public ArrayList<Pot> getPots() {
+        return (ArrayList<Pot>) pots;
+    }
+
     public void setWordName(String wordName) { this.wordName = wordName; }
 
     public void setWordDescription(String wordDescription) {
         this.wordDescription = wordDescription;
     }
 
+    public void setDictionaries(ArrayList<Dictionary> dictionaries) {
+        this.dictionaries = dictionaries;
+    }
+
+    public void setPots(ArrayList<Pot> pots) {
+        this.pots = pots;
+    }
+
     @Override
     public String toString() {
         return "Word{" +
-                "id=" + wordId +
+                "wordId=" + wordId +
                 ", wordName='" + wordName + '\'' +
                 ", wordDescription='" + wordDescription + '\'' +
+                ", dictionaries=" + dictionaries +
+                ", pots=" + pots +
                 '}';
+    }
+
+    public void addDictionary(Dictionary dictionary) {
+        if (dictionaries == null) {
+            dictionaries = new ArrayList<>();
+        }
+        dictionaries.add(dictionary);
     }
 }

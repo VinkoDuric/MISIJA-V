@@ -2,7 +2,8 @@ package com.misijav.flipmemo.service;
 
 import com.misijav.flipmemo.model.Dictionary;
 import com.misijav.flipmemo.model.Word;
-import com.misijav.flipmemo.rest.DictionaryModificationRequest;
+import com.misijav.flipmemo.rest.dict.DictionaryModificationRequest;
+import com.misijav.flipmemo.rest.dict.DictionaryRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +12,10 @@ public interface DictionaryService {
 
     /**
      * Add new dictionary.
-     * @param dictionary new dictionary
+     * @param request new dictionary request
      * @return added dictionary
      */
-    Dictionary addDictionary(Dictionary dictionary);
+    Dictionary addDictionary(DictionaryRequest request);
 
     /**
      * Find a dictionary by id.

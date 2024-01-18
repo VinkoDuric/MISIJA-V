@@ -1,8 +1,10 @@
 package com.misijav.flipmemo.service.impl;
 
+import com.misijav.flipmemo.dao.DictionaryRepository;
 import com.misijav.flipmemo.dao.WordRepository;
 import com.misijav.flipmemo.exception.ResourceConflictException;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
+import com.misijav.flipmemo.model.Dictionary;
 import com.misijav.flipmemo.model.Word;
 import com.misijav.flipmemo.rest.word.WordModificationRequest;
 import com.misijav.flipmemo.rest.word.WordRequest;
@@ -15,14 +17,16 @@ import java.util.Optional;
 @Service
 public class WordServiceJpa implements WordService {
     private final WordRepository wordRepository;
+    private final DictionaryRepository dictionaryRepository;
 
     @Autowired
-    public WordServiceJpa(WordRepository wordRepository) {
+    public WordServiceJpa(WordRepository wordRepository, DictionaryRepository dictionaryRepository) {
         this.wordRepository = wordRepository;
+        this.dictionaryRepository = dictionaryRepository;
     }
 
     @Override
-    public void addWord(WordRequest request) {
+    public Word addWord(WordRequest request) {
         // Check if wordName and wordDescription are present and not null or empty
         if (request.wordName() == null || request.wordName().isEmpty()) {
             throw new IllegalArgumentException("Word name must be provided.");
@@ -36,10 +40,18 @@ public class WordServiceJpa implements WordService {
             throw new ResourceConflictException("Word already exists with the same name.");
         }
 
+        // Create new Word
         Word newWord = new Word(request.wordName(), request.wordDescription());
 
+        // Fetch dictionaries and associate them with the Word
+        for (Long dictId : request.dictionaryIds()) {
+            Dictionary dictionary = dictionaryRepository.findById(dictId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found for this id: " + dictId));
+            newWord.addDictionary(dictionary);
+        }
+
         // Save word to the repository
-        wordRepository.save(newWord);
+        return wordRepository.save(newWord);
     }
 
     @Override

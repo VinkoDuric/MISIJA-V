@@ -18,8 +18,9 @@ public interface WordService {
     /**
      * Adds a new word to the repository.
      * @param request The WordRequest object containing wordName and wordDescription.
+     * @return A newly created word
      */
-    void addWord(WordRequest request);
+    Word addWord(WordRequest request);
 
     /**
      * Updates an existing word.

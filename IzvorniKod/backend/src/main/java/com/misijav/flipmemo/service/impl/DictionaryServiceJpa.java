@@ -8,7 +8,8 @@ import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Dictionary;
 import com.misijav.flipmemo.model.Language;
 import com.misijav.flipmemo.model.Word;
-import com.misijav.flipmemo.rest.DictionaryModificationRequest;
+import com.misijav.flipmemo.rest.dict.DictionaryModificationRequest;
+import com.misijav.flipmemo.rest.dict.DictionaryRequest;
 import com.misijav.flipmemo.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,14 @@ public class DictionaryServiceJpa implements DictionaryService {
     }
 
     @Override
-    public Dictionary addDictionary(Dictionary dictionary) {
-        return dictionaryRepository.save(dictionary);
+    public Dictionary addDictionary(DictionaryRequest request) {
+        Language dictLang = languageRepository.findByLangCode(request.langCode())
+                .orElseThrow(() -> new ResourceNotFoundException("Language not found for this langCode: " + request.langCode()));
+
+        Dictionary newDictionary = new Dictionary(request.dictName(),
+                request.dictImage(), dictLang);
+
+        return dictionaryRepository.save(newDictionary);
     }
 
     @Override
