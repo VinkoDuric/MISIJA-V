@@ -19,19 +19,28 @@ import { Word } from "./home/word";
 const App = function() {
     const { userInfo, updateUserInfo } = useUserContext();
     useEffect(() => {
-        fetch("/api/v1/auth/refresh").then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-            throw Error('Unauthenticated.');
-        }).then(userInfo => {
-            console.log(userInfo);
-            updateUserInfo(userInfo)
-        })
-            .catch(err => {
-                console.log("Handled error: " + err);
-                redirect('/login');
-            });
+        let refreshSession = function() {
+            fetch("/api/v1/auth/refresh").then((response) => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw Error('Unauthenticated.');
+            }).then(userInfo => {
+                console.log(userInfo);
+                updateUserInfo(userInfo)
+            })
+                .catch(err => {
+                    console.log("Handled error: " + err);
+                    redirect('/login');
+                });
+        }
+
+        let intervalId = setInterval(refreshSession, 10*60*1000);
+
+        return () => {
+            clearInterval(intervalId);
+        }
+
     }, []);
 
     return (

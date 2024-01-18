@@ -20,8 +20,6 @@ export function Languages() {
 
         (async function() {
             let addedLanguages: BackendLanguageData[] = await fetch('/api/v1/languages').then(resp => resp.json());
-            console.log(addedLanguages);
-            console.log(backendLangDataToLangData(addedLanguages));
             setLangs(backendLangDataToLangData(addedLanguages));
         })();
     }, []);
@@ -34,7 +32,6 @@ export function Languages() {
 
     function handleAdminIconCLick(langCode: string) {
         return () => {
-            console.log("delete " + langCode)
             fetch('/api/v1/languages/' + langCode, {
                 method: 'DELETE',
                 headers: {'Content-Type': 'application/json'}
