@@ -4,6 +4,8 @@ import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.Word;
 import com.misijav.flipmemo.service.WordService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/word")
 public class WordController {
+    private static final Logger logger = LoggerFactory.getLogger(WordController.class);
+
     private final WordService wordService;
 
     @Autowired
@@ -21,30 +25,33 @@ public class WordController {
 
     @PostMapping
     public ResponseEntity<?> POST(@RequestBody WordRequest wordRequest) {
-        // Add new word to the repository
-        Word createdWord = wordService.addWord(wordRequest);
+        logger.info("Received request to add new word with name {} to dictionary.", wordRequest.wordName());
+        Word createdWord = wordService.addWord(wordRequest);  // add new word to dictionary/ies
+        logger.info("Word with name {} added successfully to dictionary.", wordRequest.wordName());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWord);
     }
 
     @PutMapping
     public ResponseEntity<?> PUT(@Valid @RequestBody WordModificationRequest wordModifyRequest) {
-        Long wordId = wordModifyRequest.id();
-        // Update an existing word
-        wordService.updateWord(wordId, wordModifyRequest);
+        logger.info("Received request to modify word with id {}.", wordModifyRequest.id());
+        wordService.updateWord(wordModifyRequest.id(), wordModifyRequest);  // Update an existing word
+        logger.info("Word with id {} modified successfully.", wordModifyRequest.id());
         return ResponseEntity.ok().body("Word updated successfully.");
     }
 
-    // get word information
-    @GetMapping("/{word_id}")
-    public ResponseEntity<?> GET(@PathVariable(value = "word_id") Long wordId) {
+    @GetMapping("/{word-id}")
+    public ResponseEntity<?> GET(@PathVariable(value = "word-id") Long wordId) {
+        logger.info("Received request to display word with id {}.", wordId);
         Word word = wordService.getWordById(wordId)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found for this id: " + wordId));
-        return ResponseEntity.ok().body(word);
+        return ResponseEntity.ok().body(word);  // return word information
     }
 
     @DeleteMapping
     public ResponseEntity<?> DELETE(@Valid @RequestBody WordModificationRequest request) {
+        logger.info("Received request to delete word with id {}.", request.id());
         wordService.deleteWord(request.id());
+        logger.info("Successfully deleted word with id {}.", request.id());
         return ResponseEntity.ok().body("Word deleted successfully.");
     }
 }

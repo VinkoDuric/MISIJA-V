@@ -1,4 +1,4 @@
-package com.misijav.flipmemo.rest.app;
+package com.misijav.flipmemo.rest.dict;
 
 public record DictionaryResponse(
         Long id,

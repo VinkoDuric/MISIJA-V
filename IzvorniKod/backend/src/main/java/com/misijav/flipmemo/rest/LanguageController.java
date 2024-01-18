@@ -3,6 +3,8 @@ package com.misijav.flipmemo.rest;
 import com.misijav.flipmemo.model.Language;
 import com.misijav.flipmemo.service.DictionaryService;
 import com.misijav.flipmemo.service.LanguageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/languages")
 public class LanguageController {
+    private static final Logger logger = LoggerFactory.getLogger(LanguageController.class);
 
     private final LanguageService languageService;
     private final DictionaryService dictionaryService;
@@ -26,6 +29,7 @@ public class LanguageController {
 
     @GetMapping
     public ResponseEntity<List<Language>> GET() {
+        logger.info("Received request to display all currently available languages.");
         List<Language> languages = languageService.getAllLanguages();
 
         if (!languages.isEmpty()) {
@@ -37,7 +41,10 @@ public class LanguageController {
 
     @PostMapping
     public ResponseEntity<Language> POST(@RequestBody Language language) {
+        logger.info("Received request to add new language.");
         Language addedLanguage = languageService.addLanguage(language);
+        logger.info("Language with name {} and code {} added successfully.",
+                language.getLanguageName(), language.getLangCode());
 
         if (addedLanguage != null) {
             return new ResponseEntity<>(addedLanguage, HttpStatus.CREATED);
@@ -48,17 +55,22 @@ public class LanguageController {
 
     @PutMapping("/{lang-code}")
     public void PUT(@RequestBody LanguageModificationRequest langModifyRequest,
-                           @PathVariable String langCode) {
+                           @PathVariable(value = "lang-code") String langCode) {
+        logger.info("Received request to modify language with code: {}.",langCode);
         languageService.updateLanguage(langCode, langModifyRequest);
+        logger.info("Successfully modified language with code: {}.",langCode);
     }
 
     @DeleteMapping("/{lang-code}")
-    public void DELETE(@PathVariable String langCode) {
+    public void DELETE(@PathVariable(value = "lang-code") String langCode) {
+        logger.info("Received request to delete language with code: {}.",langCode);
         languageService.deleteLanguage(langCode);
+        logger.info("Successfully deleted language with code: {}.",langCode);
     }
 
     @GetMapping("/{lang-code}")
-    public void GET(@PathVariable String langCode) {
+    public void GET(@PathVariable(value = "lang-code") String langCode) {
+        logger.info("Received request to display language with code: {}.", langCode);
         dictionaryService.getDictsByLangCode(langCode);
     }
 }
