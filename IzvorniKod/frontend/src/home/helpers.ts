@@ -7,3 +7,9 @@ export function convertArrayToListItems(list: string[]): ItemsListElement[] {
     }
     return arr;
 }
+
+export function backendLangDataToLangData(backendLangData: BackendLanguageData[]): LanguageData[] {
+    return backendLangData.map(lang => ({code: lang.langCode, flag: lang.languageImage, name: lang.languageName}));
+}
+
+
