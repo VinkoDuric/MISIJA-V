@@ -35,8 +35,9 @@ export function Dictionaries() {
     }
 
     function handleUserClick(dictId: number): () => void {
-        // TODO: open quiz
-        return () => {}
+        return () => {
+            navigate(`/home/studyMode`);
+        }
     }
 
     function handleAdminClick(dictId: number): () => void {

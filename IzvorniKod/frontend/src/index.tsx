@@ -15,6 +15,8 @@ import { Dictionaries } from "./home/dictionaries";
 import { Dictionary } from "./home/dictionary";
 import { AddLanguage } from "./home/addLanguage";
 import { Word } from "./home/word";
+import { StudyMode } from "./home/studyMode";
+import { Quiz } from "./home/quiz";
 
 const App = function() {
     const { userInfo, updateUserInfo } = useUserContext();
@@ -35,12 +37,11 @@ const App = function() {
                 });
         }
 
-        let intervalId = setInterval(refreshSession, 10*60*1000);
+        let intervalId = setInterval(refreshSession, 10 * 60 * 1000); 
 
         return () => {
             clearInterval(intervalId);
         }
-
     }, []);
 
     return (
@@ -55,6 +56,10 @@ const App = function() {
                 <Route path="/dictionary/:lang/:dict?" element={<Home><Dictionary /></Home>} />
                 <Route path="/add/language" element={<Home><AddLanguage /></Home>} />
                 <Route path="/word/:wordId?" element={<Home><Word /></Home>} />
+                <Route path="/home/studyMode" element={ <Home> <StudyMode /> </Home> } />
+                <Route path="/home/Quiz/ABC" element={ <Home> <Quiz studyMode={"ABC"}/> </Home> } />
+                <Route path="/home/Quiz/text" element={ <Home> <Quiz studyMode={"text"}/> </Home> } />
+                <Route path="/home/Quiz/voice" element={ <Home> <Quiz studyMode={"voice"}/> </Home> } />
 
                 <Route path="/signin" element={<Auth page={AuthPages.SIGNIN} />} />
                 {
