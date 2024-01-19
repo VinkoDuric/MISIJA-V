@@ -3,9 +3,11 @@
 		
 		\section{Korištene tehnologije i alati}
 		
-			\textbf{\textit{dio 2. revizije}}
+			%\textbf{\textit{dio 2. revizije}}
 			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
+			 %\textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
+			 
+			 Za ostvarenje komunikacije između članova projektnog tima korištena je aplikacija WhatsApp\footnote{https://www.whatsapp.com/}. Za održavanje sastanaka unutar tima korištena je platforma MS Teams\footnote{https://www.microsoft.com/microsoft-teams/}. Komunikacija s demonstratorom i asistentom ostvarena je također s pomoću platforme MS Teams. Praćenje napretka i raspodjela zadataka u timu ostvarena je pomoću alata Jira\footnote{https://www.atlassian.com/software/jira}. Jira pomoću tzv. issue nudi pogućnost podijele izrade u manje zadatke koji se zatim mogu pridijeliti nekom od članova tima. Svaki od člana tima zatim može za svaki zadatak prikazati u kojoj je fazi izrade što ostalim članovima nudi mogućnost uvida u to na čemu drugi članovi tima trenutno rade. Upravljanje izvornim kodom i dokumentacijom ostvareno je s pomoću alata Git\footnote{https://git-scm.com/}. Udaljeni repozitorij pohranjen je na platformi GitHub\footnote{https://github.com/}. Za izradu dokumentacije projekta korišten je LaTeX\footnote{https://www.latex-project.org/}. UML dijagram obrazaca uporabe, sekvencijski dijagram, prva revizija dijagrama razreda, dijagram aktivnosti, dijagram stanja, dijagram komponenti i dijagram razmještaja napravljeni su s pomoću alata Astah UML\footnote{https://astah.net/products/astah-uml/}. Implementacijski dijagram razreda napravljen je s pomoću alata IntelliJ IDEA\footnote{https://www.jetbrains.com/idea/}. Model baze podataka izgrađen je alatom ERDPlus\footnote{https://erdplus.com/}. Za izradu backend dijela aplikacije korišten je radni okvir Java\footnote{https://www.java.com/en/} Spring\footnote{https://spring.io/}, a za razvoj na backendu korišteno je razvojno okruženje IntelliJ IDEA. Za izradu frontend dijela aplikacije korištena je knjižnica React\footnote{https://react.dev/} uz programski jezik TypeScript\footnote{https://www.typescriptlang.org/}. Za ispitivanje sustava korišteni su JUnit\footnote{https://junit.org/} i Selenium\footnote{https://www.selenium.dev/}. Za puštanje aplikacije u pogon korištena je platforma Render\footnote{https://render.com/}.
 			
 			
 			\eject 
@@ -15,27 +17,27 @@
 
 			\subsection{Ispitivanje komponenti}
 			
-			\subsection{Testiranje Gettera i Settera}
-
+						\subsection{Testiranje Gettera i Settera}
+			
 			TestGettersAndSetters služi za provjeru ispravnosti gettera i settera za klasu \texttt{Account}. U ovom testu se inicijalizira objekt \texttt{Account} s određenim podacima (email, ime, prezime, lozinka, i uloga), a zatim se koriste getteri za dohvaćanje tih podataka i setteri za postavljanje novih vrijednosti. Nakon postavljanja novih vrijednosti, ponovno se koriste getteri za provjeru je li objekt uspješno promijenjen prema očekivanjima.
-
+			
 			\begin{lstlisting}
 				@Test
 				public void testGettersAndSetters() {
 					Account account = new Account("test@example.com", "John", "Doe", "password", Roles.USER);
-			
+					
 					Assertions.assertEquals("test@example.com", account.getEmail());
 					Assertions.assertEquals("John", account.getFirstName());
 					Assertions.assertEquals("Doe", account.getLastName());
 					Assertions.assertEquals("password", account.getPassword());
 					Assertions.assertEquals(Roles.USER, account.getRole());
-			
+					
 					account.setEmail("newemail@example.com");
 					account.setFirstName("Jane");
 					account.setLastName("Smith");
 					account.setPassword("newpassword");
 					account.setRole(Roles.ADMIN);
-			
+					
 					Assertions.assertEquals("newemail@example.com", account.getEmail());
 					Assertions.assertEquals("Jane", account.getFirstName());
 					Assertions.assertEquals("Smith", account.getLastName());
@@ -43,68 +45,68 @@
 					Assertions.assertEquals(Roles.ADMIN, account.getRole());
 				}
 			\end{lstlisting}
-
+			
 			\subsection{Testiranje Token Verzije}
 			
 			TestTokenVersion provjerava funkcionalnost metoda za rad s token verzijom (\texttt{getTokenVersion()}, \texttt{incrementTokenVersion()}, \texttt{setTokenVersion()}) za klasu \texttt{Account}. Prvo se inicijalizira objekt \texttt{Account}, a zatim se provjerava da li je početna vrijednost token verzije jednaka 0. Nakon toga, koristi se metoda \texttt{incrementTokenVersion()} za povećanje verzije za 1 i provjerava se da li je nova vrijednost 1. Također se koristi metoda \texttt{setTokenVersion()} za postavljanje verzije na 5 i provjerava se je li postavljena vrijednost ispravna.
-
+			
 			\begin{lstlisting}
 				@Test
 				public void testTokenVersion() {
 					Account account = new Account("test@example.com", "John", "Doe", "password", Roles.USER);
-			
+					
 					Assertions.assertEquals(0L, account.getTokenVersion());
-			
+					
 					account.incrementTokenVersion();
 					Assertions.assertEquals(1L, account.getTokenVersion());
-			
+					
 					account.setTokenVersion(5L);
 					Assertions.assertEquals(5L, account.getTokenVersion());
 				}
 			\end{lstlisting}
-
+			
 			\subection{Testiranje Metode \texttt{toString()}}
-
+			
 			ToString test provjerava da li metoda \texttt{toString()} klase \texttt{Account} vraća očekivani format teksta. Prvo se inicijalizira objekt \texttt{Account} s određenim podacima, a zatim se koristi metoda \texttt{toString()} za dobivanje string reprezentacije objekta. Očekivana string reprezentacija se uspoređuje s unaprijed definiranom očekivanom vrijednošću.
-
+			
 			\begin{lstlisting}
 				@Test
 				public void testToString() {
 					Account account = new Account("test@example.com", "John", "Doe", "password", Roles.USER);
-			
+					
 					String expectedToString = "Account{" +
-							"id=null" +
-							", email='test@example.com'" +
-							", firstName='John'" +
-							", lastName='Doe'" +
-							", password='password'" +
-							", role=USER" +
-							", tokenVersion=0" +
-							'}';
-			
+						"id=null" +
+						", email='test@example.com'" +
+						", firstName='John'" +
+						", lastName='Doe'" +
+						", password='password'" +
+						", role=USER" +
+						", tokenVersion=0" +
+						'}';
+					
 					Assertions.assertEquals(expectedToString, account.toString());
 				}
 			\end{lstlisting}
-
+			
 			\subsection{Testiranje Metode \texttt{testLoadUserByUsername_ThrowsException()}}
-
+			
 			Koristi se Assertions.assertThrows iz JUnit frameworka kako bi se provjerilo da će poziv loadUserByUsername(email) metode iz accountUserDetailsService doista izazvati iznimku tipa UsernameNotFoundException. Očekuje se da metoda loadUserByUsername baci iznimku kada korisnik s navedenim emailom ne postoji u sustavu.
 			
 			\begin{lstlisting}
 				@Test
 				public void testLoadUserByUsername_ThrowsException() {
 					String email = "test@example.com";
-			
+					
 					when(accountService.findByEmail(email)).thenReturn(Optional.empty());
-			
+					
 					Assertions.assertThrows(UsernameNotFoundException.class, () -> {
 						accountUserDetailsService.loadUserByUsername(email);
 					});
 				}
 			\end{lstlisting}
-
+			
 			\subsection{Testiranje Metode \texttt{testGetAllDicts_EmptyList()}}	
-
+			
 			\begin{itemize}
 				\item \textbf{Arrange}: Postavlja se ponašanje mock objekta \texttt{dictionaryService} kako bi simulirali situaciju kada nema rječnika. Očekujemo da će \texttt{dictionaryService.getAllDicts()} vratiti praznu listu koristeći \texttt{when} metodu.
 				
@@ -114,29 +116,29 @@
 				
 				\item \textbf{Verify}: Koristi se \texttt{verify} kako bi se provjerilo da je \texttt{dictionaryService.getAllDicts()} pozvana točno jednom i da nije bilo više interakcija s tim servisom (\texttt{verifyNoMoreInteractions(dictionaryService)}).
 			\end{itemize}
-
+			
 			\begin{lstlisting}
-
+				
 				@Test
 				public void testGetAllDicts_EmptyList() {
 					// Arrange
 					when(dictionaryService.getAllDicts()).thenReturn(Collections.emptyList());
-			
+					
 					// Act
 					ResponseEntity<List<Dictionary>> response = dictionaryController.GET();
-			
+					
 					// Assert
 					Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 					Assertions.assertEquals(Collections.emptyList(), response.getBody());
-			
+					
 					verify(dictionaryService, times(1)).getAllDicts();
 					verifyNoMoreInteractions(dictionaryService);
 				}
-
+				
 			\end{lstlisting}
 			
 			\subsection{Testiranje Metode \texttt{testGetAllDicts_NonEmptyList()}}	
-
+			
 			\begin{itemize}
 				\item \textbf{Arrange}: Postavlja se ponašanje mock objekta \texttt{dictionaryService} kako bi simulirali situaciju kada lista rječnika sadrži nekoliko rječnika. Očekujemo da će \texttt{dictionaryService.getAllDicts()} vratiti listu rječnika koristeći \texttt{when} metodu.
 				
@@ -146,26 +148,26 @@
 				
 				\item \textbf{Verify}: Koristi se \texttt{verify} kako bi se provjerilo da je \texttt{dictionaryService.getAllDicts()} pozvana točno jednom i da nije bilo više interakcija s tim servisom (\texttt{verifyNoMoreInteractions(dictionaryService)}).
 			\end{itemize}
-
+			
 			\begin{lstlisting}
-
+				
 				@Test
 				public void testGetAllDicts_NonEmptyList() {
 					// Arrange
 					List<Dictionary> dictionaries = List.of(new Dictionary(), new Dictionary());
 					when(dictionaryService.getAllDicts()).thenReturn(dictionaries);
-			
+					
 					// Act
 					ResponseEntity<List<Dictionary>> response = dictionaryController.GET();
-			
+					
 					// Assert
 					Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
 					Assertions.assertEquals(dictionaries, response.getBody());
-			
+					
 					verify(dictionaryService, times(1)).getAllDicts();
 					verifyNoMoreInteractions(dictionaryService);
 				}
-
+				
 			\end{lstlisting}
 
 			\subsection{Ispitivanje sustava}
