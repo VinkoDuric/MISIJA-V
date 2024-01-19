@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pot {
@@ -21,7 +22,7 @@ public class Pot {
             joinColumns = @JoinColumn(name = "potId"),
             inverseJoinColumns = @JoinColumn(name = "wordId")
     )*/
-    private ArrayList<Word> words;
+    private List<Word> words;
 
     private int potNumber;
     private LocalDateTime lastReviewed = LocalDateTime.now();
@@ -60,6 +61,8 @@ public class Pot {
     public LocalDateTime getLastReviewed() {
         return lastReviewed;
     }
+
+    public List<Word> getWords() { return words; }
 
     // Method to add a word to the pot
     public void addWord(Word word) {

@@ -17,6 +17,8 @@ public class CurrentState {
     @Enumerated(EnumType.STRING)
     private LearningMode learningMode;
 
+    private int numberOfPots;
+
     public CurrentState() {}
 
     public CurrentState(Account user, Dictionary dictionary, LearningMode learningMode) {
@@ -37,6 +39,10 @@ public class CurrentState {
         this.learningMode = learningMode;
     }
 
+    public void setNumberOfPots(int numberOfPots) {
+        this.numberOfPots = numberOfPots;
+    }
+
     public Long getId() {
         return id;
     }
@@ -52,4 +58,6 @@ public class CurrentState {
     public LearningMode getLearningMode() {
         return learningMode;
     }
+
+    public int getNumberOfPots() { return numberOfPots; }
 }

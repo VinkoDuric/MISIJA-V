@@ -58,6 +58,11 @@ public class CurrentStateServiceJpa implements CurrentStateService {
             Pot newPot = new Pot(user, potNum);
             potRepository.save(newPot);
         }
+
+        CurrentState currentState = currentStateRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with id: " + userId));
+        currentState.setNumberOfPots(numberOfPots);
+        currentStateRepository.save(currentState);
     }
 
     @Override
