@@ -21,9 +21,8 @@ public interface QuizService {
      *
      * @param userId The ID of the user submitting the answer.
      * @param wordId The ID of the word that the quiz question was based on.
-     * @param type The type of quiz question (text|audio response).
      * @param answer The user's answer to the quiz question.
-     * @return true if the answer is correct, false otherwise.
+     * @return evaluation of the answer.
      */
-    boolean checkAnswer(Long userId, Long wordId, String type, CheckQuizAnswerRequest answer);
+    int checkAnswer(Long userId, Long wordId, CheckQuizAnswerRequest answer);
 }

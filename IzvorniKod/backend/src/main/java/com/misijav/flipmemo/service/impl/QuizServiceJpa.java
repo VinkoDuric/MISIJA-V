@@ -102,7 +102,7 @@ public class QuizServiceJpa implements QuizService {
             }
             return new GetQuizQuestionResponse(question, answerChoices);
         } else if (learningMode.equals(LearningMode.AUDIO_RESPONSE)) {
-            // TODO return original word audio (user should write answer)
+            // return original word audio (user should write answer)
             return null;
         } else if (learningMode.equals(LearningMode.ORIGINAL_AUDIO)) {
             // return original word (eng) (user should record audio (with original word (eng)))
@@ -154,7 +154,7 @@ public class QuizServiceJpa implements QuizService {
     }
 
     @Override
-    public boolean checkAnswer(Long userId, Long wordId, String type, CheckQuizAnswerRequest request) {
+    public int checkAnswer(Long userId, Long wordId, CheckQuizAnswerRequest request) {
         CurrentState currentState = currentStateRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with id: " + userId));
 
@@ -172,33 +172,42 @@ public class QuizServiceJpa implements QuizService {
             // check if original word (eng) matches with translated word (hrv)
             if (word.getTranslatedWord().equals(request.answer())) {  // if word translated == answer
                 moveWordToNextPot(userId, word, currentState);  // Move word to next pot
-                return true;
+                return 10;
             } else {
                 moveWordToFirstPot(userId, word);  // Move word to first pot
-                return false;
+                return 0;
             }
         } else if (learningMode.equals(LearningMode.TRANSLATED_ORIGINAL)) {
             // check if translated word (hrv) matches with original word (eng)
             if (word.getOriginalWord().equals(request.answer())) {  // if original word == answer
                 moveWordToNextPot(userId, word, currentState);
-                return true;
+                return 10;
             } else {
                 moveWordToFirstPot(userId, word);
-                return false;
+                return 0;
             }
         } else if (learningMode.equals(LearningMode.AUDIO_RESPONSE)) {
             // check if original word is equal to user written answer
             if (word.getOriginalWord().equals(request.answer())) {
                 moveWordToNextPot(userId, word, currentState);
-                return true;
+                return 10;
             } else {
                 moveWordToFirstPot(userId, word);
-                return false;
+                return 0;
             }
         } else if (learningMode.equals(LearningMode.ORIGINAL_AUDIO)) {
-            // TODO check if audio equals original word (eng)
+            // check if audio equals original word (eng)
+            // return random value from 0 to 10
+            Random random = new Random();
+            int evaluation = random.nextInt(11);
+            if (evaluation >= 5) {
+                moveWordToNextPot(userId, word, currentState);
+            } else {
+                moveWordToFirstPot(userId, word);
+            }
+            return evaluation;
         }
-        return false;
+        return 0;
     }
 
     private void moveWordToNextPot(Long userId, Word word, CurrentState currentState) {

@@ -1,6 +1,7 @@
 package com.misijav.flipmemo.rest.quiz;
 
 import com.misijav.flipmemo.model.Account;
+import com.misijav.flipmemo.model.LearningMode;
 import com.misijav.flipmemo.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +28,18 @@ public class QuizController {
         return ResponseEntity.ok(getQuizQuestionResponse);
     }
 
-    @PostMapping("/{wordId}/{type}")
-    public ResponseEntity<?> POST(@PathVariable Long wordId, @PathVariable String type,
-                                  @AuthenticationPrincipal UserDetails userDetails,
+    @PostMapping("/{wordId}")
+    public ResponseEntity<?> POST(@PathVariable Long wordId, @AuthenticationPrincipal UserDetails userDetails,
                                   @RequestBody CheckQuizAnswerRequest answer) {
 
         Account user = (Account) userDetails;
-        boolean isCorrect = quizService.checkAnswer(user.getId(), wordId, type, answer);
-        return ResponseEntity.ok(isCorrect);
+        int evaluation = quizService.checkAnswer(user.getId(), wordId, answer);
+        if (answer.learningMode().equals(LearningMode.ORIGINAL_AUDIO)) {
+            return ResponseEntity.ok(evaluation);
+        } else {
+            boolean isCorrect;
+            isCorrect = evaluation == 10;
+            return ResponseEntity.ok(isCorrect);
+        }
     }
 }
