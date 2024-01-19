@@ -1,12 +1,13 @@
 import { faTrash, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Role, useUserContext } from "../userContext";
 import { ImgCard } from "./components/card";
 import { useHomeContext } from "./homeContext";
 import styles from "./styles/home.module.css";
 
 export function Dictionaries() {
+    const navigate = useNavigate();
     let { lang } = useParams();
     const { updateHomeText } = useHomeContext();
     let { userInfo } = useUserContext();
@@ -27,17 +28,23 @@ export function Dictionaries() {
         icon = undefined;
     }
 
+    function openDictionary() {
+        return () => {
+            navigate(`/home/studyMode`);
+        }
+    }
+
     return (
         <div className={styles.gridWrapper}>
-            <ImgCard caption="Rječnik 1" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />  {/* treba zamijeniti slike */}
-            <ImgCard caption="Rječnik 2" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
-            <ImgCard caption="Rječnik 3" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
-            <ImgCard caption="Rječnik 4" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
-            <ImgCard caption="Rječnik 5" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
-            <ImgCard caption="Rječnik 6" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
-            <ImgCard caption="Rječnik 7" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
-            <ImgCard caption="Rječnik 8" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
-            <ImgCard caption="Rječnik 9" imageSrc="/images/book.jpg" adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 1" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />  {/* treba zamijeniti slike */}
+            <ImgCard caption="Rječnik 2" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 3" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 4" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 5" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 6" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 7" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 8" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
+            <ImgCard caption="Rječnik 9" imageSrc="/images/book.jpg" handleClick={openDictionary()} adminIcon={icon} handleAdminIconClick={handleAdminIconCLick} />
         </div>
     );
 }

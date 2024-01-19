@@ -16,6 +16,8 @@ import { Dictionary } from "./home/dictionary";
 import { AddLanguage } from "./home/addLanguage";
 import { Word } from "./home/word";
 import AddAdmin from "./addAdmin/addAdmin";
+import { StudyMode } from "./home/studyMode";
+import { Quiz } from "./home/quiz";
 
 const App = function () {
   const { userInfo, updateUserInfo } = useUserContext();
@@ -72,6 +74,38 @@ const App = function () {
           element={
             <Home>
               <Dictionaries />
+            </Home>
+          }
+        />
+        <Route
+          path="/home/studyMode"
+          element={
+            <Home>
+              <StudyMode />
+            </Home>
+          }
+        />
+        <Route
+          path="/home/Quiz/ABC"
+          element={
+            <Home>
+              <Quiz studyMode={"ABC"}/>
+            </Home>
+          }
+        />
+        <Route
+          path="/home/Quiz/text"
+          element={
+            <Home>
+              <Quiz studyMode={"text"}/>
+            </Home>
+          }
+        />
+        <Route
+          path="/home/Quiz/voice"
+          element={
+            <Home>
+              <Quiz studyMode={"voice"}/>
             </Home>
           }
         />
