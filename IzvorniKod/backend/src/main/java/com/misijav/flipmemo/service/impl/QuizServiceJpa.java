@@ -3,6 +3,7 @@ package com.misijav.flipmemo.service.impl;
 import com.misijav.flipmemo.dao.CurrentStateRepository;
 import com.misijav.flipmemo.dao.DictionaryRepository;
 import com.misijav.flipmemo.dao.PotRepository;
+import com.misijav.flipmemo.dao.WordRepository;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.CurrentState;
 import com.misijav.flipmemo.model.LearningMode;
@@ -22,20 +23,20 @@ import java.util.Random;
 
 @Service
 public class QuizServiceJpa implements QuizService {
-    private final DictionaryRepository dictionaryRepository;
     private final CurrentStateRepository currentStateRepository;
     private final PotRepository potRepository;
     private final CurrentStateService currentStateService;
+    private final WordRepository wordRepository;
 
     @Autowired
-    public QuizServiceJpa(DictionaryRepository dictionaryRepository,
-                          CurrentStateRepository currentStateRepository,
+    public QuizServiceJpa(CurrentStateRepository currentStateRepository,
                           PotRepository potRepository,
-                          CurrentStateService currentStateService) {
-        this.dictionaryRepository = dictionaryRepository;
+                          CurrentStateService currentStateService,
+                          WordRepository wordRepository) {
         this.currentStateRepository = currentStateRepository;
         this.potRepository = potRepository;
         this.currentStateService = currentStateService;
+        this.wordRepository = wordRepository;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class QuizServiceJpa implements QuizService {
         Pot selectedPot = determineRelevantPot(userPots, currentState);
 
         if (currentState.getLearningMode().equals(LearningMode.ORIGINAL_TRANSLATED)) {
-            // TODO return original word (eng) with multiple translated words (hrv)
+            // return original word (eng) with multiple translated words (hrv)
             Word originalWord = selectWordForQuiz(selectedPot, userPots, currentState);
             String question = originalWord.getOriginalWord();
 
@@ -75,7 +76,7 @@ public class QuizServiceJpa implements QuizService {
             return new QuizQuestion(question, answerChoices);
 
         } else if (currentState.getLearningMode().equals(LearningMode.TRANSLATED_ORIGINAL)) {
-            // TODO return translated word (hrv) with multiple original words (eng)
+            // return translated word (hrv) with multiple original words (eng)
             Word translatedWord = selectWordForQuiz(selectedPot, userPots, currentState);
             String question = translatedWord.getTranslatedWord();
 
@@ -142,12 +143,75 @@ public class QuizServiceJpa implements QuizService {
     }
 
     @Override
-    public boolean checkAnswer(Long userId, Long wordId, String type, QuizAnswer answer) {
+    public boolean checkAnswer(Long userId, Long wordId, String type, QuizAnswer quizAnswer) {
         CurrentState currentState = currentStateRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with id: " + userId));
 
-        // TODO
-        // ... if true move word to next pot
+        Word word = wordRepository.findWordByWordId(wordId)
+                .orElseThrow(() -> new ResourceNotFoundException("Word not found with id: " + wordId));
+
+        List<Pot> userPots = potRepository.findByUserId(userId);
+        if (userPots == null) {
+            throw new ResourceNotFoundException("Pots not found for user with id: " + userId);
+        }
+
+        if (currentState.getLearningMode().equals(LearningMode.ORIGINAL_TRANSLATED)) {
+            // check if original word (eng) matches with translated word (hrv)
+            if (word.getTranslatedWord().equals(quizAnswer.answer())) {  // if word translated == answer
+                moveWordToNextPot(userId, word, currentState);  // Move word to next pot
+                return true;
+            } else {
+                moveWordToFirstPot(userId, word);  // Move word to first pot
+                return false;
+            }
+        } else if (currentState.getLearningMode().equals(LearningMode.TRANSLATED_ORIGINAL)) {
+            // check if translated word (hrv) matches with original word (eng)
+            if (word.getOriginalWord().equals(quizAnswer.answer())) {  // if original word == answer
+                moveWordToNextPot(userId, word, currentState);
+                return true;
+            } else {
+                moveWordToFirstPot(userId, word);
+                return false;
+            }
+        } else if (currentState.getLearningMode().equals(LearningMode.AUDIO_RESPONSE)) {
+            // TODO return original word audio (user should write answer)
+        } else if (currentState.getLearningMode().equals(LearningMode.ORIGINAL_AUDIO)) {
+            // TODO return original word (eng) (user should record audio (with original word (eng)))
+        }
         return false;
+    }
+
+    private void moveWordToNextPot(Long userId, Word word, CurrentState currentState) {
+        Pot currentPot = potRepository.findByUserIdAndWordId(userId, word.getWordId())
+                .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
+                        + userId + ", and word " + word.getWordId()));
+
+        currentPot.removeWord(word);
+        potRepository.save(currentPot);
+
+        if (currentState.getNumberOfPots() > currentPot.getPotNumber()) {  // if it is not last pot
+            Pot nextPot = potRepository.findByUserIdAndPotNumber(userId, currentPot.getPotNumber() + 1)
+                    .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
+                            + userId + ", and pot number " + currentPot.getPotNumber()));
+
+            nextPot.addWord(word);
+            potRepository.save(nextPot);
+        }  // else : word is removed from last pot
+    }
+
+    private void moveWordToFirstPot(Long userId, Word word) {
+        Pot currentPot = potRepository.findByUserIdAndWordId(userId, word.getWordId())
+                .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
+                        + userId + ", and word " + word.getWordId()));
+
+        currentPot.removeWord(word);  // Remove word from current pot
+        potRepository.save(currentPot);
+
+        Pot firstPot = potRepository.findByUserIdAndPotNumber(userId, 1)
+                .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
+                        + userId + ", and pot number 1"));
+
+        firstPot.addWord(word);  // Add word to first pot
+        potRepository.save(firstPot);
     }
 }
