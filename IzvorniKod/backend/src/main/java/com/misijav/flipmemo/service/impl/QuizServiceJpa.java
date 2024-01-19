@@ -1,7 +1,6 @@
 package com.misijav.flipmemo.service.impl;
 
 import com.misijav.flipmemo.dao.CurrentStateRepository;
-import com.misijav.flipmemo.dao.DictionaryRepository;
 import com.misijav.flipmemo.dao.PotRepository;
 import com.misijav.flipmemo.dao.WordRepository;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
@@ -9,8 +8,9 @@ import com.misijav.flipmemo.model.CurrentState;
 import com.misijav.flipmemo.model.LearningMode;
 import com.misijav.flipmemo.model.Pot;
 import com.misijav.flipmemo.model.Word;
-import com.misijav.flipmemo.rest.quiz.QuizAnswer;
-import com.misijav.flipmemo.rest.quiz.QuizQuestion;
+import com.misijav.flipmemo.rest.quiz.GetQuizQuestionRequest;
+import com.misijav.flipmemo.rest.quiz.CheckQuizAnswerRequest;
+import com.misijav.flipmemo.rest.quiz.GetQuizQuestionResponse;
 import com.misijav.flipmemo.service.CurrentStateService;
 import com.misijav.flipmemo.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class QuizServiceJpa implements QuizService {
     }
 
     @Override
-    public QuizQuestion getQuizQuestion(Long dictId, Long userId) {
+    public GetQuizQuestionResponse getQuizQuestion(Long dictId, Long userId, GetQuizQuestionRequest request) {
         CurrentState currentState = currentStateRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with id: " + userId));
 
@@ -50,11 +50,17 @@ public class QuizServiceJpa implements QuizService {
             currentStateService.initializePotsForUser(userId, dictId);
             userPots = potRepository.findByUserId(userId);
         }
+        // TODO if user chooses different language then what?
+        if (!Objects.equals(currentState.getDictionary().getDictionaryId(), dictId)) {
+            // TODO ...
+        }
+
+        LearningMode learningMode = request.learningMode();
 
         // Determine which pot to use
-        Pot selectedPot = determineRelevantPot(userPots, currentState);
+        Pot selectedPot = determineRelevantPot(userPots);
 
-        if (currentState.getLearningMode().equals(LearningMode.ORIGINAL_TRANSLATED)) {
+        if (learningMode.equals(LearningMode.ORIGINAL_TRANSLATED)) {
             // return original word (eng) with multiple translated words (hrv)
             Word originalWord = selectWordForQuiz(selectedPot, userPots, currentState);
             String question = originalWord.getOriginalWord();
@@ -73,9 +79,9 @@ public class QuizServiceJpa implements QuizService {
                     numOfAnswers--;
                 }
             }
-            return new QuizQuestion(question, answerChoices);
+            return new GetQuizQuestionResponse(question, answerChoices);
 
-        } else if (currentState.getLearningMode().equals(LearningMode.TRANSLATED_ORIGINAL)) {
+        } else if (learningMode.equals(LearningMode.TRANSLATED_ORIGINAL)) {
             // return translated word (hrv) with multiple original words (eng)
             Word translatedWord = selectWordForQuiz(selectedPot, userPots, currentState);
             String question = translatedWord.getTranslatedWord();
@@ -94,15 +100,20 @@ public class QuizServiceJpa implements QuizService {
                     numOfAnswers--;
                 }
             }
-        } else if (currentState.getLearningMode().equals(LearningMode.AUDIO_RESPONSE)) {
+            return new GetQuizQuestionResponse(question, answerChoices);
+        } else if (learningMode.equals(LearningMode.AUDIO_RESPONSE)) {
             // TODO return original word audio (user should write answer)
-        } else if (currentState.getLearningMode().equals(LearningMode.ORIGINAL_AUDIO)) {
-            // TODO return original word (eng) (user should record audio (with original word (eng)))
+            return null;
+        } else if (learningMode.equals(LearningMode.ORIGINAL_AUDIO)) {
+            // return original word (eng) (user should record audio (with original word (eng)))
+            Word originalWord = selectWordForQuiz(selectedPot, userPots, currentState);
+            String question = originalWord.getOriginalWord();
+            return new GetQuizQuestionResponse(question, null);
         }
         return null;
     }
 
-    private Pot determineRelevantPot(List<Pot> userPots, CurrentState currentState) {
+    private Pot determineRelevantPot(List<Pot> userPots) {
         // Check if first pot is not empty and send "it", if not, send other pot in line
         for (Pot pot : userPots) {
             if (!pot.getWords().isEmpty()) {
@@ -118,7 +129,7 @@ public class QuizServiceJpa implements QuizService {
         // Check if the pot is empty
         if (potWords.isEmpty()) {
             // get another pot
-            potWords = determineRelevantPot(userPots, currentState).getWords();
+            potWords = determineRelevantPot(userPots).getWords();
         }
 
         // If pot has small amount of elements (<5), combine with next pot
@@ -143,7 +154,7 @@ public class QuizServiceJpa implements QuizService {
     }
 
     @Override
-    public boolean checkAnswer(Long userId, Long wordId, String type, QuizAnswer quizAnswer) {
+    public boolean checkAnswer(Long userId, Long wordId, String type, CheckQuizAnswerRequest request) {
         CurrentState currentState = currentStateRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with id: " + userId));
 
@@ -155,28 +166,37 @@ public class QuizServiceJpa implements QuizService {
             throw new ResourceNotFoundException("Pots not found for user with id: " + userId);
         }
 
-        if (currentState.getLearningMode().equals(LearningMode.ORIGINAL_TRANSLATED)) {
+        LearningMode learningMode = request.learningMode();
+
+        if (learningMode.equals(LearningMode.ORIGINAL_TRANSLATED)) {
             // check if original word (eng) matches with translated word (hrv)
-            if (word.getTranslatedWord().equals(quizAnswer.answer())) {  // if word translated == answer
+            if (word.getTranslatedWord().equals(request.answer())) {  // if word translated == answer
                 moveWordToNextPot(userId, word, currentState);  // Move word to next pot
                 return true;
             } else {
                 moveWordToFirstPot(userId, word);  // Move word to first pot
                 return false;
             }
-        } else if (currentState.getLearningMode().equals(LearningMode.TRANSLATED_ORIGINAL)) {
+        } else if (learningMode.equals(LearningMode.TRANSLATED_ORIGINAL)) {
             // check if translated word (hrv) matches with original word (eng)
-            if (word.getOriginalWord().equals(quizAnswer.answer())) {  // if original word == answer
+            if (word.getOriginalWord().equals(request.answer())) {  // if original word == answer
                 moveWordToNextPot(userId, word, currentState);
                 return true;
             } else {
                 moveWordToFirstPot(userId, word);
                 return false;
             }
-        } else if (currentState.getLearningMode().equals(LearningMode.AUDIO_RESPONSE)) {
-            // TODO return original word audio (user should write answer)
-        } else if (currentState.getLearningMode().equals(LearningMode.ORIGINAL_AUDIO)) {
-            // TODO return original word (eng) (user should record audio (with original word (eng)))
+        } else if (learningMode.equals(LearningMode.AUDIO_RESPONSE)) {
+            // check if original word is equal to user written answer
+            if (word.getOriginalWord().equals(request.answer())) {
+                moveWordToNextPot(userId, word, currentState);
+                return true;
+            } else {
+                moveWordToFirstPot(userId, word);
+                return false;
+            }
+        } else if (learningMode.equals(LearningMode.ORIGINAL_AUDIO)) {
+            // TODO check if audio equals original word (eng)
         }
         return false;
     }

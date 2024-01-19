@@ -7,7 +7,7 @@ public record WordDTO(
         String wordLanguageCode,
         String originalWord,
         String translatedWord,
-        String wordDescription,
+        List<String> wordDescription,
         String wordSynonyms,
         String dictionaryIds
 ) {}

@@ -20,15 +20,6 @@ public interface CurrentStateService {
     Optional<CurrentState> findByUserId(Long userId);
 
     /**
-     * Updates the learning mode for a specific user.
-     * This method alters the user's current state to reflect the new learning mode.
-     *
-     * @param userId The unique identifier of the user.
-     * @param learningMode The learning mode to be set for the user.
-     */
-    void updateLearningMode(Long userId, LearningMode learningMode);
-
-    /**
      * Initializes pots for a given user with a selected dictionary.
      * This method will create a starting learning state for each word in the dictionary,
      * typically placing all words in the first pot, signifying the start of the learning process.

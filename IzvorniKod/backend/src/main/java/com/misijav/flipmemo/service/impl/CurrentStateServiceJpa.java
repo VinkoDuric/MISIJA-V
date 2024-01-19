@@ -30,14 +30,6 @@ public class CurrentStateServiceJpa implements CurrentStateService {
         this.accountRepository = accountRepository;
     }
 
-    public void updateLearningMode(Long userId, LearningMode learningMode) {
-        // Find the current state for the user
-        CurrentState currentState = currentStateRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with this id:" + userId));
-        currentState.setLearningMode(learningMode);
-        currentStateRepository.save(currentState);
-    }
-
     public void initializePotsForUser(Long userId, Long dictionaryId) {
         Dictionary dictionary = dictionaryRepository.findById(dictionaryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found with id: "+ dictionaryId));

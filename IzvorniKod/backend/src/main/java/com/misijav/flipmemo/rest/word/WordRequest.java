@@ -6,7 +6,7 @@ public record WordRequest(
     String wordLanguageCode,
     String originalWord,
     String translatedWord,
-    String wordDescription,
+    List<String> wordDescription,
     List<String> wordSynonyms,
     List<Long> dictionaryIds
 ) {}

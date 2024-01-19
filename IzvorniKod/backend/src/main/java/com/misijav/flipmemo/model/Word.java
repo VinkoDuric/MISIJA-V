@@ -15,7 +15,8 @@ public class Word {
     private String originalWord;
     private String translatedWord;
 
-    private String wordDescription;
+    @ElementCollection
+    private List<String> wordDescription = new ArrayList<>();
 
     @ElementCollection
     private List<String> wordSynonyms = new ArrayList<>();
@@ -28,7 +29,7 @@ public class Word {
 
     public Word() {}
 
-    public Word(String wordLanguageCode, String originalWord, String translatedWord, String wordDescription) {
+    public Word(String wordLanguageCode, String originalWord, String translatedWord, List<String> wordDescription) {
         this.wordLanguageCode = wordLanguageCode;
         this.originalWord = originalWord;
         this.translatedWord = translatedWord;
@@ -45,7 +46,7 @@ public class Word {
 
     public List<String> getWordSynonyms() { return wordSynonyms; }
 
-    public String getWordDescription() { return wordDescription; }
+    public List<String> getWordDescription() { return wordDescription; }
 
     public List<Long> getDictionaries() {
         List<Long> dictionariesId = new ArrayList<>();
@@ -71,7 +72,7 @@ public class Word {
 
     public void setPots(List<Pot> pots) { this.pots = pots; }
 
-    public void setWordDescription(String wordDescription) { this.wordDescription = wordDescription; }
+    public void setWordDescription(List<String> wordDescription) { this.wordDescription = wordDescription; }
 
     public void addDictionary(Dictionary dictionary) { this.dictionaries.add(dictionary); }
 
@@ -81,10 +82,10 @@ public class Word {
     public String toString() {
         return "Word{" +
                 "wordId=" + wordId +
-                ", wordLanguage='" + wordLanguageCode + '\'' +
+                ", wordLanguageCode='" + wordLanguageCode + '\'' +
                 ", originalWord='" + originalWord + '\'' +
                 ", translatedWord='" + translatedWord + '\'' +
-                ", wordDescription='" + wordDescription + '\'' +
+                ", wordDescription=" + wordDescription +
                 ", wordSynonyms=" + wordSynonyms +
                 ", dictionaries=" + dictionaries +
                 ", pots=" + pots +

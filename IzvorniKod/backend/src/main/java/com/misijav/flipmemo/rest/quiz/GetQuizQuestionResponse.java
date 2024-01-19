@@ -2,7 +2,7 @@ package com.misijav.flipmemo.rest.quiz;
 
 import java.util.List;
 
-public record QuizQuestion(
+public record GetQuizQuestionResponse(
         String question,
         List<String> answerChoices
 ) {}

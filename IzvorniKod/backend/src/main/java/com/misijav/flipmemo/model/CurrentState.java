@@ -14,9 +14,6 @@ public class CurrentState {
     @ManyToOne
     private Dictionary dictionary;
 
-    @Enumerated(EnumType.STRING)
-    private LearningMode learningMode;
-
     private int numberOfPots;
 
     public CurrentState() {}
@@ -24,7 +21,6 @@ public class CurrentState {
     public CurrentState(Account user, Dictionary dictionary, LearningMode learningMode) {
         this.user = user;
         this.dictionary = dictionary;
-        this.learningMode = learningMode;
     }
 
     public void setUser(Account user) {
@@ -33,10 +29,6 @@ public class CurrentState {
 
     public void setDictionary(Dictionary dictionary) {
         this.dictionary = dictionary;
-    }
-
-    public void setLearningMode(LearningMode learningMode) {
-        this.learningMode = learningMode;
     }
 
     public void setNumberOfPots(int numberOfPots) {
@@ -53,10 +45,6 @@ public class CurrentState {
 
     public Dictionary getDictionary() {
         return dictionary;
-    }
-
-    public LearningMode getLearningMode() {
-        return learningMode;
     }
 
     public int getNumberOfPots() { return numberOfPots; }

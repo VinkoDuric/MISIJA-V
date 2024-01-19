@@ -20,16 +20,17 @@ public class QuizController {
     }
 
     @GetMapping("/{dictId}")
-    public ResponseEntity<?> GET(@PathVariable Long dictId, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> GET(@PathVariable Long dictId, @AuthenticationPrincipal UserDetails userDetails,
+                                 @RequestBody GetQuizQuestionRequest request) {
         Account user = (Account) userDetails;
-        QuizQuestion quizQuestion = quizService.getQuizQuestion(dictId, user.getId());
-        return ResponseEntity.ok(quizQuestion);
+        GetQuizQuestionResponse getQuizQuestionResponse = quizService.getQuizQuestion(dictId, user.getId(), request);
+        return ResponseEntity.ok(getQuizQuestionResponse);
     }
 
     @PostMapping("/{wordId}/{type}")
     public ResponseEntity<?> POST(@PathVariable Long wordId, @PathVariable String type,
                                   @AuthenticationPrincipal UserDetails userDetails,
-                                  @RequestBody QuizAnswer answer) {
+                                  @RequestBody CheckQuizAnswerRequest answer) {
 
         Account user = (Account) userDetails;
         boolean isCorrect = quizService.checkAnswer(user.getId(), wordId, type, answer);
