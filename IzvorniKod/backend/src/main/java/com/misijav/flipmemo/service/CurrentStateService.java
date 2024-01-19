@@ -1,6 +1,5 @@
 package com.misijav.flipmemo.service;
 
-import com.misijav.flipmemo.model.Account;
 import com.misijav.flipmemo.model.CurrentState;
 import com.misijav.flipmemo.model.LearningMode;
 
@@ -30,12 +29,12 @@ public interface CurrentStateService {
     void updateLearningMode(Long userId, LearningMode learningMode);
 
     /**
-     * Initializes learning states for a given user with a selected dictionary.
+     * Initializes pots for a given user with a selected dictionary.
      * This method will create a starting learning state for each word in the dictionary,
      * typically placing all words in the first pot, signifying the start of the learning process.
      *
-     * @param user The user for whom learning states need to be initialized.
+     * @param userId The user for whom learning states need to be initialized.
      * @param dictionaryId The dictionary from which words will be taken to create learning states.
      */
-    void initializeLearningStatesForUser(Account user, Long dictionaryId);
+    void initializePotsForUser(Long userId, Long dictionaryId);
 }

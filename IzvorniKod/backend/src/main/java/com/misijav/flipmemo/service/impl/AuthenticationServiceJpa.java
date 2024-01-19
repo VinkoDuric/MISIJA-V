@@ -1,12 +1,14 @@
 package com.misijav.flipmemo.service.impl;
 
 import com.misijav.flipmemo.dao.AccountRepository;
+import com.misijav.flipmemo.dao.CurrentStateRepository;
 import com.misijav.flipmemo.dto.AccountDTO;
 import com.misijav.flipmemo.dto.AccountDTOMapper;
 import com.misijav.flipmemo.exception.RequestValidationException;
 import com.misijav.flipmemo.exception.ResourceConflictException;
 import com.misijav.flipmemo.jwt.JWTUtil;
 import com.misijav.flipmemo.model.Account;
+import com.misijav.flipmemo.model.CurrentState;
 import com.misijav.flipmemo.model.Roles;
 import com.misijav.flipmemo.rest.auth.AuthenticationRequest;
 import com.misijav.flipmemo.rest.auth.AuthenticationResponse;
@@ -46,19 +48,23 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     private final JWTUtil jwtUtil;
     @Autowired
     private final JavaMailSender javaMailSender;
+    @Autowired
+    private final CurrentStateRepository currentStateRepository;
 
     public AuthenticationServiceJpa(AccountRepository accountRepository,
                                     AuthenticationManager authenticationManager,
                                     AccountDTOMapper accountDTOMapper,
                                     PasswordEncoder passwordEncoder,
                                     JWTUtil jwtUtil,
-                                    JavaMailSender javaMailSender) {
+                                    JavaMailSender javaMailSender,
+                                    CurrentStateRepository currentStateRepository) {
         this.accountRepository = accountRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
         this.accountDTOMapper = accountDTOMapper;
         this.javaMailSender = javaMailSender;
+        this.currentStateRepository = currentStateRepository;
     }
 
     @Override
@@ -123,7 +129,12 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         );
 
         // save user to database
-        accountRepository.save(newUser);
+        Account createdUser = accountRepository.save(newUser);
+
+        // Initialize CurrentState for new user
+        CurrentState currentState = new CurrentState();
+        currentState.setUser(createdUser);
+        currentStateRepository.save(currentState);
 
         // send verification email
         sendVerificationEmail(request.firstName(), request.email(), randomPassword);

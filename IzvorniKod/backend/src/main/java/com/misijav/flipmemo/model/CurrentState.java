@@ -14,14 +14,15 @@ public class CurrentState {
     @ManyToOne
     private Dictionary dictionary;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private LearningMode learningMode;
 
-    private CurrentState() {}
+    public CurrentState() {}
 
-    public CurrentState(Account user, Dictionary dictionary) {
+    public CurrentState(Account user, Dictionary dictionary, LearningMode learningMode) {
         this.user = user;
         this.dictionary = dictionary;
+        this.learningMode = learningMode;
     }
 
     public void setUser(Account user) {

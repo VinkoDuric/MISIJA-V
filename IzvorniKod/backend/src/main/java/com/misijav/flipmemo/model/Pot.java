@@ -24,14 +24,13 @@ public class Pot {
     private ArrayList<Word> words;
 
     private int potNumber;
-    private LocalDateTime lastReviewed;
+    private LocalDateTime lastReviewed = LocalDateTime.now();
 
     protected Pot() {}
 
-    public Pot(Account user, int potNumber, LocalDateTime lastReviewed) {
+    public Pot(Account user, int potNumber) {
         this.user = user;
         this.potNumber = potNumber;
-        this.lastReviewed = lastReviewed;
     }
 
     public void setAccount(Account user) {

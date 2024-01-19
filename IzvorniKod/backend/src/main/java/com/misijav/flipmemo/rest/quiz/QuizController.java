@@ -1,7 +1,6 @@
 package com.misijav.flipmemo.rest.quiz;
 
 import com.misijav.flipmemo.model.Account;
-import com.misijav.flipmemo.model.Word;
 import com.misijav.flipmemo.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +19,20 @@ public class QuizController {
         this.quizService = quizService;
     }
 
-    @GetMapping("/{dictionary-id}")
-    public ResponseEntity<?> GET(@PathVariable(value = "dictionary-id") Long dictId,
-                                 @AuthenticationPrincipal UserDetails userDetails) {
-        // TODO
-        //Account user = (Account) userDetails;
-        //QuizQuestion question = quizService.getQuizQuestion(dictId, user.getId());
-       // return ResponseEntity.ok(question);
-        return ResponseEntity.ok().build();
+    @GetMapping("/{dictId}")
+    public ResponseEntity<?> GET(@PathVariable Long dictId, @AuthenticationPrincipal UserDetails userDetails) {
+        Account user = (Account) userDetails;
+        QuizQuestion quizQuestion = quizService.getQuizQuestion(dictId, user.getId());
+        return ResponseEntity.ok(quizQuestion);
     }
 
-    @PostMapping("/{word-id}/{type}")
-    public ResponseEntity<?> POST(@PathVariable(value = "word-id") Long wordId,
-                                          @PathVariable String type){
-                                          //@RequestBody Answer answer) {
-        // TODO
-        //boolean isCorrect = quizService.checkAnswer(wordId, type, answer);
-        //return ResponseEntity.ok(isCorrect);
-        return ResponseEntity.ok().build();
+    @PostMapping("/{wordId}/{type}")
+    public ResponseEntity<?> POST(@PathVariable Long wordId, @PathVariable String type,
+                                  @AuthenticationPrincipal UserDetails userDetails,
+                                  @RequestBody QuizAnswer answer) {
+
+        Account user = (Account) userDetails;
+        boolean isCorrect = quizService.checkAnswer(user.getId(), wordId, type, answer);
+        return ResponseEntity.ok(isCorrect);
     }
 }
