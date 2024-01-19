@@ -38,6 +38,7 @@ const App = function() {
                 });
         }
 
+        refreshSession();
         let intervalId = setInterval(refreshSession, 10 * 60 * 1000); 
 
         return () => {

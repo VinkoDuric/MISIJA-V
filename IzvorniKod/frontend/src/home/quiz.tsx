@@ -31,7 +31,7 @@ export function Quiz ({ studyMode }: QuizProps){
             }
             {
                 studyMode === "text" &&
-                <div className = {styles.answersWrapper} >
+                <div className = {styles.quizWrapper} >
                     <InputText name = {"odgovor"} placeholder={"Ovdje unesite svoj odgovor."}></InputText>
                     <OptionBtn submit={true} onClick={() => { }} >Predaj!</OptionBtn>
                 </div>

@@ -59,7 +59,7 @@ export function Dictionary() {
             fetch('/api/v1/dictionaries', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({languageCode: lang, dictionaryName: arg})
+                body: JSON.stringify({langCode: lang, dictName: arg})
             }).then(res => {
                 if (res.ok) {
                     navigate('/home/' + lang)
