@@ -169,19 +169,113 @@
 				}
 				
 			\end{lstlisting}
-
+			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+			Ispitivanje sustava provodi se korištenjem Selenium WebDrivera i programskog jezika Java. U nastavku su opisana četiri testa, te su priloženi programski kodovi.
 			
-			\eject 
+			\subsection{Testiranje prijave}
+
+			U ovom testu koristi se Selenium WebDriver za otvaranje web preglednika (Chrome) i prijavu na web stranicu. Nakon prijave, provjerava se trenutna URL adresa. Ako URL sadrži "/home", to znači da je prijava uspješna i ispisuje se poruka "Login successful!". Inače, ispisuje se poruka "Login failed!".
+
+			\begin{lstlisting}
+				System.setProperty("webdriver.chrome.driver", "C:\\Users\\Korisnik\\Desktop\\chromedriver.exe");
+				WebDriver driver = new ChromeDriver();
+				driver.get("http://localhost:3000/login");
+		
+				driver.manage().window().maximize();
+				driver.findElement(By.name("email")).sendKeys("admin");
+				driver.findElement(By.name("password")).sendKeys("password");
+		
+				WebElement button = driver.findElement(By.className("accentBtn"));
+				button.click();
+		
+				driver.getCurrentUrl().then((url) -> {
+					if (url.contains("/home")) {
+						System.out.println("Login successful!");
+					} else {
+						System.err.println("Login failed!");
+					}
+					driver.quit();        
+				});	
+
+			\end{lstlisting}
+			
+			\subsection{Testiranje registracije}
+
+			U sljedećem isječku koda prikazano je testiranje registracije na web stranici:
+			
+			\begin{lstlisting}
+				driver.get("http://localhost:3000/login");
+				// Perform additional test steps
+				driver.manage().window().maximize();
+				WebElement anchorTag = driver.findElement(By.className("login_createAccountLink__FV3W+"));
+				anchorTag.click();
+				WebElement firstNameField = driver.findElement(By.name("firstName"));
+				WebElement lastNameField = driver.findElement(By.name("lastName"));
+				WebElement emailField = driver.findElement(By.name("email"));
+		
+				firstNameField.sendKeys("John");
+				lastNameField.sendKeys("Doe");
+				emailField.sendKeys("johndoe@fer.com");
+				
+				WebElement registerButton = driver.findElement(By.className("accentBtn"));
+				registerButton.click();
+				driver.getCurrentUrl().then((url) -> {
+					if (url.contains("/changepass")) {
+						System.out.println("registration successful!");
+					} else {
+						System.err.println("Registration failed!");
+					}
+					driver.quit();        
+				});
+			\end{lstlisting}
+
+			\subsection{Testiranje klika na element}
+
+			U ovom testu otvara se web stranica na URL adresi "http://localhost:3000/home" i izvode se određene akcije na web stranici (u ovom slučaju, klik na određeni element). Nakon izvršenja akcija, provjerava se trenutna URL adresa. Ako URL sadrži "/home/en", to znači da su akcije uspješno izvršene i ispisuje se poruka "Successful!". Inače, ispisuje se poruka "Failed!".
+
+			\begin{lstlisting}
+				driver.get("http://localhost:3000/home");
+
+				driver.manage().window().maximize();
+				WebElement element = driver.findElement(By.xpath("//div[@class='card_card__611WY']"));
+				element.click();
+		
+				driver.getCurrentUrl().then((url) -> {
+					if (url.contains("/home/en")) {
+						System.out.println("Successful!");
+					} else {
+						System.err.println("Failed!");
+					}
+					driver.quit();
+				});
+			\end{lstlisting}
+
+			\subsection{Testiranje ponovne prijave}
+
+			U sljedećem isječku koda prikazano je testiranje ponovne prijave na web stranicu koje bi zbog ne unosa passworda trebalo završiti neuspješno.
+
+			\begin{lstlisting}
+				driver.get("http://localhost:3000/login");
+
+				driver.manage().window().maximize();
+				driver.findElement(By.name("email")).sendKeys("admin");
+		
+				WebElement button = driver.findElement(By.className("accentBtn"));
+				button.click();
+		
+				driver.getCurrentUrl().then((url) -> {
+					if (url.contains("/home")) {
+						System.out.println("Login successful!");
+					} else {
+						System.err.println("Login failed!");
+					}
+					driver.quit();        
+				});
+			\end{lstlisting}
+
+
 		
 		
 		\section{Dijagram razmještaja}
