@@ -18,7 +18,7 @@ export function Quiz ({ studyMode }: QuizProps){
 
     return (
         <div className ={styles.quizWrapper}>
-            <div>Ovdje ide tekst pitanja:</div>
+            <div>Ovdje ide tekst pitanja</div>
             <div>
             {
                 studyMode === "ABC" &&
@@ -40,7 +40,7 @@ export function Quiz ({ studyMode }: QuizProps){
                 studyMode === "voice" &&
                 <VoiceRecorder></VoiceRecorder>
             }
-            <div>
+            </div>
         </div>
     );
 }

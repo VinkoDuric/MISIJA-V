@@ -17,6 +17,7 @@ import { AddLanguage } from "./home/addLanguage";
 import { Word } from "./home/word";
 import { StudyMode } from "./home/studyMode";
 import { Quiz } from "./home/quiz";
+import { Account } from "./home/account";
 
 const App = function() {
     const { userInfo, updateUserInfo } = useUserContext();
@@ -51,6 +52,7 @@ const App = function() {
 
                 {/* TODO: move this to be available only when logged in */}
                 <Route path="/home" element={<Home><Languages /></Home>} />
+                <Route path="/home/account" element={ <Home> <Account /> </Home> } />
                 <Route path="/home/:lang" element={<Home><Dictionaries /></Home>} />
                 <Route path="/changepass" element={<ChangePass />} />
                 <Route path="/dictionary/:lang/:dict?" element={<Home><Dictionary /></Home>} />

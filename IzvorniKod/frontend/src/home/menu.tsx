@@ -14,7 +14,6 @@ export function Menu({ closeMenu }: MenuProps) {
     const { userInfo } = useUserContext();
     let { updateUserInfo } = useUserContext();
     const { updateHomeText } = useHomeContext();
-
     function onLogoutClick() {
         fetch("/api/v1/auth/logout").then(() => {
             updateUserInfo(null);
@@ -29,7 +28,7 @@ export function Menu({ closeMenu }: MenuProps) {
     return (
         <div className={styles.menuWrapper}>
             <OptionBtn onClick={() => { navigate('/home'); closeMenu(); }}>Odabir jezika</OptionBtn>
-            <OptionBtn onClick={() => { }}>Upravljanje računom</OptionBtn>
+            <OptionBtn onClick={() => { navigate('/home/account'); closeMenu();}}>Upravljanje računom</OptionBtn>
             {
                 userInfo !== null && Role[userInfo.role] === Role.ADMIN &&
                 (

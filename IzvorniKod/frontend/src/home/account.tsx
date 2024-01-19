@@ -6,18 +6,16 @@ import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHomeContext } from "./homeContext";
 
-type AccountProps = {
-    closeAccount: () => void;
-}
 
-export function Account({ closeAccount }: AccountProps){
+
+export function Account(){
     const { userInfo, updateUserInfo } = useUserContext();
     const { updateHomeText } = useHomeContext();
     let navigate = useNavigate();
     let [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
-        updateHomeText('Upravljanje računom', '');
+        updateHomeText('Upravljanje računom', 'Promjenite osobne informacije svog računa.');
     }, []);
 
     async function handleFirstnameSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
@@ -37,6 +35,20 @@ export function Account({ closeAccount }: AccountProps){
         };
 
         updateUserInfo(newUser);
+        fetch('/api/v1/account', {
+            method: 'PUT',
+            body: JSON.stringify(newUser),
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        }).then(response => {
+            console.log(response);
+            if (response.ok) {
+                return response.json()
+            }
+        }).then(json => {
+            console.log(json);
+            updateUserInfo(newUser);
+
+        });
     }
 
     async function handleLastnameSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
@@ -56,6 +68,21 @@ export function Account({ closeAccount }: AccountProps){
         };
         
         updateUserInfo(newUser);
+
+        fetch('/api/v1/account', {
+            method: 'PUT',
+            body: JSON.stringify(newUser),
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        }).then(response => {
+            console.log(response);
+            if (response.ok) {
+                return response.json()
+            }
+        }).then(json => {
+            console.log(json);
+            updateUserInfo(newUser);
+
+        });
     }
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
@@ -96,19 +123,19 @@ export function Account({ closeAccount }: AccountProps){
     return (
         <div className={styles.quizWrapper}>    
             <div className={styles.accountWrapper}>
-                <p className={styles.audioText}>Ime:</p> <p></p>
+                <p className={styles.accountText}>Ime:</p> <p></p>
                 <form className={styles.inputWrapper} onSubmit={handleFirstnameSubmit}>
                     <InputText name = {"firstname"} placeholder={userInfo?.firstName}></InputText>
                     <OptionBtn submit={true} onClick={() => { }}>Spremi</OptionBtn>
                 </form>
 
-                <p className={styles.audioText}>Prezime:</p> <p></p>
+                <p className={styles.accountText}>Prezime:</p> <p></p>
                 <form className={styles.inputWrapper} onSubmit={handleLastnameSubmit}>
                     <InputText name = {"lastname"} placeholder={userInfo?.lastName}></InputText>
                     <OptionBtn submit={true} onClick={() => { }}>Spremi</OptionBtn>
                 </form>
 
-                <p className={styles.audioText}>Lozinka:</p> <p></p>
+                <p className={styles.accountText}>Lozinka:</p> <p></p>
                 <form onSubmit={handleSubmit}>
                     <InputPassword name='password1' placeholder="Unesite novu lozinku" />
                     <InputPassword name="password2" placeholder="Ponovite novu lozinku" />
