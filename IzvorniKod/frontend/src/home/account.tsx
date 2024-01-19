@@ -6,11 +6,9 @@ import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHomeContext } from "./homeContext";
 
-type AccountProps = {
-    closeAccount: () => void;
-}
 
-export function Account({ closeAccount }: AccountProps){
+
+export function Account(){
     const { userInfo, updateUserInfo } = useUserContext();
     const { updateHomeText } = useHomeContext();
     let navigate = useNavigate();
@@ -37,6 +35,20 @@ export function Account({ closeAccount }: AccountProps){
         };
 
         updateUserInfo(newUser);
+        fetch('/api/v1/account', {
+            method: 'PUT',
+            body: JSON.stringify(newUser),
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        }).then(response => {
+            console.log(response);
+            if (response.ok) {
+                return response.json()
+            }
+        }).then(json => {
+            console.log(json);
+            updateUserInfo(newUser);
+
+        });
     }
 
     async function handleLastnameSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
@@ -56,6 +68,21 @@ export function Account({ closeAccount }: AccountProps){
         };
         
         updateUserInfo(newUser);
+
+        fetch('/api/v1/account', {
+            method: 'PUT',
+            body: JSON.stringify(newUser),
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        }).then(response => {
+            console.log(response);
+            if (response.ok) {
+                return response.json()
+            }
+        }).then(json => {
+            console.log(json);
+            updateUserInfo(newUser);
+
+        });
     }
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {

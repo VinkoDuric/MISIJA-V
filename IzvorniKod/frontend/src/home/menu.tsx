@@ -15,15 +15,7 @@ export function Menu({ closeMenu }: MenuProps) {
     let { updateUserInfo } = useUserContext();
     const { updateHomeText } = useHomeContext();
     const [isAccountOpen, setIsAccountOpen] = useState(false);
-
-    const openAccount = () => {
-        setIsAccountOpen(true);
-      };
     
-    const closeAccount = () => {
-        setIsAccountOpen(false);
-    };
-
     function onLogoutClick() {
         fetch("/api/v1/auth/logout").then(() => {
             updateUserInfo(null);
@@ -37,16 +29,13 @@ export function Menu({ closeMenu }: MenuProps) {
 
     return (
         <div className={styles.menuWrapper}>
-            {!isAccountOpen && (
                 <>
                     <OptionBtn onClick={() => { navigate('/home'); closeMenu(); }}>Početna stranica</OptionBtn>
-                    <OptionBtn onClick={() => { openAccount();}}>Upravljanje računom</OptionBtn>
+                    <OptionBtn onClick={() => { navigate('/home/account'); closeMenu();}}>Upravljanje računom</OptionBtn>
                     <OptionBtn onClick={() => { }}>Dodaj admina</OptionBtn>
                     <OptionBtn onClick={() => { }}>Dodaj riječ</OptionBtn>
                     <OptionBtn accent={true} onClick={onLogoutClick}>Odjava</OptionBtn>
                 </>
-            )}
-            {isAccountOpen === true && (<Account closeAccount={closeAccount} />)}
         </div>  
     );
 }

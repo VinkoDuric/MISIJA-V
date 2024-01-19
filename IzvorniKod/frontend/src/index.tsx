@@ -18,6 +18,7 @@ import { Word } from "./home/word";
 import AddAdmin from "./addAdmin/addAdmin";
 import { StudyMode } from "./home/studyMode";
 import { Quiz } from "./home/quiz";
+import { Account } from "./home/account";
 
 const App = function () {
   const { userInfo, updateUserInfo } = useUserContext();
@@ -66,6 +67,14 @@ const App = function () {
           element={
             <Home>
               <Languages />
+            </Home>
+          }
+        />
+        <Route
+          path="/home/account"
+          element={
+            <Home>
+              <Account />
             </Home>
           }
         />
