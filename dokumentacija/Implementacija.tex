@@ -12,17 +12,162 @@
 		
 	
 		\section{Ispitivanje programskog rješenja}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
-	
-			
+
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
 			
+			\subsection{Testiranje Gettera i Settera}
+
+			TestGettersAndSetters služi za provjeru ispravnosti gettera i settera za klasu \texttt{Account}. U ovom testu se inicijalizira objekt \texttt{Account} s određenim podacima (email, ime, prezime, lozinka, i uloga), a zatim se koriste getteri za dohvaćanje tih podataka i setteri za postavljanje novih vrijednosti. Nakon postavljanja novih vrijednosti, ponovno se koriste getteri za provjeru je li objekt uspješno promijenjen prema očekivanjima.
+
+			\begin{lstlisting}
+				@Test
+				public void testGettersAndSetters() {
+					Account account = new Account("test@example.com", "John", "Doe", "password", Roles.USER);
 			
+					Assertions.assertEquals("test@example.com", account.getEmail());
+					Assertions.assertEquals("John", account.getFirstName());
+					Assertions.assertEquals("Doe", account.getLastName());
+					Assertions.assertEquals("password", account.getPassword());
+					Assertions.assertEquals(Roles.USER, account.getRole());
 			
+					account.setEmail("newemail@example.com");
+					account.setFirstName("Jane");
+					account.setLastName("Smith");
+					account.setPassword("newpassword");
+					account.setRole(Roles.ADMIN);
+			
+					Assertions.assertEquals("newemail@example.com", account.getEmail());
+					Assertions.assertEquals("Jane", account.getFirstName());
+					Assertions.assertEquals("Smith", account.getLastName());
+					Assertions.assertEquals("newpassword", account.getPassword());
+					Assertions.assertEquals(Roles.ADMIN, account.getRole());
+				}
+			\end{lstlisting}
+
+			\subsection{Testiranje Token Verzije}
+			
+			TestTokenVersion provjerava funkcionalnost metoda za rad s token verzijom (\texttt{getTokenVersion()}, \texttt{incrementTokenVersion()}, \texttt{setTokenVersion()}) za klasu \texttt{Account}. Prvo se inicijalizira objekt \texttt{Account}, a zatim se provjerava da li je početna vrijednost token verzije jednaka 0. Nakon toga, koristi se metoda \texttt{incrementTokenVersion()} za povećanje verzije za 1 i provjerava se da li je nova vrijednost 1. Također se koristi metoda \texttt{setTokenVersion()} za postavljanje verzije na 5 i provjerava se je li postavljena vrijednost ispravna.
+
+			\begin{lstlisting}
+				@Test
+				public void testTokenVersion() {
+					Account account = new Account("test@example.com", "John", "Doe", "password", Roles.USER);
+			
+					Assertions.assertEquals(0L, account.getTokenVersion());
+			
+					account.incrementTokenVersion();
+					Assertions.assertEquals(1L, account.getTokenVersion());
+			
+					account.setTokenVersion(5L);
+					Assertions.assertEquals(5L, account.getTokenVersion());
+				}
+			\end{lstlisting}
+
+			\subection{Testiranje Metode \texttt{toString()}}
+
+			ToString test provjerava da li metoda \texttt{toString()} klase \texttt{Account} vraća očekivani format teksta. Prvo se inicijalizira objekt \texttt{Account} s određenim podacima, a zatim se koristi metoda \texttt{toString()} za dobivanje string reprezentacije objekta. Očekivana string reprezentacija se uspoređuje s unaprijed definiranom očekivanom vrijednošću.
+
+			\begin{lstlisting}
+				@Test
+				public void testToString() {
+					Account account = new Account("test@example.com", "John", "Doe", "password", Roles.USER);
+			
+					String expectedToString = "Account{" +
+							"id=null" +
+							", email='test@example.com'" +
+							", firstName='John'" +
+							", lastName='Doe'" +
+							", password='password'" +
+							", role=USER" +
+							", tokenVersion=0" +
+							'}';
+			
+					Assertions.assertEquals(expectedToString, account.toString());
+				}
+			\end{lstlisting}
+
+			\subsection{Testiranje Metode \texttt{testLoadUserByUsername_ThrowsException()}}
+
+			Koristi se Assertions.assertThrows iz JUnit frameworka kako bi se provjerilo da će poziv loadUserByUsername(email) metode iz accountUserDetailsService doista izazvati iznimku tipa UsernameNotFoundException. Očekuje se da metoda loadUserByUsername baci iznimku kada korisnik s navedenim emailom ne postoji u sustavu.
+			
+			\begin{lstlisting}
+				@Test
+				public void testLoadUserByUsername_ThrowsException() {
+					String email = "test@example.com";
+			
+					when(accountService.findByEmail(email)).thenReturn(Optional.empty());
+			
+					Assertions.assertThrows(UsernameNotFoundException.class, () -> {
+						accountUserDetailsService.loadUserByUsername(email);
+					});
+				}
+			\end{lstlisting}
+
+			\subsection{Testiranje Metode \texttt{testGetAllDicts_EmptyList()}}	
+
+			\begin{itemize}
+				\item \textbf{Arrange}: Postavlja se ponašanje mock objekta \texttt{dictionaryService} kako bi simulirali situaciju kada nema rječnika. Očekujemo da će \texttt{dictionaryService.getAllDicts()} vratiti praznu listu koristeći \texttt{when} metodu.
+				
+				\item \textbf{Act}: Poziva se \texttt{GET()} metoda iz \texttt{dictionaryController} kako bi se dobio odgovor.
+				
+				\item \textbf{Assert}: Provjerava se da li je odgovor tipa \texttt{HttpStatus.NOT\_FOUND} (404), što označava da nema dostupnih rječnika. Također se provjerava da li je tijelo odgovora prazna lista (\texttt{Collections.emptyList()}).
+				
+				\item \textbf{Verify}: Koristi se \texttt{verify} kako bi se provjerilo da je \texttt{dictionaryService.getAllDicts()} pozvana točno jednom i da nije bilo više interakcija s tim servisom (\texttt{verifyNoMoreInteractions(dictionaryService)}).
+			\end{itemize}
+
+			\begin{lstlisting}
+
+				@Test
+				public void testGetAllDicts_EmptyList() {
+					// Arrange
+					when(dictionaryService.getAllDicts()).thenReturn(Collections.emptyList());
+			
+					// Act
+					ResponseEntity<List<Dictionary>> response = dictionaryController.GET();
+			
+					// Assert
+					Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+					Assertions.assertEquals(Collections.emptyList(), response.getBody());
+			
+					verify(dictionaryService, times(1)).getAllDicts();
+					verifyNoMoreInteractions(dictionaryService);
+				}
+
+			\end{lstlisting}
+			
+			\subsection{Testiranje Metode \texttt{testGetAllDicts_NonEmptyList()}}	
+
+			\begin{itemize}
+				\item \textbf{Arrange}: Postavlja se ponašanje mock objekta \texttt{dictionaryService} kako bi simulirali situaciju kada lista rječnika sadrži nekoliko rječnika. Očekujemo da će \texttt{dictionaryService.getAllDicts()} vratiti listu rječnika koristeći \texttt{when} metodu.
+				
+				\item \textbf{Act}: Poziva se \texttt{GET()} metoda iz \texttt{dictionaryController} kako bi se dobio odgovor.
+				
+				\item \textbf{Assert}: Provjerava se da li je odgovor tipa \texttt{HttpStatus.OK} (200), što označava uspješan zahtjev, te da li tijelo odgovora sadrži listu rječnika koja je vraćena iz \texttt{dictionaryService}.
+				
+				\item \textbf{Verify}: Koristi se \texttt{verify} kako bi se provjerilo da je \texttt{dictionaryService.getAllDicts()} pozvana točno jednom i da nije bilo više interakcija s tim servisom (\texttt{verifyNoMoreInteractions(dictionaryService)}).
+			\end{itemize}
+
+			\begin{lstlisting}
+
+				@Test
+				public void testGetAllDicts_NonEmptyList() {
+					// Arrange
+					List<Dictionary> dictionaries = List.of(new Dictionary(), new Dictionary());
+					when(dictionaryService.getAllDicts()).thenReturn(dictionaries);
+			
+					// Act
+					ResponseEntity<List<Dictionary>> response = dictionaryController.GET();
+			
+					// Assert
+					Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+					Assertions.assertEquals(dictionaries, response.getBody());
+			
+					verify(dictionaryService, times(1)).getAllDicts();
+					verifyNoMoreInteractions(dictionaryService);
+				}
+
+			\end{lstlisting}
+
 			\subsection{Ispitivanje sustava}
 			
 			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
