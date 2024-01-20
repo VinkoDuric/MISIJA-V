@@ -1,0 +1,20 @@
+.autocomplete {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.input {
+    margin: 0;
+}
+
+.itemsList {
+    margin-bottom: 1rem;
+}
+
+.btn {
+    height: 100%;
+    padding-top: auto;
+    padding-bottom: auto;
+}

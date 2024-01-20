@@ -1,0 +1,43 @@
+.optionWrapper {
+    flex-basis: 100%;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    text-align: center;
+    background-color: var(--btn-grey);
+    color: rgba(50, 50, 50, 0.79);
+    border-radius: 5px;
+    font-weight: normal;
+}
+
+.optionWrapper:hover {
+    background-color: var(--btn-grey-hover);
+}
+
+.accentColor {
+    background-color: var(--theme-color-mid-dark);
+}
+
+.accentColor:hover {
+    background-color: var(--theme-color-dark);
+}
+
+.answerColor{
+    background-color: var(--theme-color-mid-dark);
+    width:100%;
+    height: fit-content;
+}
+
+.answerColor:hover {
+    background-color: var(--theme-color-dark);
+}
+
+.submitColor{
+    background-color: var(--theme-color-mid-dark);
+    width:fit-content;
+    height: fit-content;
+}
+
+.submitColor:hover {
+    background-color: var(--theme-color-dark);
+}

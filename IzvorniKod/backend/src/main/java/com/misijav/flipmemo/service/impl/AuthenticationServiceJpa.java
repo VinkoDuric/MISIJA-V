@@ -78,11 +78,15 @@ public class AuthenticationServiceJpa implements AuthenticationService {
 
     @Override
     public AuthenticationResponse refresh(Authentication authentication) {
-        Account principal = (Account)authentication.getPrincipal();
-        Optional<Account> savedAccount = accountRepository.findByEmail(principal.getEmail());
-        String token = jwtUtil.issueToken(principal.getUsername(), savedAccount.get().getTokenVersion());
-        AccountDTO accountDTO = accountDTOMapper.apply(principal);
-        return new AuthenticationResponse(token, accountDTO);
+        Optional<Account> savedAccount = accountRepository.findByEmail(authentication.getName());
+
+        if (savedAccount.isPresent()) {
+            String token = jwtUtil.issueToken(authentication.getName(), savedAccount.get().getTokenVersion());
+            AccountDTO accountDTO = accountDTOMapper.apply(savedAccount.get());
+            return new AuthenticationResponse(token, accountDTO);
+        } else {
+            throw new RequestValidationException("User account not found.");
+        }
     }
 
     @Override
@@ -119,7 +123,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         );
 
         // save user to database
-        accountRepository.save(newUser);
+        Account createdUser = accountRepository.save(newUser);
 
         // send verification email
         sendVerificationEmail(request.firstName(), request.email(), randomPassword);
@@ -164,8 +168,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     private void sendVerificationEmail(String userFirstName, String userEmail, String userPassword) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        // TODO change login address
-        String loginAddress = "https://www.fer.unizg.hr/";
+        String loginAddress = "https://misija-v.onrender.com/";
         String htmlMsg = "<h2>Dear " + userFirstName + ",</h2>\n\n" +
                 "<p>Thank you for registering an account on <strong>FlipMemo</strong>, the language learning application.</p>" +
                 "\n\n<p style=\"margin: 5px 0;\"><strong>Your login credentials:</strong></p>" +
@@ -179,7 +182,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
             helper.setText(htmlMsg, true);
             helper.setTo(userEmail);
             helper.setSubject("FlipMemo - Registration Successful");
-            helper.setFrom("flipmemo@talentsecho.com");
+            helper.setFrom("misijav.flipmemo@gmail.com");
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -21,6 +21,13 @@ code {
   --theme-color-light: #fdfbe2;
   --shadow-color: #5a719d;
   --default-text: #263257;
+  --text-grey: rgb(126, 126, 126);
+  --theme-color-dark-complement: #40a1f9;
+  --theme-color-mid-dark-complement: #447FFF;
+  --theme-color-mid-complement: #9eb0fa;
+  --theme-color-light-complement: #e2e4fd;
+  --btn-grey: #d0d0d0;
+  --btn-grey-hover: #a8a8a8;
 }
 
 * {
@@ -34,6 +41,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   height: 100%;
+  color: var(--text-grey);
 }
 
 .xxlarge-text {
@@ -41,3 +49,4 @@ body {
   color: var(--theme-color-dark);
   margin: 1.4rem 0;
 }
+

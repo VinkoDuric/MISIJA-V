@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { InputText, InputPassword, Button } from "../components/form";
+import { Button } from "../components/buttons";
+import { InputText, InputPassword } from "../components/form";
 import styles from "./styles/login.module.css";
 
 export default function SigninInfo() {

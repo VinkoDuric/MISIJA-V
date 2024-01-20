@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components/form";
+import { Button } from "../components/buttons";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../userContext";
 import "./styles/user.css";

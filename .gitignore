@@ -8,3 +8,4 @@
 /dokumentacija/*.toc
 /dokumentacija/*.fls
 /dokumentacija/*.fdb_latexmk
+/IzvorniKod/.env

@@ -1,0 +1,32 @@
+.itemsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.item {
+    display: flex;
+    padding: 0.5rem 1rem;
+    background-color: var(--theme-color-light);
+    border: solid;
+    border-color: var(--theme-color-mid-dark);
+    border-radius: 10px;
+    border-width: 1px;
+
+}
+
+.item:hover {
+    background-color: var(--theme-color-dark);
+}
+
+.itemText {
+    flex-grow: 1;
+}
+
+.itemIcon {
+    color: pink;
+}
+
+.itemIcon:hover {
+    color: darkred;
+}

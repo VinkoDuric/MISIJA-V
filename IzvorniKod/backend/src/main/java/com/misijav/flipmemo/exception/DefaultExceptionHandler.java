@@ -60,4 +60,9 @@ public class DefaultExceptionHandler {
         return getResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request.getRequestURI());
     }
 
+    @ExceptionHandler(QuizCompletionException.class)
+    public ResponseEntity<ApiError> handleQuizCompletionException(QuizCompletionException e, HttpServletRequest request) {
+        return getResponse(HttpStatus.OK, e.getMessage(), request.getRequestURI());
+    }
+
 }

@@ -1,61 +1,44 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/form";
-import "./styles/home.css";
+import styles from "./styles/home.module.css";
 import { useUserContext } from "../userContext";
+import { faBars, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { Menu } from "./menu";
+import { ReactNode, useState } from "react";
+import { AppWindow } from "../components/structure";
+import { HomeContextProvider, useHomeContext } from "./homeContext";
 
-export default function Home() {
-  let {userInfo, updateUserInfo} = useUserContext();
-  let navigate = useNavigate();
-
-  function onLogoutClick() {
-    fetch("/api/v1/auth/logout").then(() => {
-      console.log("logout");
-      updateUserInfo(null);
-      navigate("/");
-    });
-  }
-
-  function onLogIn() {
-    navigate("/user");
-  }
-
-  return (
-    <>
-      <div className="homeCard">
-        <div className="row">
-          <img
-            alt="FlipMemoLogo"
-            className="logo"
-            src="images/logo.svg"
-            width={"50%"}
-          />
-
-          <div className="row_second">
-            <Button className="button_second" onClick={onLogIn}>
-              Korisnički račun
-            </Button>
-            <Button className="button_second" onClick={onLogoutClick}>
-              Odjava
-            </Button>
-          </div>
-          <div className="text">
-            <p>Hey, {userInfo?.firstName || "Korisnik"}</p>
-          </div>
-        </div>
-        <div className="homeCard_second">
-          <div className="card">
-            <img
-              alt="FlipMemoLogo"
-              className="flag"
-              src="images/uk.svg"
-              width={"100%"}
-            />
-            <div className="text_second">
-              <p>Engleski</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+type HomeProps = {
+    children: ReactNode;
 }
+
+function HomePage({ children }: HomeProps) {
+    let { userInfo } = useUserContext();
+    let { text } = useHomeContext();
+
+    let [menuOpen, setMenuOpen] = useState<boolean>(false);
+
+    function onMenuClick() {
+        setMenuOpen(open => !open);
+    }
+
+    return (
+        <AppWindow
+            title={text.title}
+            footer={userInfo?.firstName + ' ' + userInfo?.lastName}
+            icon={menuOpen ? faHouse : faBars}
+            handleIconClick={onMenuClick}
+        >
+            {text.caption !== null && <div className={styles.pageCaption}>{text.caption}</div>}
+            {menuOpen === false && children}
+            {menuOpen === true && <Menu closeMenu={() => setMenuOpen(false)} />}
+        </AppWindow>
+    );
+}
+
+export default function Home({ children }: HomeProps) {
+    return (
+        <HomeContextProvider>
+            <HomePage>{children}</HomePage>
+        </HomeContextProvider>
+    );
+}
+

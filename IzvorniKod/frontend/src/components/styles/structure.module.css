@@ -1,0 +1,85 @@
+.appCard {
+  max-width: 500px;
+  background-color: white;
+  margin: auto;
+  border-radius: 5px;
+  justify-items: center;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 /0.1);
+  padding: 2rem;
+}
+
+.appCardHead {
+  display: grid;
+  margin: auto;
+  max-width: 400px;
+  grid-template-columns: 1fr auto;
+}
+
+.appCardBody {
+  margin: auto;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 3rem;
+}
+
+.appWindow {
+    max-width: 1010px;
+    background-color: white;
+    margin: auto;
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 /0.1);
+    margin-bottom: 100px;
+}
+
+.appWindowContent {
+    padding: 0rem 2rem 1.5rem 2rem;
+}
+
+.appWindowHeader {
+    margin:auto;
+    display: grid;
+    padding: 1.5rem 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.appWindowLogo {
+    height: 27px;
+}
+
+.appWindowMenu {
+    color: var(--text-grey);
+    font-size: x-large;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.appWindowTitle {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--text-grey);
+    user-select: none;
+}
+
+.appWindowIcon {
+    color: var(--text-grey);
+    font-size: x-large;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.appWindowFooter {
+    margin-top: 1.9rem;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-grey)
+}
+
+
+.gridWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 170px);
+    gap: 1.5rem;
+}

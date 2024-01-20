@@ -1,0 +1,33 @@
+button {
+  display: block;
+  padding: .9em 1.7em;
+  border-radius: 5px;
+  border-style: none;
+  font-size: medium;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.accentBtn {
+  color: white;
+  background-color: var(--theme-color-dark);
+}
+
+.accentBtn:hover {
+  background-color: var(--theme-color-mid-dark);
+}
+
+.accentBtn:active {
+  background-color: var(--theme-color-mid);
+}
+
+.iconBtn {
+    cursor: pointer;
+    display: inline-block;
+}
+.iconBtn {
+    color: var(--text-grey);
+}
+.iconBtn:hover {
+    color: black;
+}

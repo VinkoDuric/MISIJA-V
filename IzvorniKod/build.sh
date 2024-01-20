@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ -f .env ]; then
+    source .env
+else
+    source /etc/secrets/.env
+fi
+
+env
+
 cat << EOF > backend/src/main/resources/application.properties
 spring.datasource.url=$POSTGRES_URL
 spring.datasource.username=$POSTGRES_USERNAME
@@ -17,3 +25,5 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties..mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 EOF
+
+cat backend/src/main/resources/application.properties

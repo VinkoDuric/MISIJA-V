@@ -2,7 +2,8 @@ import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles/login.module.css';
 import { useNavigate } from 'react-router-dom';
-import { Button, Checkbox, InputText, InputPassword } from '../components/form';
+import { Button } from '../components/buttons';
+import { Checkbox, InputText, InputPassword } from '../components/form';
 import { useUserContext, Role, UserInfo } from '../userContext';
 
 export default function LoginInfo() {
