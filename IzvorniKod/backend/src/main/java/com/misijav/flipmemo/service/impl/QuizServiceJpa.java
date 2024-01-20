@@ -64,6 +64,7 @@ public class QuizServiceJpa implements QuizService {
                     numOfAnswers--;
                 }
             }
+            Collections.shuffle(answerChoices);
             return new GetQuizQuestionResponse(question, answerChoices);
 
         } else if (learningMode.equals(LearningMode.TRANSLATED_ORIGINAL)) {
@@ -88,6 +89,7 @@ public class QuizServiceJpa implements QuizService {
                     numOfAnswers--;
                 }
             }
+            Collections.shuffle(answerChoices);
             return new GetQuizQuestionResponse(question, answerChoices);
         } else if (learningMode.equals(LearningMode.AUDIO_RESPONSE)) {
             // return original word audio (user should write answer)
