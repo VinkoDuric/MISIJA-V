@@ -15,6 +15,8 @@ function dictMetaToItemsListElements(dict: DictionaryMeta[]): ItemsListElement[]
     return dict.map(dict => ({ clickArg: dict.id, text: dict.name }));
 }
 
+let abortController: AbortController | null = null;
+
 export function Word() {
     const navigate = useNavigate();
     const { wordId } = useParams();
@@ -35,6 +37,8 @@ export function Word() {
     const [dictOptions, setDictOptions] = useState<ItemsListElement[] | null>(null);
     const [dictInput, setDictInput] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+    const [synonimeInput, setSynonimeInput] = useState<string>('');
+    const [usageInput, setUsageInput] = useState<string>('');
 
     async function setupGeneral() {
         let langs: BackendLanguageData[] = await fetch('/api/v1/languages').then(res => res.json()) || [];
@@ -138,14 +142,6 @@ export function Word() {
         }
     }
 
-    function setSynonimeSuggestions() {
-        // Only if lang is english use api
-    }
-
-    function setUsageSuggestions() {
-        // Only if lang is english use api
-    }
-
     function addSynonim(submitArg: string | number) {
         if (typeof submitArg === 'string' && submitArg !== '') {
             setSynonimes([submitArg, ...synonimes]);
@@ -158,8 +154,42 @@ export function Word() {
         }
     }
 
-    function handleSynonimInputChange(input: string) {
-        // TODO: filter suggestions by input
+    async function fetchApiData(word: string, signal: AbortSignal) {
+        let allSynonimes: string[] = [];
+        let allUsages: string[] = [];
+        try {
+            let wordApiRes = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + word, { signal: signal });
+            if (signal && signal.aborted) return;
+
+            if (!wordApiRes.ok) return;
+            let wordsInfo = await wordApiRes.json();
+
+            console.log(allSynonimes)
+            wordsInfo.forEach((word: any) => {
+                word.meanings?.forEach((meaning: any) => {
+                    console.log(meaning)
+                    allSynonimes = allSynonimes.concat(meaning.synonyms);
+                    allUsages = allUsages.concat(meaning.definitions.map((m: any) => m.definition));
+                })
+            });
+        } catch (err) {
+            console.log('ABORTED: ', err);
+        }
+        console.log('allUsages:', allUsages)
+        setSynonimeOptions(allSynonimes);
+        setUsageOptions(allUsages);
+    }
+
+    function originalWordInputChange(word: string) {
+        setOriginalWord(word)
+        if (lang?.code !== 'en') return;
+        if (abortController !== null) {
+            abortController.abort();
+        }
+        abortController = new AbortController();
+        console.log(word);
+        setSynonimeOptions([]);
+        fetchApiData(word, abortController.signal);
     }
 
     function handleAddedSynonimClick(clickArg: number) {
@@ -169,13 +199,11 @@ export function Word() {
             synonimeInputRef.current.value = synonimeText[0];
         }
         setSynonimes([...synonimes]);
-        setSynonimeSuggestions();
     }
 
     function handleSynonimRemove(clickArg: number) {
         synonimes.splice(clickArg, 1);
         setSynonimes([...synonimes]);
-        setSynonimeSuggestions();
     }
 
     function addUsage(submitArg: string | number) {
@@ -187,10 +215,6 @@ export function Word() {
         }
     }
 
-    function handleUsageInputChange(input: string) {
-        // TODO: fetch suggestions from api
-    }
-
 
     function handleAddedUsageClick(clickArg: number) {
         let usageText = usages.splice(clickArg, 1);
@@ -199,13 +223,11 @@ export function Word() {
             usagesInputRef.current.value = usageText[0];
         }
         setUsages([...usages]);
-        setUsageSuggestions();
     }
 
     function handleUsageRemove(clickArg: number) {
         usages.splice(clickArg, 1);
         setUsages([...usages]);
-        setUsageSuggestions();
     }
 
     async function refreshDictionaryOptions() {
@@ -273,7 +295,7 @@ export function Word() {
                 <h2 className={styles.sectionTitle}>Riječi</h2>
                 <div className={styles.sectionText}>Upišite stranu riječ i njezin prijevod.</div>
                 <div className={styles.wordWrapper}>
-                    <InputText value={originalWord ?? ''} onChange={setOriginalWord} name="originalWord" placeholder="Izvorna riječ" />
+                    <InputText value={originalWord ?? ''} onChange={originalWordInputChange} name="originalWord" placeholder="Izvorna riječ" />
                     <InputText value={translatedWord ?? ''} onChange={setTranslatedWord} name="translatedWord" placeholder="Prevedena riječ" />
                 </div>
             </div>
@@ -283,10 +305,10 @@ export function Word() {
                 <Autocomplete
                     placeholder="Sinonim riječi"
                     btnText="dodaj"
-                    options={convertArrayToListItems(synonimeOptions.filter(s => !synonimes.includes(s)))}
+                    options={convertArrayToListItems(synonimeOptions.filter(s => !synonimes.includes(s) && (s.includes(synonimeInput) || synonimeInput === '')).splice(0, 5))}
                     inputRef={synonimeInputRef}
                     handleSubmit={addSynonim}
-                    handleInputChange={handleSynonimInputChange} />
+                    handleInputChange={setSynonimeInput} />
                 <div>Odabrani sinonimi</div>
                 <ItemsList
                     className={styles.marginTopSmall}
@@ -296,15 +318,15 @@ export function Word() {
                     handleIconClick={handleSynonimRemove} />
             </div>
             <div className={styles.section + " " + styles.marginTop}>
-                <h2 className={styles.sectionTitle}>Primjeri korištenja</h2>
-                <div className={styles.sectionText}>Dodajte primjere korištenja riječi u izvornom jeziku.</div>
+                <h2 className={styles.sectionTitle}>Definicije</h2>
+                <div className={styles.sectionText}>Dodajte definicije izvorne riječi na izvornome jeziku.</div>
                 <Autocomplete
-                    placeholder="Primjer korištenja"
+                    placeholder="Definicija riječi"
                     btnText="dodaj"
                     inputRef={usagesInputRef}
-                    options={convertArrayToListItems(usageOptions)}
+                    options={convertArrayToListItems(usageOptions.filter(u => !usages.includes(u) && (u.includes(usageInput) || usageInput === '')).splice(0, 5))}
                     handleSubmit={addUsage}
-                    handleInputChange={handleUsageInputChange} />
+                    handleInputChange={setUsageInput} />
                 <div>Odabrani primjeri korištenja</div>
                 <ItemsList
                     className={styles.marginTopSmall}
