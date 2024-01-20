@@ -1,0 +1,752 @@
+[
+    {
+        "name": "afarski",
+        "flag": "dj",
+        "code": "aa"
+    },
+    {
+        "name": "afrikaans",
+        "flag": "za",
+        "code": "af"
+    },
+    {
+        "name": "akanski",
+        "flag": "gh",
+        "code": "ak"
+    },
+    {
+        "name": "amharski",
+        "flag": "et",
+        "code": "am"
+    },
+    {
+        "name": "arapski",
+        "flag": "UG",
+        "code": "ar"
+    },
+    {
+        "name": "asamski",
+        "flag": "IN",
+        "code": "as"
+    },
+    {
+        "name": "avarski",
+        "flag": "TR",
+        "code": "av"
+    },
+    {
+        "name": "ajmarski",
+        "flag": "PE",
+        "code": "ay"
+    },
+    {
+        "name": "azerski",
+        "flag": "az",
+        "code": "az"
+    },
+    {
+        "name": "ba\u0161kirski",
+        "flag": "RU",
+        "code": "ba"
+    },
+    {
+        "name": "bjeloruski",
+        "flag": "by",
+        "code": "be"
+    },
+    {
+        "name": "bugarski",
+        "flag": "bg",
+        "code": "bg"
+    },
+    {
+        "name": "biharski",
+        "flag": "IN",
+        "code": "bh"
+    },
+    {
+        "name": "bislama",
+        "flag": "vu",
+        "code": "bi"
+    },
+    {
+        "name": "bambarski",
+        "flag": "ml",
+        "code": "bm"
+    },
+    {
+        "name": "bengalski",
+        "flag": "bd",
+        "code": "bn"
+    },
+    {
+        "name": "bretonski",
+        "flag": "FR",
+        "code": "br"
+    },
+    {
+        "name": "bo\u0161nja\u010dki",
+        "flag": "ba",
+        "code": "bs"
+    },
+    {
+        "name": "katalonski",
+        "flag": "ad",
+        "code": "ca"
+    },
+    {
+        "name": "\u010de\u010denski",
+        "flag": "RU",
+        "code": "ce"
+    },
+    {
+        "name": "korzikanski",
+        "flag": "IT",
+        "code": "co"
+    },
+    {
+        "name": "\u010de\u0161ki",
+        "flag": "cz",
+        "code": "cs"
+    },
+    {
+        "name": "staroslavenski jezik",
+        "flag": "XX",
+        "code": "cu"
+    },
+    {
+        "name": "\u010duva\u0161ki",
+        "flag": "RU",
+        "code": "cv"
+    },
+    {
+        "name": "danski",
+        "flag": "dk",
+        "code": "da"
+    },
+    {
+        "name": "njema\u010dki",
+        "flag": "de",
+        "code": "de"
+    },
+    {
+        "name": "divehi",
+        "flag": "mv",
+        "code": "dv"
+    },
+    {
+        "name": "dzongkha",
+        "flag": "bt",
+        "code": "dz"
+    },
+    {
+        "name": "ewe",
+        "flag": "TG",
+        "code": "ee"
+    },
+    {
+        "name": "novogr\u010dki",
+        "flag": "gr",
+        "code": "el"
+    },
+    {
+        "name": "engleski",
+        "flag": "gb",
+        "code": "en"
+    },
+    {
+        "name": "\u0161panjolski",
+        "flag": "es",
+        "code": "es"
+    },
+    {
+        "name": "estonski",
+        "flag": "ee",
+        "code": "et"
+    },
+    {
+        "name": "baskijski",
+        "flag": "FR",
+        "code": "eu"
+    },
+    {
+        "name": "perzijski",
+        "flag": "ir",
+        "code": "fa"
+    },
+    {
+        "name": "fulbe (fulanski)",
+        "flag": "NG",
+        "code": "ff"
+    },
+    {
+        "name": "finski",
+        "flag": "fi",
+        "code": "fi"
+    },
+    {
+        "name": "fid\u017eijski",
+        "flag": "fj",
+        "code": "fj"
+    },
+    {
+        "name": "ferojski",
+        "flag": "FO",
+        "code": "fo"
+    },
+    {
+        "name": "francuski",
+        "flag": "fr",
+        "code": "fr"
+    },
+    {
+        "name": "\u0161kotski gaelski",
+        "flag": "GB",
+        "code": "gd"
+    },
+    {
+        "name": "galicijski",
+        "flag": "ES",
+        "code": "gl"
+    },
+    {
+        "name": "guaran\u00ed",
+        "flag": "PY",
+        "code": "gn"
+    },
+    {
+        "name": "gud\u017earatski",
+        "flag": "in",
+        "code": "gu"
+    },
+    {
+        "name": "manski",
+        "flag": "IM",
+        "code": "gv"
+    },
+    {
+        "name": "hauski",
+        "flag": "TG",
+        "code": "ha"
+    },
+    {
+        "name": "hebrejski",
+        "flag": "il",
+        "code": "he"
+    },
+    {
+        "name": "hindski",
+        "flag": "in",
+        "code": "hi"
+    },
+    {
+        "name": "hiri motu jezik",
+        "flag": "pg",
+        "code": "ho"
+    },
+    {
+        "name": "hrvatski",
+        "flag": "hr",
+        "code": "hr"
+    },
+    {
+        "name": "hai\u0107anski",
+        "flag": "ht",
+        "code": "ht"
+    },
+    {
+        "name": "ma\u0111arski",
+        "flag": "hu",
+        "code": "hu"
+    },
+    {
+        "name": "armenski",
+        "flag": "am",
+        "code": "hy"
+    },
+    {
+        "name": "herero jezik",
+        "flag": "NA",
+        "code": "hz"
+    },
+    {
+        "name": "indonezijski",
+        "flag": "id",
+        "code": "id"
+    },
+    {
+        "name": "igbo",
+        "flag": "ng",
+        "code": "ig"
+    },
+    {
+        "name": "islandski",
+        "flag": "is",
+        "code": "is"
+    },
+    {
+        "name": "talijanski",
+        "flag": "it",
+        "code": "it"
+    },
+    {
+        "name": "Inuktitut",
+        "flag": "CA",
+        "code": "iu"
+    },
+    {
+        "name": "japanski",
+        "flag": "jp",
+        "code": "ja"
+    },
+    {
+        "name": "javanski",
+        "flag": "SR",
+        "code": "jv"
+    },
+    {
+        "name": "gruzijski",
+        "flag": "ge",
+        "code": "ka"
+    },
+    {
+        "name": "kongo",
+        "flag": "cg",
+        "code": "kg"
+    },
+    {
+        "name": "kaza\u0161ki",
+        "flag": "kz",
+        "code": "kk"
+    },
+    {
+        "name": "grenlandski",
+        "flag": "GL",
+        "code": "kl"
+    },
+    {
+        "name": "kmerski",
+        "flag": "kh",
+        "code": "km"
+    },
+    {
+        "name": "Kannada",
+        "flag": "IN",
+        "code": "kn"
+    },
+    {
+        "name": "Kanuri",
+        "flag": "ne",
+        "code": "kr"
+    },
+    {
+        "name": "ka\u0161mirski",
+        "flag": "IN",
+        "code": "ks"
+    },
+    {
+        "name": "kurdski",
+        "flag": "iq",
+        "code": "ku"
+    },
+    {
+        "name": "Komi",
+        "flag": "RU",
+        "code": "kv"
+    },
+    {
+        "name": "kirgiski",
+        "flag": "kg",
+        "code": "ky"
+    },
+    {
+        "name": "latinski",
+        "flag": "va",
+        "code": "la"
+    },
+    {
+        "name": "luksembur\u0161ki",
+        "flag": "lu",
+        "code": "lb"
+    },
+    {
+        "name": "Ganda",
+        "flag": "UG",
+        "code": "lg"
+    },
+    {
+        "name": "Lingala",
+        "flag": "cg",
+        "code": "ln"
+    },
+    {
+        "name": "Lao",
+        "flag": "la",
+        "code": "lo"
+    },
+    {
+        "name": "litavski",
+        "flag": "lt",
+        "code": "lt"
+    },
+    {
+        "name": "latvijski",
+        "flag": "lv",
+        "code": "lv"
+    },
+    {
+        "name": "malga\u0161ki",
+        "flag": "mg",
+        "code": "mg"
+    },
+    {
+        "name": "Marshallese",
+        "flag": "mh",
+        "code": "mh"
+    },
+    {
+        "name": "maorski",
+        "flag": "nz",
+        "code": "mi"
+    },
+    {
+        "name": "makedonski",
+        "flag": "mk",
+        "code": "mk"
+    },
+    {
+        "name": "malajlamski",
+        "flag": "MY",
+        "code": "ml"
+    },
+    {
+        "name": "mongolski",
+        "flag": "mn",
+        "code": "mn"
+    },
+    {
+        "name": "Marathi",
+        "flag": "IN",
+        "code": "mr"
+    },
+    {
+        "name": "malte\u0161ki",
+        "flag": "mt",
+        "code": "mt"
+    },
+    {
+        "name": "burmanski",
+        "flag": "mm",
+        "code": "my"
+    },
+    {
+        "name": "Nauru",
+        "flag": "NR",
+        "code": "na"
+    },
+    {
+        "name": "knji\u0161ki norve\u0161ki (bokm\u00e5l)",
+        "flag": "no",
+        "code": "nb"
+    },
+    {
+        "name": "North Ndebele",
+        "flag": "zw",
+        "code": "nd"
+    },
+    {
+        "name": "Nepali",
+        "flag": "np",
+        "code": "ne"
+    },
+    {
+        "name": "nizozemski",
+        "flag": "nl",
+        "code": "nl"
+    },
+    {
+        "name": "novonorve\u0161ki (nynorsk)",
+        "flag": "no",
+        "code": "nn"
+    },
+    {
+        "name": "norve\u0161ki",
+        "flag": "no",
+        "code": "no"
+    },
+    {
+        "name": "South Ndebele",
+        "flag": "za",
+        "code": "nr"
+    },
+    {
+        "name": "Chichewa",
+        "flag": "mw",
+        "code": "ny"
+    },
+    {
+        "name": "okcitanski",
+        "flag": "FR",
+        "code": "oc"
+    },
+    {
+        "name": "Oriya",
+        "flag": "IN",
+        "code": "or"
+    },
+    {
+        "name": "pend\u017eabski",
+        "flag": "in",
+        "code": "pa"
+    },
+    {
+        "name": "poljski",
+        "flag": "pl",
+        "code": "pl"
+    },
+    {
+        "name": "pa\u0161tunski",
+        "flag": "af",
+        "code": "ps"
+    },
+    {
+        "name": "portugalski",
+        "flag": "pt",
+        "code": "pt"
+    },
+    {
+        "name": "ke\u010duanski",
+        "flag": "XX",
+        "code": "qu"
+    },
+    {
+        "name": "retoromanski",
+        "flag": "ch",
+        "code": "rm"
+    },
+    {
+        "name": "Kirundi",
+        "flag": "bi",
+        "code": "rn"
+    },
+    {
+        "name": "rumunjski",
+        "flag": "ro",
+        "code": "ro"
+    },
+    {
+        "name": "ruski",
+        "flag": "ru",
+        "code": "ru"
+    },
+    {
+        "name": "Kinyarwanda",
+        "flag": "rw",
+        "code": "rw"
+    },
+    {
+        "name": "sanskrt",
+        "flag": "IN",
+        "code": "sa"
+    },
+    {
+        "name": "sardski",
+        "flag": "IT",
+        "code": "sc"
+    },
+    {
+        "name": "Sindhi",
+        "flag": "PK",
+        "code": "sd"
+    },
+    {
+        "name": "sjeverni sami jezik",
+        "flag": "SE",
+        "code": "se"
+    },
+    {
+        "name": "Sango",
+        "flag": "cf",
+        "code": "sg"
+    },
+    {
+        "name": "Sinhalese",
+        "flag": "lk",
+        "code": "si"
+    },
+    {
+        "name": "slova\u010dki",
+        "flag": "sk",
+        "code": "sk"
+    },
+    {
+        "name": "slovenski",
+        "flag": "si",
+        "code": "sl"
+    },
+    {
+        "name": "samoanski",
+        "flag": "WS",
+        "code": "sm"
+    },
+    {
+        "name": "Shona",
+        "flag": "zw",
+        "code": "sn"
+    },
+    {
+        "name": "albanski",
+        "flag": "al",
+        "code": "sq"
+    },
+    {
+        "name": "srpski",
+        "flag": "rs",
+        "code": "sr"
+    },
+    {
+        "name": "Swati",
+        "flag": "sz",
+        "code": "ss"
+    },
+    {
+        "name": "Sotho",
+        "flag": "ls",
+        "code": "st"
+    },
+    {
+        "name": "\u0161vedski",
+        "flag": "se",
+        "code": "sv"
+    },
+    {
+        "name": "svahili",
+        "flag": "UG",
+        "code": "sw"
+    },
+    {
+        "name": "tamilski",
+        "flag": "lk",
+        "code": "ta"
+    },
+    {
+        "name": "telu\u0161ki",
+        "flag": "in",
+        "code": "te"
+    },
+    {
+        "name": "tad\u017ei\u010dki",
+        "flag": "tj",
+        "code": "tg"
+    },
+    {
+        "name": "Thai",
+        "flag": "th",
+        "code": "th"
+    },
+    {
+        "name": "turkmenski",
+        "flag": "tm",
+        "code": "tk"
+    },
+    {
+        "name": "Tagalog",
+        "flag": "ph",
+        "code": "tl"
+    },
+    {
+        "name": "Tswana",
+        "flag": "bw",
+        "code": "tn"
+    },
+    {
+        "name": "Tonga",
+        "flag": "TO",
+        "code": "to"
+    },
+    {
+        "name": "turski",
+        "flag": "tr",
+        "code": "tr"
+    },
+    {
+        "name": "Tsonga",
+        "flag": "za",
+        "code": "ts"
+    },
+    {
+        "name": "tatarski",
+        "flag": "RU",
+        "code": "tt"
+    },
+    {
+        "name": "Twi",
+        "flag": "GH",
+        "code": "tw"
+    },
+    {
+        "name": "tahi\u0107anski",
+        "flag": "PF",
+        "code": "ty"
+    },
+    {
+        "name": "ujgurski",
+        "flag": "CN",
+        "code": "ug"
+    },
+    {
+        "name": "ukrajinski",
+        "flag": "ua",
+        "code": "uk"
+    },
+    {
+        "name": "urdski",
+        "flag": "pk",
+        "code": "ur"
+    },
+    {
+        "name": "Uzbek",
+        "flag": "uz",
+        "code": "uz"
+    },
+    {
+        "name": "Venda",
+        "flag": "za",
+        "code": "ve"
+    },
+    {
+        "name": "vijetnamski",
+        "flag": "vn",
+        "code": "vi"
+    },
+    {
+        "name": "Wolof",
+        "flag": "sn",
+        "code": "wo"
+    },
+    {
+        "name": "Xhosa",
+        "flag": "za",
+        "code": "xh"
+    },
+    {
+        "name": "Yoruba",
+        "flag": "NG",
+        "code": "yo"
+    },
+    {
+        "name": "Zhuang",
+        "flag": "CN",
+        "code": "za"
+    },
+    {
+        "name": "kineski",
+        "flag": "cn",
+        "code": "zh"
+    },
+    {
+        "name": "Zulu",
+        "flag": "za",
+        "code": "zu"
+    }
+]
