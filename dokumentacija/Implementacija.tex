@@ -326,6 +326,94 @@ driver.getCurrentUrl().then((url) -> {
 			
 			
 %			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+
+			\hspace*{6mm}U ovom poglavlju dane su upute za puštanje aplikacije u pogon na usluzi Render. Slika 5.2 prikazuje početnu stranicu na kojoj će se izvršavati puštanje u pogon. Za puštanje u pogon potrebno je pripremiti Docker kontejner koji će uspješno izgraditi aplikaciju. Na prikazanoj slici već postoji web servis i baza podataka, no u nastavku su dane upute za njihovo stvaranje. 
+
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy1.PNG}
+				\caption{Render - početna stranica}
+				\label{fig:deployment1}
+			\end{figure}
+			
+			Slika 5.3 prikazuje izbornik koji otvaramo klikom na gumb "New". Za početak je potrebno napraviti bazu podataka pa stoga odabiremo opciju "PostgreSQL".
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy2.PNG}
+				\caption{Render - stvaranje novih servisa}
+				\label{fig:deployment2}
+			\end{figure}
+			
+			Na slici 5.4 prikazana je stranica u kojoj je potrebno ispuniti sve potrebne podatke o bazi podataka za njezino uspješno kreiranje.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy3.PNG}
+				\caption{Render - stvaranje nove baze podataka}
+				\label{fig:deployment3}
+			\end{figure}
+			
+			Nakon ispunjavanja svih potrebnih podataka, kreirana je baza podataka. Kada s početne stranice prikazane na slici 5.1 odaberemo našu bazu podataka (koja će se tamo pojaviti samim kreiranjem) možemo vidjeti sve potrebne podatke, a neki podaci koji će nam biti važni u nastavku puštanja u pogon prikazani su na slici 5.5.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy4.PNG}
+				\caption{Render - bitni podaci stvorene baze podataka}
+				\label{fig:deployment4}
+			\end{figure}
+			
+			Uz bazu podataka, za puštanje u pogon potrebno je stvoriti novi web servis. Novi web servis stvara se tako što se s početne stranice odabere "New" te zatim "Web Service", slično kao i za bazu podataka. Naša aplikacija se nalazi na GitHub repozitoriju pa je stoga potrebno odabrati prvu opciju od dvije ponuđene na slici 5.6.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy10.PNG}
+				\caption{Render - stvaranje novog web servisa}
+				\label{fig:deployment10}
+			\end{figure}
+			
+			Nakon toga potrebno je odabrati željeni repozitorij s kojeg će se izvršiti puštanje u pogon kako je prikazano na slici 5.7.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy11.PNG}
+				\caption{Render - povezivanje repozitorija}
+				\label{fig:deployment11}
+			\end{figure}
+			
+			Za uspješno puštanje u pogon potrebno je podesiti i varijable okruženja. One se podešavaju odabirom opcije "Environment" na lijevoj strani stranice web servisa što je prikazano na slici 5.8.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy5.PNG}
+				\caption{Render - podešavanje varijabli okruženja}
+				\label{fig:deployment5}
+			\end{figure}
+			
+			Primjer ispunjenih varijabli okruženja prikazan je na slici 5.9. Posljednja tri retka ove datoteke ispunjavaju se na temelju podataka iz kreirane baze podataka prikazanih na slici 5.5.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy6.PNG}
+				\caption{Render - primjer Secret File datoteke}
+				\label{fig:deployment6}
+			\end{figure}
+			
+			U sljedećem koraku potrebno je pokrenuti puštanje u pogon. To radimo na stranici web servisa odabirom opcije "Manual Deploy" te zatim odabirom "Deploy latest commit" iz padajućeg izbornika kako je prikazano slikom 5.10.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy7.PNG}
+				\caption{Render - pokretanje puštanja u pogon}
+				\label{fig:deployment7}
+			\end{figure}
+			
+			Slika 5.11 prikazuje primjer poruka koje se ispisuju tijekom procesa puštanja u pogon.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy8.PNG}
+				\caption{Render - tijek puštanja u pogon}
+				\label{fig:deployment8}
+			\end{figure}
+			
+			Konačno, uspješnost puštanja u pogon možemo vidjeti zadnjom porukom kao što je prikazano na slici 5.12. Ovdje se prikazuju neke poruke poput pokušaja registracije novog korisnika i slično.
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{slike/deploy9.PNG}
+				\caption{Render - prikaz poruke o uspješnom puštanju u pogon}
+				\label{fig:deployment9}
+			\end{figure}
 			
 			
 			\eject 
