@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useHomeContext } from "./homeContext";
 
 
-
 export function Account(){
     const { userInfo, updateUserInfo } = useUserContext();
     const { updateHomeText } = useHomeContext();
@@ -25,16 +24,12 @@ export function Account(){
         formData.forEach((value, property) => console.log(value, property));
         let inputData = Object.fromEntries(Array.from(formData));
 
-        const newUser: UserInfo = {
-            lastName: userInfo?.lastName || '',
-            firstName: inputData.firstname?.toString() || '',
-            id: userInfo?.id || 0,
-            email: userInfo?.email  || '',
-            role: userInfo?.role || "NONE",
-            tokenVersion: userInfo?.tokenVersion || 0
+        let newFirstName = inputData.firstname?.toString();
+
+        const newUser = {
+            firstName: newFirstName || '',
         };
 
-        updateUserInfo(newUser);
         fetch('/api/v1/account', {
             method: 'PUT',
             body: JSON.stringify(newUser),
@@ -46,8 +41,10 @@ export function Account(){
             }
         }).then(json => {
             console.log(json);
-            updateUserInfo(newUser);
-
+            if (userInfo === null) return;
+            let newUserInfo: UserInfo = {...userInfo};
+            newUserInfo.firstName = newFirstName;
+            updateUserInfo(newUserInfo);
         });
     }
 
@@ -58,16 +55,11 @@ export function Account(){
         formData.forEach((value, property) => console.log(value, property));
         let inputData = Object.fromEntries(Array.from(formData));
 
-        const newUser: UserInfo = {
-            firstName: userInfo?.firstName || '',
-            lastName: inputData.lastname?.toString() || '',
-            id: userInfo?.id || 0,
-            email: userInfo?.email  || '',
-            role: userInfo?.role || "NONE",
-            tokenVersion: userInfo?.tokenVersion || 0
+        let newLastName = inputData.lastname?.toString() || '';
+
+        const newUser = {
+            lastName: newLastName,
         };
-        
-        updateUserInfo(newUser);
 
         fetch('/api/v1/account', {
             method: 'PUT',
@@ -80,8 +72,10 @@ export function Account(){
             }
         }).then(json => {
             console.log(json);
-            updateUserInfo(newUser);
-
+            if (userInfo === null) return;
+            let newUserInfo: UserInfo = {...userInfo};
+            newUserInfo.lastName = newLastName;
+            updateUserInfo(newUserInfo);
         });
     }
 
