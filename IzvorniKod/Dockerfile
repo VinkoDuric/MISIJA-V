@@ -1,7 +1,7 @@
 FROM node:17-alpine as node_build
 COPY ./frontend /frontend
 WORKDIR /frontend
-RUN npm install
+RUN npm install --force
 RUN npm run build
 
 FROM ubuntu:latest AS spring_build
