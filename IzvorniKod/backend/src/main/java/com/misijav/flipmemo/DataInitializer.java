@@ -21,7 +21,7 @@ public class DataInitializer {
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
         Account racun = new Account(
-                "some.mail@gmail.com",
+                "admin@gmail.com",
                 "Ivica",
                 "Ivic",
                 pwdEncoder.encode("password"),
@@ -29,9 +29,9 @@ public class DataInitializer {
 
         racunRepo.save(racun);
         Account racun2 = new Account(
-                "bala@gmail.com",
-                "Ivica",
-                "Ivic",
+                "user@gmail.com",
+                "Marko",
+                "Marulic",
                 pwdEncoder.encode("password"),
                 Roles.USER);
 
