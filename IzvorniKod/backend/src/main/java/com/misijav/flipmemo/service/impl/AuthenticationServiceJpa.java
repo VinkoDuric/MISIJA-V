@@ -131,11 +131,6 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         // save user to database
         Account createdUser = accountRepository.save(newUser);
 
-        // Initialize CurrentState for new user
-        CurrentState currentState = new CurrentState();
-        currentState.setUser(createdUser);
-        currentStateRepository.save(currentState);
-
         // send verification email
         sendVerificationEmail(request.firstName(), request.email(), randomPassword);
     }

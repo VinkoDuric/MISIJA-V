@@ -1,6 +1,8 @@
 package com.misijav.flipmemo.model;
 
 import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,9 +31,10 @@ public class Pot {
     private Dictionary dictionary;
 
     private int potNumber;
+    private int maxPotNumber;
     private int potTimeInterval;  // in days
 
-    protected Pot() {}
+    public Pot() {}
 
     public Pot(Account user, int potNumber, Dictionary dictionary) {
         this.user = user;
@@ -48,6 +51,8 @@ public class Pot {
         this.potNumber = potNumber;
     }
 
+    public void setMaxPotNumber(int maxPotNumber) { this.maxPotNumber = maxPotNumber; }
+
     public void setDictionary(Dictionary dictionary) { this.dictionary = dictionary; }
 
     public Long getPotId() {
@@ -61,6 +66,8 @@ public class Pot {
     public int getPotNumber() {
         return potNumber;
     }
+
+    public int getMaxPotNumber() { return maxPotNumber; }
 
     public List<Word> getWords() { return words; }
 
@@ -86,16 +93,28 @@ public class Pot {
 
     // Method to get all available words ("time.now - word.time <= potTimeInterval")
     public List<Word> getAvailableWords() {
+        if (this.words == null) {
+            return null;
+        }
         List<Word> availableWords = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
 
         for (Word word : this.words) {
-            if (availableWords.size() > 50) return availableWords;  // future optimisation: adjust this constant
+            if (availableWords.size() > 50) { return availableWords; } // future optimisation: adjust this constant
             LocalDateTime lastReviewedTime = word.getLastReviewedTimes().get(this);
             if (lastReviewedTime == null || ChronoUnit.DAYS.between(lastReviewedTime, now) >= this.potTimeInterval) {
                 availableWords.add(word);
             }
         }
         return availableWords;
+    }
+
+    @Override
+    public String toString() {
+        return "Pot{" +
+                "potId=" + potId +
+                ", potNumber=" + potNumber +
+                ", potTimeInterval=" + potTimeInterval +
+                '}';
     }
 }

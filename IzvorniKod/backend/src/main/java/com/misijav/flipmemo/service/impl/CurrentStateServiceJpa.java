@@ -1,7 +1,6 @@
 package com.misijav.flipmemo.service.impl;
 
 import com.misijav.flipmemo.dao.AccountRepository;
-import com.misijav.flipmemo.dao.CurrentStateRepository;
 import com.misijav.flipmemo.dao.DictionaryRepository;
 import com.misijav.flipmemo.dao.PotRepository;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
@@ -10,21 +9,16 @@ import com.misijav.flipmemo.service.CurrentStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class CurrentStateServiceJpa implements CurrentStateService {
-    private final CurrentStateRepository currentStateRepository;
     private final DictionaryRepository dictionaryRepository;
     private final PotRepository potRepository;
     private final AccountRepository accountRepository;
 
     @Autowired
-    public CurrentStateServiceJpa(CurrentStateRepository currentStateRepository,
-                                  DictionaryRepository dictionaryRepository,
+    public CurrentStateServiceJpa(DictionaryRepository dictionaryRepository,
                                   PotRepository potRepository,
                                   AccountRepository accountRepository) {
-        this.currentStateRepository = currentStateRepository;
         this.dictionaryRepository = dictionaryRepository;
         this.potRepository = potRepository;
         this.accountRepository = accountRepository;
@@ -37,7 +31,7 @@ public class CurrentStateServiceJpa implements CurrentStateService {
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id " + userId));
 
         // Create pots for this user and dictionary
-        int numberOfPots = 3;  // Number of pots
+        int numberOfPots = 6;  // Number of pots
         for (int potNum = 1; potNum <= numberOfPots; potNum++) {
             Pot newPot = new Pot(user, potNum, dictionary);
             if (potNum == 1) {  // For the first pot, add all words from the dictionary
@@ -45,17 +39,8 @@ public class CurrentStateServiceJpa implements CurrentStateService {
                     newPot.addWord(word);
                 }
             }
+            newPot.setMaxPotNumber(numberOfPots);
             potRepository.save(newPot);
         }
-
-        CurrentState currentState = currentStateRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with id: " + userId));
-        currentState.setNumberOfPots(numberOfPots);
-        currentStateRepository.save(currentState);
-    }
-
-    @Override
-    public Optional<CurrentState> findByUserId(Long userId) {
-        return currentStateRepository.findByUserId(userId);
     }
 }

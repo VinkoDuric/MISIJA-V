@@ -1,15 +1,12 @@
 package com.misijav.flipmemo.service.impl;
 
-import com.misijav.flipmemo.dao.CurrentStateRepository;
 import com.misijav.flipmemo.dao.PotRepository;
 import com.misijav.flipmemo.dao.WordRepository;
 import com.misijav.flipmemo.exception.QuizCompletionException;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
-import com.misijav.flipmemo.model.CurrentState;
 import com.misijav.flipmemo.model.LearningMode;
 import com.misijav.flipmemo.model.Pot;
 import com.misijav.flipmemo.model.Word;
-import com.misijav.flipmemo.rest.quiz.GetQuizQuestionRequest;
 import com.misijav.flipmemo.rest.quiz.CheckQuizAnswerRequest;
 import com.misijav.flipmemo.rest.quiz.GetQuizQuestionResponse;
 import com.misijav.flipmemo.service.CurrentStateService;
@@ -22,33 +19,28 @@ import java.util.*;
 
 @Service
 public class QuizServiceJpa implements QuizService {
-    private final CurrentStateRepository currentStateRepository;
     private final PotRepository potRepository;
     private final CurrentStateService currentStateService;
     private final WordRepository wordRepository;
 
     @Autowired
-    public QuizServiceJpa(CurrentStateRepository currentStateRepository,
-                          PotRepository potRepository,
+    public QuizServiceJpa(PotRepository potRepository,
                           CurrentStateService currentStateService,
                           WordRepository wordRepository) {
-        this.currentStateRepository = currentStateRepository;
         this.potRepository = potRepository;
         this.currentStateService = currentStateService;
         this.wordRepository = wordRepository;
     }
 
     @Override
-    public GetQuizQuestionResponse getQuizQuestion(Long dictId, Long userId, GetQuizQuestionRequest request) {
+    public GetQuizQuestionResponse getQuizQuestion(Long dictId, Long userId, LearningMode learningMode) {
         // Find list of pots for this user and this dictionary
         List<Pot> userPots = potRepository.findByUserIdAndDictionaryId(userId, dictId);
         // If pots are not yet initialized, initialize them
-        if (userPots == null) {
+        if (userPots == null || userPots.isEmpty()) {
             currentStateService.initializePotsForUser(userId, dictId);
             userPots = potRepository.findByUserIdAndDictionaryId(userId, dictId);
         }
-
-        LearningMode learningMode = request.learningMode();
 
         if (learningMode.equals(LearningMode.ORIGINAL_TRANSLATED)) {
             // return original word (eng) with multiple translated words (hrv)
@@ -57,7 +49,9 @@ public class QuizServiceJpa implements QuizService {
             updateWordTimestamp(originalWord, dictId, userId);  // update timestamp for word
 
             List<String> answerChoices = new ArrayList<>();
-            for (int numOfAnswers = 1; numOfAnswers <= 4; numOfAnswers++) {
+            answerChoices.add(originalWord.getTranslatedWord());
+
+            for (int numOfAnswers = 1; numOfAnswers < 4; numOfAnswers++) {
                 Word answer = selectWordForQuiz(userPots);
                 // check if word is "question unique"
                 if (!Objects.equals(answer.getWordId(), originalWord.getWordId())) {  // if answer != question
@@ -79,7 +73,9 @@ public class QuizServiceJpa implements QuizService {
             updateWordTimestamp(translatedWord, dictId, userId);  // update timestamp for word
 
             List<String> answerChoices = new ArrayList<>();
-            for (int numOfAnswers = 1; numOfAnswers <= 4; numOfAnswers++) {
+            answerChoices.add(translatedWord.getOriginalWord());
+
+            for (int numOfAnswers = 1; numOfAnswers < 4; numOfAnswers++) {
                 Word answer = selectWordForQuiz(userPots);
                 // Check if word is "question unique"
                 if (!Objects.equals(answer.getWordId(), translatedWord.getWordId())) {
@@ -128,7 +124,7 @@ public class QuizServiceJpa implements QuizService {
         List<Word> wordList = new ArrayList<>();
         for (Pot potElem : userPots) {
             List<Word> tmpWordList = potElem.getAvailableWords();
-            if (tmpWordList != null && tmpWordList.size() > 1) {
+            if (tmpWordList != null && !tmpWordList.isEmpty()) {
                 wordList.addAll(tmpWordList);
             }
 
@@ -141,7 +137,9 @@ public class QuizServiceJpa implements QuizService {
             // Check if there is enough words inside pots
             int wordsLeft = 0;
             for (Pot potElem : userPots) {
-                wordsLeft += potElem.getWords().size();
+                if (potElem.getWords() != null) {
+                    wordsLeft += potElem.getWords().size();
+                }
             }
             if (wordsLeft < 5) {
                 // Quiz is done
@@ -159,9 +157,6 @@ public class QuizServiceJpa implements QuizService {
 
     @Override
     public int checkAnswer(Long userId, Long wordId, CheckQuizAnswerRequest request) {
-        CurrentState currentState = currentStateRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Current state not found for user with id: " + userId));
-
         Word word = wordRepository.findWordByWordId(wordId)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found with id: " + wordId));
 
@@ -176,7 +171,7 @@ public class QuizServiceJpa implements QuizService {
         if (learningMode.equals(LearningMode.ORIGINAL_TRANSLATED)) {
             // check if original word (eng) matches with translated word (hrv)
             if (word.getTranslatedWord().equals(request.answer())) {  // if word translated == answer
-                moveWordToNextPot(userId, request.dictId(), word, currentState);  // Move word to next pot
+                moveWordToNextPot(userId, request.dictId(), word);  // Move word to next pot
                 return 10;
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);  // Move word to first pot
@@ -185,7 +180,7 @@ public class QuizServiceJpa implements QuizService {
         } else if (learningMode.equals(LearningMode.TRANSLATED_ORIGINAL)) {
             // check if translated word (hrv) matches with original word (eng)
             if (word.getOriginalWord().equals(request.answer())) {  // if original word == answer
-                moveWordToNextPot(userId, request.dictId(), word, currentState);
+                moveWordToNextPot(userId, request.dictId(), word);
                 return 10;
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);
@@ -194,7 +189,7 @@ public class QuizServiceJpa implements QuizService {
         } else if (learningMode.equals(LearningMode.AUDIO_RESPONSE)) {
             // check if original word is equal to user written answer
             if (word.getOriginalWord().equals(request.answer())) {
-                moveWordToNextPot(userId, request.dictId(), word, currentState);
+                moveWordToNextPot(userId, request.dictId(), word);
                 return 10;
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);
@@ -206,7 +201,7 @@ public class QuizServiceJpa implements QuizService {
             Random random = new Random();
             int evaluation = random.nextInt(11);
             if (evaluation >= 5) {
-                moveWordToNextPot(userId, request.dictId(), word, currentState);
+                moveWordToNextPot(userId, request.dictId(), word);
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);
             }
@@ -215,7 +210,7 @@ public class QuizServiceJpa implements QuizService {
         return 0;
     }
 
-    private void moveWordToNextPot(Long userId, Long dictId, Word word, CurrentState currentState) {
+    private void moveWordToNextPot(Long userId, Long dictId, Word word) {
         Pot currentPot = potRepository.findByUserIdWordIdAndDictId(userId, word.getWordId(), dictId)
                 .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
                         + userId + ", and word " + word.getWordId()));
@@ -223,7 +218,7 @@ public class QuizServiceJpa implements QuizService {
         currentPot.removeWord(word);
         potRepository.save(currentPot);
 
-        if (currentState.getNumberOfPots() > currentPot.getPotNumber()) {  // if it is not last pot
+        if (currentPot.getMaxPotNumber() > currentPot.getPotNumber()) {  // if it is not last pot
             Pot nextPot = potRepository.findByUserIdPotNumberAndDictId(userId, currentPot.getPotNumber() + 1, dictId)
                     .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
                             + userId + ", and pot number " + currentPot.getPotNumber()));

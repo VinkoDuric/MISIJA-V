@@ -12,14 +12,6 @@ import java.util.Optional;
 public interface CurrentStateService {
 
     /**
-     * Finds the current learning state of a specific user.
-     *
-     * @param userId The unique identifier of the user.
-     * @return An Optional containing the user's current learning state if found.
-     */
-    Optional<CurrentState> findByUserId(Long userId);
-
-    /**
      * Initializes pots for a given user with a selected dictionary.
      * This method will create a starting learning state for each word in the dictionary,
      * typically placing all words in the first pot, signifying the start of the learning process.

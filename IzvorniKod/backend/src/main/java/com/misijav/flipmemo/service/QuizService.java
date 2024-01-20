@@ -1,7 +1,7 @@
 package com.misijav.flipmemo.service;
 
+import com.misijav.flipmemo.model.LearningMode;
 import com.misijav.flipmemo.rest.quiz.CheckQuizAnswerRequest;
-import com.misijav.flipmemo.rest.quiz.GetQuizQuestionRequest;
 import com.misijav.flipmemo.rest.quiz.GetQuizQuestionResponse;
 
 public interface QuizService {
@@ -11,10 +11,10 @@ public interface QuizService {
      *
      * @param dictId The ID of the dictionary to generate questions from.
      * @param userId The ID of the user taking the quiz.
-     * @param request Additional request parameters, including Learning Mode
+     * @param learningMode User learning mode.
      * @return A response containing the quiz question.
      */
-    GetQuizQuestionResponse getQuizQuestion(Long dictId, Long userId, GetQuizQuestionRequest request);
+    GetQuizQuestionResponse getQuizQuestion(Long dictId, Long userId, LearningMode learningMode);
 
     /**
      * Checks the answer submitted by a user for a quiz question.
