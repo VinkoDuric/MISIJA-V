@@ -91,7 +91,10 @@ export function Dictionary() {
         <div>
             <Autocomplete inputRef={inputRef} placeholder="Ime rječnika" btnText="spremi" handleSubmit={handleSubmit} />
             <ItemsList items={wordMetaToItemsListElements(words)} icon={faTrash} handleIconClick={handleItemIconClick} handleClick={handleItemClick} />
-            <Button type={ButtonType.NORMAL} className={styles.addWordButton} onClick={()=>{navigate('/word')}}>Dodaj riječ</Button>
+            {
+                !newDict &&
+                <Button type={ButtonType.NORMAL} className={styles.addWordButton} onClick={()=>{navigate('/word')}}>Dodaj riječ</Button>
+            }
         </div>
     );
 }

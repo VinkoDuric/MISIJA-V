@@ -152,6 +152,7 @@ export function Word() {
         if (synonimeInputRef.current) {
             synonimeInputRef.current.value = '';
         }
+        setSynonimeInput('');
     }
 
     async function fetchApiData(word: string, signal: AbortSignal) {
@@ -213,6 +214,7 @@ export function Word() {
         else if (typeof submitArg === 'number') {
             setUsages([usageOptions[submitArg], ...usages])
         }
+        setUsageInput('');
     }
 
 
