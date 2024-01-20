@@ -6,39 +6,66 @@ import { useNavigate } from "react-router-dom";
 import { useHomeContext } from "./homeContext";
 
 type MenuProps = {
-    closeMenu: () => void;
-}
+  closeMenu: () => void;
+};
 
 export function Menu({ closeMenu }: MenuProps) {
-    const navigate = useNavigate();
-    const { userInfo } = useUserContext();
-    let { updateUserInfo } = useUserContext();
-    const { updateHomeText } = useHomeContext();
-    function onLogoutClick() {
-        fetch("/api/v1/auth/logout").then(() => {
-            updateUserInfo(null);
-            navigate('/');
-        });
-    }
+  const navigate = useNavigate();
+  const { userInfo } = useUserContext();
+  let { updateUserInfo } = useUserContext();
+  const { updateHomeText } = useHomeContext();
+  function onLogoutClick() {
+    fetch("/api/v1/auth/logout").then(() => {
+      updateUserInfo(null);
+      navigate("/");
+    });
+  }
 
-    useEffect(() => {
-        updateHomeText('Izbornik', '');
-    }, []);
+  useEffect(() => {
+    updateHomeText("Izbornik", "");
+  }, []);
 
-    return (
-        <div className={styles.menuWrapper}>
-            <OptionBtn onClick={() => { navigate('/home'); closeMenu(); }}>Odabir jezika</OptionBtn>
-            <OptionBtn onClick={() => { navigate('/home/account'); closeMenu();}}>Upravljanje računom</OptionBtn>
-            {
-                userInfo !== null && Role[userInfo.role] === Role.ADMIN &&
-                (
-                    <>
-                        <OptionBtn onClick={() => { }}>Dodaj admina</OptionBtn>
-                        <OptionBtn onClick={() => { navigate('/word'); closeMenu(); }}>Dodaj riječ</OptionBtn>
-                    </>
-                )
-            }
-            <OptionBtn accent={true} onClick={onLogoutClick}>Odjava</OptionBtn>
-        </div>
-    );
+  return (
+    <div className={styles.menuWrapper}>
+      <OptionBtn
+        onClick={() => {
+          navigate("/home");
+          closeMenu();
+        }}
+      >
+        Odabir jezika
+      </OptionBtn>
+      <OptionBtn
+        onClick={() => {
+          navigate("/home/account");
+          closeMenu();
+        }}
+      >
+        Upravljanje računom
+      </OptionBtn>
+      {userInfo !== null && Role[userInfo.role] === Role.ADMIN && (
+        <>
+          <OptionBtn
+            onClick={() => {
+              navigate("/home/addadmin");
+              closeMenu();
+            }}
+          >
+            Dodaj admina
+          </OptionBtn>
+          <OptionBtn
+            onClick={() => {
+              navigate("/word");
+              closeMenu();
+            }}
+          >
+            Dodaj riječ
+          </OptionBtn>
+        </>
+      )}
+      <OptionBtn accent={true} onClick={onLogoutClick}>
+        Odjava
+      </OptionBtn>
+    </div>
+  );
 }
