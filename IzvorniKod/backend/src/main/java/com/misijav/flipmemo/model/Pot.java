@@ -3,6 +3,7 @@ package com.misijav.flipmemo.model;
 import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,15 +17,9 @@ public class Pot {
     private Long potId;
 
     @ManyToOne
-    Account user;
+    private Account user;
 
-    @ManyToMany
-    /*
-    @JoinTable(
-            name = "wordInPot",
-            joinColumns = @JoinColumn(name = "potId"),
-            inverseJoinColumns = @JoinColumn(name = "wordId")
-    )*/
+    @ManyToMany(mappedBy = "pots")
     private List<Word> words;
 
     @ManyToOne
@@ -92,6 +87,7 @@ public class Pot {
     }
 
     // Method to get all available words ("time.now - word.time <= potTimeInterval")
+    @Transactional
     public List<Word> getAvailableWords() {
         if (this.words == null) {
             return null;

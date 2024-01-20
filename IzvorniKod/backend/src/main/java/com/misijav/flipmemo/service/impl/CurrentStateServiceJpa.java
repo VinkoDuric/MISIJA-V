@@ -8,6 +8,7 @@ import com.misijav.flipmemo.model.*;
 import com.misijav.flipmemo.service.CurrentStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CurrentStateServiceJpa implements CurrentStateService {
@@ -24,6 +25,7 @@ public class CurrentStateServiceJpa implements CurrentStateService {
         this.accountRepository = accountRepository;
     }
 
+    @Transactional
     public void initializePotsForUser(Long userId, Long dictionaryId) {
         Dictionary dictionary = dictionaryRepository.findById(dictionaryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found with id: "+ dictionaryId));

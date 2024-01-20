@@ -1,10 +1,5 @@
 package com.misijav.flipmemo.service;
 
-import com.misijav.flipmemo.model.CurrentState;
-import com.misijav.flipmemo.model.LearningMode;
-
-import java.util.Optional;
-
 /**
  * This service is responsible for managing the learning states of users,
  * particularly their progress through different 'pots' or levels of word familiarity.

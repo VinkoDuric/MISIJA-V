@@ -28,19 +28,16 @@ public class Word {
     @ElementCollection
     private List<String> wordSynonyms = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "dictWords")
     private List<Dictionary> dictionaries = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "words")
+    @ManyToMany
     private List<Pot> pots;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    /*
     @CollectionTable(name = "word_review_times", joinColumns = @JoinColumn(name = "word_id"))
     @MapKeyJoinColumn(name = "pot_id")
     @Column(name = "last_reviewed")
-
-     */
     private Map<Pot, LocalDateTime> lastReviewedTimes = new HashMap<>();
 
     public Word() {}
@@ -100,6 +97,13 @@ public class Word {
 
     public void addWordSynonym(String synonym) { this.wordSynonyms.add(synonym); }
 
+    public void addPot(Pot pot) {
+        if (pots == null) {
+            pots = new ArrayList<>();
+        }
+        pots.add(pot);
+    }
+
     @Override
     public String toString() {
         return "Word{" +
@@ -109,8 +113,6 @@ public class Word {
                 ", translatedWord='" + translatedWord + '\'' +
                 ", wordDescription=" + wordDescription +
                 ", wordSynonyms=" + wordSynonyms +
-                ", dictionaries=" + dictionaries +
-                ", pots=" + pots +
                 '}';
     }
 }

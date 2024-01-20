@@ -11,14 +11,18 @@ import com.misijav.flipmemo.rest.quiz.CheckQuizAnswerRequest;
 import com.misijav.flipmemo.rest.quiz.GetQuizQuestionResponse;
 import com.misijav.flipmemo.service.CurrentStateService;
 import com.misijav.flipmemo.service.QuizService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 public class QuizServiceJpa implements QuizService {
+    private static final Logger logger = LoggerFactory.getLogger(QuizServiceJpa.class);
     private final PotRepository potRepository;
     private final CurrentStateService currentStateService;
     private final WordRepository wordRepository;
@@ -42,10 +46,14 @@ public class QuizServiceJpa implements QuizService {
             userPots = potRepository.findByUserIdAndDictionaryId(userId, dictId);
         }
 
+        logger.info("userPots = {}", userPots);
+        logger.info("First pot = {}", userPots.get(0).getWords());
+
         if (learningMode.equals(LearningMode.ORIGINAL_TRANSLATED)) {
             // return original word (eng) with multiple translated words (hrv)
             Word originalWord = selectWordForQuiz(userPots);
             String question = originalWord.getOriginalWord();
+            logger.info("User id {} dict id {} word id {}.", userId, dictId, originalWord.getWordId());
             updateWordTimestamp(originalWord, dictId, userId);  // update timestamp for word
 
             List<String> answerChoices = new ArrayList<>();
@@ -105,6 +113,7 @@ public class QuizServiceJpa implements QuizService {
     }
 
     private void updateWordTimestamp(Word word, Long dictId, Long userId) {
+        logger.info("User inside updateWordTimestamp method");
         Pot pot = potRepository.findByUserIdWordIdAndDictId(userId, word.getWordId(), dictId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pot for user "
                         + userId + ", dictionary " + dictId + ", and word " + word.getWordId() + " not found"));
@@ -119,6 +128,10 @@ public class QuizServiceJpa implements QuizService {
     }
 
     private Word selectWordForQuiz(List<Pot> userPots) {
+        logger.info("User in selectWordForQuiz");
+        logger.info("userPots = {}", userPots);
+        logger.info("First pot = {}", userPots.get(0).getWords());
+
         // Sort pots by potNumber in descending order (Pot6,..,Pot1)
         userPots.sort((pot1, pot2) -> Integer.compare(pot2.getPotNumber(), pot1.getPotNumber()));
 
@@ -158,6 +171,7 @@ public class QuizServiceJpa implements QuizService {
     }
 
     @Override
+    @Transactional
     public int checkAnswer(Long userId, Long wordId, CheckQuizAnswerRequest request) {
         Word word = wordRepository.findWordByWordId(wordId)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found with id: " + wordId));

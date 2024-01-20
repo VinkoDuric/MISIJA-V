@@ -22,7 +22,12 @@ public class Dictionary {
     @ManyToOne
     private Language dictLang;
 
-    @ManyToMany(mappedBy = "dictionaries")
+    @ManyToMany
+    @JoinTable(
+            name = "dictionary_word",
+            joinColumns = @JoinColumn(name = "dictionary_id"),
+            inverseJoinColumns = @JoinColumn(name = "word_id")
+    )
     private List<Word> dictWords;
 
     public Dictionary() {}

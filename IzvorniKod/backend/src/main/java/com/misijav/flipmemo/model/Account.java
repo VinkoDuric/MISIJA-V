@@ -26,6 +26,9 @@ public class Account implements UserDetails {
     private Roles role;
     private Long tokenVersion = (long) 0;
 
+    @OneToMany(mappedBy = "user")
+    private List<Pot> pots;
+
     private Account() {}
 
     public Account(String email, String firstName, String lastName, String password, Roles role) {

@@ -11,7 +11,10 @@ import com.misijav.flipmemo.rest.word.WordRequest;
 import com.misijav.flipmemo.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,7 +28,9 @@ public class WordServiceJpa implements WordService {
         this.dictionaryRepository = dictionaryRepository;
     }
 
+
     @Override
+    @Transactional
     public Word addWord(WordRequest request) {
 
         if (request.originalWord() == null || request.originalWord().isEmpty()) {
@@ -64,14 +69,18 @@ public class WordServiceJpa implements WordService {
         for (Long dictId : request.dictionaryIds()) {
             Dictionary dictionary = dictionaryRepository.findById(dictId)
                     .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found for this id: " + dictId));
-            newWord.addDictionary(dictionary);
+            newWord.addDictionary(dictionary);  // Set the dictionary in the word entity
+            dictionary.getDictWords().add(newWord);  // Add the word to the dictionary
+            wordRepository.save(newWord);
+            dictionaryRepository.save(dictionary);  // Save changes
         }
 
-        // Save word to the repository
-        return wordRepository.save(newWord);
+        return wordRepository.findByOriginalWord(request.originalWord())
+                .orElseThrow(() -> new ResourceNotFoundException("Word not found with this name: " + request.originalWord()));
     }
 
     @Override
+    @Transactional
     public void updateWord(Long id, WordModificationRequest wordDetails) {
         // Check if word exists
         Word word = wordRepository.findWordByWordId(id)
@@ -97,31 +106,40 @@ public class WordServiceJpa implements WordService {
             word.setWordDescription(wordDetails.wordDescription());
         }
 
-        // Add synonyms if present
-        if (wordDetails.wordSynonyms() != null && !wordDetails.wordSynonyms().isEmpty()) {
-            for (String synonym : wordDetails.wordSynonyms()) {
-                word.addWordSynonym(synonym);
-            }
+        // Update synonyms, replace existing synonyms with new list
+        if (wordDetails.wordSynonyms() != null) {
+            word.setSynonyms(new ArrayList<>(wordDetails.wordSynonyms()));
         }
 
-        // Update if present
+        // Update dictionaries
         if (wordDetails.dictionaryIds() != null && !wordDetails.dictionaryIds().isEmpty()) {
-           for (Long dictId : wordDetails.dictionaryIds()) {
-               Dictionary dictionary = dictionaryRepository.findById(dictId)
-                       .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found for this id: " + dictId));
-               word.addDictionary(dictionary);
-           }
+            List<Dictionary> dictionaries = (List<Dictionary>) dictionaryRepository.findAllById(wordDetails.dictionaryIds());
+            word.setDictionaries(dictionaries);
         }
 
         wordRepository.save(word);
     }
 
      @Override
+     @Transactional
      public void deleteWord(Long id) {
          // Check if word exists
          Word word = wordRepository.findWordByWordId(id)
                  .orElseThrow(() -> new ResourceNotFoundException("Word not found for this id: " + id));
 
+         // Remove the word from all associated dictionaries
+         List<Long> dictionaryIds = word.getDictionaries();
+         if (dictionaryIds != null) {
+             for (Long dictId : dictionaryIds) {
+                 Dictionary dictionary = dictionaryRepository.findById(dictId)
+                         .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found for this id: " + dictId));
+
+                 dictionary.getDictWords().remove(word);
+                 dictionaryRepository.save(dictionary);
+             }
+         }
+
+         // Delete the word
          wordRepository.delete(word);
      }
 

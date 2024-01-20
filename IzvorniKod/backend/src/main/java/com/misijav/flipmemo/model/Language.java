@@ -3,12 +3,10 @@ package com.misijav.flipmemo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.List;
+
 @Entity
 public class Language {
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;*/
-
     @Id
     private String langCode;
 
@@ -17,15 +15,16 @@ public class Language {
 
     private String languageImage;
 
-    private Language() {}
+    @OneToMany(mappedBy = "dictLang")
+    private List<Dictionary> dictionaries;
+
+    protected Language() {}
 
     public Language(String langCode, String languageName, String languageImage) {
         this.languageName = languageName;
         this.languageImage = languageImage;
         this.langCode = langCode;
     }
-
-    //public Long getId() { return id; }
 
     public String getLangCode() {
         return langCode;
