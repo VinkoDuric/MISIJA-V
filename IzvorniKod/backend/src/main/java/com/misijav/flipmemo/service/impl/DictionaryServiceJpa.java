@@ -60,12 +60,15 @@ public class DictionaryServiceJpa implements DictionaryService {
         Dictionary dictionary = dictionaryRepository.findDictById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Dictionary not found with id " + id));
 
+        Language language = languageRepository.findByLanguageName(request.dictLang())
+                .orElseThrow(() -> new ResourceNotFoundException("Language with name " + request.dictLang() + " not found."));
+
         if(request.dictName() != null && request.dictName().isEmpty()) {
             if(dictionaryRepository.findByDictName(request.dictName()).isPresent() &&
                    !(dictionary.getDictName().equals(request.dictName()))) {
                 throw new ResourceConflictException("Dictionary name is already in use.");
             }
-            dictionary.setDictLang(request.dictLang());
+            dictionary.setDictLang(language);
         }
 
         if(request.dictImage() != null && !request.dictImage().isEmpty()) {
@@ -73,7 +76,7 @@ public class DictionaryServiceJpa implements DictionaryService {
         }
 
         if(request.dictLang() != null){
-            dictionary.setDictLang((request.dictLang()));
+            dictionary.setDictLang(language);
         }
         return dictionaryRepository.save(dictionary);
     }

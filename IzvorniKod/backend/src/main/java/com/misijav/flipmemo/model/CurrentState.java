@@ -18,7 +18,7 @@ public class CurrentState {
 
     public CurrentState() {}
 
-    public CurrentState(Account user, Dictionary dictionary, LearningMode learningMode) {
+    public CurrentState(Account user, Dictionary dictionary) {
         this.user = user;
         this.dictionary = dictionary;
     }

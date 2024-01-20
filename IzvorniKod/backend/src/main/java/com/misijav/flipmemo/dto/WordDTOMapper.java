@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 public class WordDTOMapper implements Function<Word, WordDTO> {
     @Override
     public WordDTO apply(Word word) {
-        String synonyms = String.join(", ", word.getWordSynonyms());
         String dictionaries = word.getDictionaries().stream().map(String::valueOf)
                 .collect(Collectors.joining(", "));
 
@@ -18,7 +17,7 @@ public class WordDTOMapper implements Function<Word, WordDTO> {
                 word.getOriginalWord(),
                 word.getTranslatedWord(),
                 word.getWordDescription(),
-                synonyms,
+                word.getWordSynonyms(),
                 dictionaries
         );
     }

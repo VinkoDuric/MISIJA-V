@@ -36,18 +36,15 @@ public class CurrentStateServiceJpa implements CurrentStateService {
         Account user = accountRepository.findUserById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id " + userId));
 
-        // Create first pot and "copy" dictionary to it
-        Pot newPot1 = new Pot(user, 1);
-        for (Word word : dictionary.getDictWords()) {
-            newPot1.addWord(word);
-        }
-        // Save the newPot to its repository
-        potRepository.save(newPot1);
-
-        // Create other, empty pots
-        int numberOfPots = 3;
-        for (int potNum = 2; potNum <= numberOfPots; potNum++) {
-            Pot newPot = new Pot(user, potNum);
+        // Create pots for this user and dictionary
+        int numberOfPots = 3;  // Number of pots
+        for (int potNum = 1; potNum <= numberOfPots; potNum++) {
+            Pot newPot = new Pot(user, potNum, dictionary);
+            if (potNum == 1) {  // For the first pot, add all words from the dictionary
+                for (Word word : dictionary.getDictWords()) {
+                    newPot.addWord(word);
+                }
+            }
             potRepository.save(newPot);
         }
 

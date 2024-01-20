@@ -8,6 +8,6 @@ public record WordDTO(
         String originalWord,
         String translatedWord,
         List<String> wordDescription,
-        String wordSynonyms,
+        List<String> wordSynonyms,
         String dictionaryIds
 ) {}
