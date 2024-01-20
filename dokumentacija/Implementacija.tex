@@ -7,7 +7,7 @@
 			
 			 %\textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
 			 
-			 Za ostvarenje komunikacije između članova projektnog tima korištena je aplikacija WhatsApp\footnote{https://www.whatsapp.com/}. Za održavanje sastanaka unutar tima korištena je platforma MS Teams\footnote{https://www.microsoft.com/microsoft-teams/}. Komunikacija s demonstratorom i asistentom ostvarena je također s pomoću platforme MS Teams. Praćenje napretka i raspodjela zadataka u timu ostvarena je pomoću alata Jira\footnote{https://www.atlassian.com/software/jira}. Jira pomoću tzv. issue nudi pogućnost podijele izrade u manje zadatke koji se zatim mogu pridijeliti nekom od članova tima. Svaki od člana tima zatim može za svaki zadatak prikazati u kojoj je fazi izrade što ostalim članovima nudi mogućnost uvida u to na čemu drugi članovi tima trenutno rade. Upravljanje izvornim kodom i dokumentacijom ostvareno je s pomoću alata Git\footnote{https://git-scm.com/}. Udaljeni repozitorij pohranjen je na platformi GitHub\footnote{https://github.com/}. Za izradu dokumentacije projekta korišten je LaTeX\footnote{https://www.latex-project.org/}. UML dijagram obrazaca uporabe, sekvencijski dijagram, prva revizija dijagrama razreda, dijagram aktivnosti, dijagram stanja, dijagram komponenti i dijagram razmještaja napravljeni su s pomoću alata Astah UML\footnote{https://astah.net/products/astah-uml/}. Implementacijski dijagram razreda napravljen je s pomoću alata IntelliJ IDEA\footnote{https://www.jetbrains.com/idea/}. Model baze podataka izgrađen je alatom ERDPlus\footnote{https://erdplus.com/}. Za izradu backend dijela aplikacije korišten je radni okvir Java\footnote{https://www.java.com/en/} Spring\footnote{https://spring.io/}, a za razvoj na backendu korišteno je razvojno okruženje IntelliJ IDEA. Za izradu frontend dijela aplikacije korištena je knjižnica React\footnote{https://react.dev/} uz programski jezik TypeScript\footnote{https://www.typescriptlang.org/}. Za ispitivanje sustava korišteni su JUnit\footnote{https://junit.org/} i Selenium\footnote{https://www.selenium.dev/}. Za puštanje aplikacije u pogon korištena je platforma Render\footnote{https://render.com/}.
+			 Za ostvarenje komunikacije između članova projektnog tima korištena je aplikacija WhatsApp\footnote{\url{https://www.whatsapp.com/}}. Za održavanje sastanaka unutar tima korištena je platforma MS Teams\footnote{\url{https://www.microsoft.com/microsoft-teams/}}. Komunikacija s demonstratorom i asistentom ostvarena je također s pomoću platforme MS Teams. Praćenje napretka i raspodjela zadataka u timu ostvarena je pomoću alata Jira\footnote{\url{https://www.atlassian.com/software/jira}}. Jira pomoću tzv. issue nudi pogućnost podijele izrade u manje zadatke koji se zatim mogu pridijeliti nekom od članova tima. Svaki od člana tima zatim može za svaki zadatak prikazati u kojoj je fazi izrade što ostalim članovima nudi mogućnost uvida u to na čemu drugi članovi tima trenutno rade. Upravljanje izvornim kodom i dokumentacijom ostvareno je s pomoću alata Git\footnote{\url{https://git-scm.com/}}. Udaljeni repozitorij pohranjen je na platformi GitHub\footnote{\url{https://github.com/}}. Za izradu dokumentacije projekta korišten je LaTeX\footnote{\url{https://www.latex-project.org/}}. UML dijagram obrazaca uporabe, sekvencijski dijagram, prva revizija dijagrama razreda, dijagram aktivnosti, dijagram stanja, dijagram komponenti i dijagram razmještaja napravljeni su s pomoću alata Astah UML\footnote{\url{https://astah.net/products/astah-uml/}}. Implementacijski dijagram razreda napravljen je s pomoću alata IntelliJ IDEA\footnote{\url{https://www.jetbrains.com/idea/}}. Model baze podataka izgrađen je alatom ERDPlus\footnote{\url{https://erdplus.com/}}. Za izradu backend dijela aplikacije korišten je radni okvir Java\footnote{\url{https://www.java.com/en/}} Spring\footnote{\url{https://spring.io/}}, a za razvoj na backendu korišteno je razvojno okruženje IntelliJ IDEA. Za izradu frontend dijela aplikacije korištena je knjižnica React\footnote{\url{https://react.dev/}} uz programski jezik TypeScript\footnote{\url{https://www.typescriptlang.org/}}. Za ispitivanje sustava korišteni su JUnit\footnote{\url{https://junit.org/}} i Selenium\footnote{\url{https://www.selenium.dev/}}. Za puštanje aplikacije u pogon korištena je platforma Render\footnote{\url{https://render.com/}}.
 			
 			
 			\eject 
@@ -21,7 +21,7 @@
 			
 			TestGettersAndSetters služi za provjeru ispravnosti gettera i settera za klasu \texttt{Account}. U ovom testu se inicijalizira objekt \texttt{Account} s određenim podacima (email, ime, prezime, lozinka, i uloga), a zatim se koriste getteri za dohvaćanje tih podataka i setteri za postavljanje novih vrijednosti. Nakon postavljanja novih vrijednosti, ponovno se koriste getteri za provjeru je li objekt uspješno promijenjen prema očekivanjima.
 			
-			\begin{lstlisting}
+			\begin{lstlisting}[language=Java]
 @Test
 public void testGettersAndSetters() {
 	Account account = new Account("test@example.com", "John", 
@@ -53,7 +53,7 @@ public void testGettersAndSetters() {
 			
 			TestTokenVersion provjerava funkcionalnost metoda za rad s token verzijom \\(\texttt{getTokenVersion()}, \texttt{incrementTokenVersion()}, \texttt{setTokenVersion()}) za klasu \texttt{Account}. Prvo se inicijalizira objekt \texttt{Account}, a zatim se provjerava da li je početna vrijednost token verzije jednaka 0. Nakon toga, koristi se metoda \texttt{incrementTokenVersion()} za povećanje verzije za 1 i provjerava se da li je nova vrijednost 1. Također se koristi metoda \texttt{setTokenVersion()} za postavljanje verzije na 5 i provjerava se je li postavljena vrijednost ispravna.
 			
-			\begin{lstlisting}
+			\begin{lstlisting}[language=Java]
 @Test
 public void testTokenVersion() {
 	Account account = new Account("test@example.com", "John", 
@@ -73,7 +73,7 @@ public void testTokenVersion() {
 			
 			ToString test provjerava da li metoda \texttt{toString()} klase \texttt{Account} vraća očekivani format teksta. Prvo se inicijalizira objekt \texttt{Account} s određenim podacima, a zatim se koristi metoda \texttt{toString()} za dobivanje string reprezentacije objekta. Očekivana string reprezentacija se uspoređuje s unaprijed definiranom očekivanom vrijednošću.
 			
-			\begin{lstlisting}
+			\begin{lstlisting}[language=Java]
 @Test
 public void testToString() {
 	Account account = new Account("test@example.com", "John", 
@@ -97,7 +97,7 @@ public void testToString() {
 			
 			Koristi se Assertions.assertThrows iz JUnit frameworka kako bi se provjerilo da će poziv loadUserByUsername(email) metode iz accountUserDetailsService doista izazvati iznimku tipa UsernameNotFoundException. Očekuje se da metoda loadUserByUsername baci iznimku kada korisnik s navedenim emailom ne postoji u sustavu.
 			
-			\begin{lstlisting}
+			\begin{lstlisting}[language=Java]
 @Test
 public void testLoadUserByUsername_ThrowsException() {
 	String email = "test@example.com";
@@ -125,7 +125,7 @@ public void testLoadUserByUsername_ThrowsException() {
 				\item \textbf{Verify}: Koristi se \texttt{verify} kako bi se provjerilo da je \texttt{dictionaryService.getAllDicts()} pozvana točno jednom i da nije bilo više interakcija s tim servisom \\(\texttt{verifyNoMoreInteractions(dictionaryService)}).
 			\end{itemize}
 			
-			\begin{lstlisting}
+			\begin{lstlisting}[language=Java]
 				
 @Test
 public void testGetAllDicts_EmptyList() {
@@ -161,7 +161,7 @@ public void testGetAllDicts_EmptyList() {
 				\item \textbf{Verify}: Koristi se \texttt{verify} kako bi se provjerilo da je \texttt{dictionaryService.getAllDicts()} pozvana točno jednom i da nije bilo više interakcija s tim servisom (\texttt{verifyNoMoreInteractions(dictionaryService)}).
 			\end{itemize}
 			
-			\begin{lstlisting}
+			\begin{lstlisting}[language=Java]
 				
 @Test
 public void testGetAllDicts_NonEmptyList() {
