@@ -15,6 +15,7 @@ export function Dictionary() {
     const inputRef = useRef<HTMLInputElement>(null);
     const { updateHomeText } = useHomeContext();
     let [words, setWords] = useState<WordMeta[]>([]);
+    let [dictId, setDictId] = useState<number | null>(null);
 
     let newDict = (dict === undefined)
 
@@ -23,12 +24,13 @@ export function Dictionary() {
 
         let dicts: DictionaryMeta[] = await fetch('/api/v1/languages/' + lang).then(res => res.json());
         if (inputRef.current && dict !== undefined) {
-            inputRef.current.value = dicts.find(d => d.id === parseInt(dict ?? '-1'))?.name ?? '';
+            let currentDict = dicts.find(d => d.id === parseInt(dict ?? '-1'));
+            inputRef.current.value = currentDict?.name ?? '';
+            setDictId(currentDict?.id ?? -1);
         }
 
-        let words = await fetch('/api/v1/dictionaries/' + dict).then(res => res.json());
-        console.log(words)
-        setWords(words);
+        let words: {wordId: number; originalWord: string;}[] = await fetch('/api/v1/dictionaries/' + dict).then(res => res.json());
+        setWords(words.map(word => ({ id: word.wordId?? -1, text: word.originalWord })));
     }
 
     useEffect(() => {
@@ -41,13 +43,17 @@ export function Dictionary() {
     }, []);
 
     function handleItemClick(arg: number) {
-        // TODO: open word editing
-        console.log("Handle item click for argument: " + arg)
+        navigate('/word/' + arg);
     }
 
     function handleItemIconClick(arg: number) {
-        // TODO: remove word
-        console.log("Handle Icon click for argument: " + arg);
+        fetch(`/api/v1/dictionaries/${dict}/${arg}`, {
+            method: 'DELETE'
+        }).then(res => {
+            if (res.ok) {
+                setWords(words.filter(word => word.id != arg));
+            }
+        })
     }
 
     function handleSubmit(arg: number | string) {
@@ -58,15 +64,24 @@ export function Dictionary() {
         if (newDict) { // create new dict
             fetch('/api/v1/dictionaries', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({langCode: lang, dictName: arg})
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ langCode: lang, dictName: arg })
             }).then(res => {
                 if (res.ok) {
                     navigate('/home/' + lang)
                 }
             });
-        } else { // update existing dict
-            throw new Error("unimplemented");
+        } else {
+            // Update existing dict
+            fetch('/api/v1/dictionaries/' + dictId, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dictLang: lang, dictName: arg, id: dictId ?? undefined, dictImage: 'empty' })
+            }).then(res => {
+                if (res.ok) {
+                    navigate('/home/' + lang)
+                }
+            });
         }
     }
 

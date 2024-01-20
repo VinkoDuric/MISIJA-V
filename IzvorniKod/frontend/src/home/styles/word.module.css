@@ -26,3 +26,9 @@
     margin: auto;
     margin-top: 2rem;
 }
+
+.error {
+    text-align: center;
+    color: red;
+    margin-top: 1.5rem;
+}

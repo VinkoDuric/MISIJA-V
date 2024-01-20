@@ -1,4 +1,4 @@
-import { RefObject, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { Button, ButtonType } from '../../components/buttons';
 import { InputText } from '../../components/form';
 import { ItemsList, ItemsListElement } from './itemsList';
@@ -15,19 +15,23 @@ type AutocompleteProps = {
 }
 
 export function Autocomplete({ placeholder, btnText, options, handleSubmit, handleInputChange, className, inputRef }: AutocompleteProps) {
-
-    let [inputText, setInputText] = useState<string>('');
+    let inputTextRef = useRef<HTMLInputElement>(null);
+    if (inputRef === undefined) {
+        inputRef = inputTextRef;
+    }
 
     function handleItemClick(arg: number) {
         handleSubmit(arg);
     }
 
     function onBtnClick() {
-        handleSubmit(inputText);
+        handleSubmit(inputRef?.current?.value ?? '');
+        if (inputRef && inputRef.current) {
+            inputRef.current.value = '';
+        }
     }
 
     function inputChange(text: string) {
-        setInputText(text);
         if (handleInputChange) {
             handleInputChange(text);
         }

@@ -1,6 +1,6 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, ButtonType } from "../components/buttons";
 import { InputText } from "../components/form";
 import { Autocomplete } from "./components/autocomplete";
@@ -16,6 +16,7 @@ function dictMetaToItemsListElements(dict: DictionaryMeta[]): ItemsListElement[]
 }
 
 export function Word() {
+    const navigate = useNavigate();
     const { wordId } = useParams();
     const { updateHomeText } = useHomeContext();
 
@@ -33,6 +34,7 @@ export function Word() {
     const [dicts, setDicts] = useState<ItemsListElement[]>([]);
     const [dictOptions, setDictOptions] = useState<ItemsListElement[] | null>(null);
     const [dictInput, setDictInput] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
 
     async function setupGeneral() {
         let langs: BackendLanguageData[] = await fetch('/api/v1/languages').then(res => res.json()) || [];
@@ -43,9 +45,24 @@ export function Word() {
         updateHomeText('Dodavanje nove riječi', 'Dodajte novu riječ u aplikaciju.');
     }
 
-    function setupEditWord(wordId: number) {
+    async function setupEditWord(wordId: number) {
         updateHomeText('Uređivanje riječi', 'Uredite postojeću riječ u aplikaciji.');
-        // TODO : fetch word data and populate it
+
+        let word: BackendWord = await fetch('/api/v1/word/' + wordId).then(res => res.json());
+
+        let allLangs: LanguageData[] = backendLangDataToLangData(await fetch('/api/v1/languages').then(res => res.json()));
+        let backendLang = allLangs.find(lang => lang.code === word.wordLanguageCode);
+        setLang(backendLang ?? null);
+
+        setOriginalWord(word.originalWord);
+        setTranslatedWord(word.translatedWord);
+        setUsages(word.wordDescription);
+        //setSynonimes(word.wordSynonyms);
+        let newDicts = dictMetaToItemsListElements(await fetch('/api/v1/languages/' + word.wordLanguageCode)
+            .then(res => res.json()))
+            .filter(dict => word.dictionaryIds.includes(dict.clickArg))
+
+        setDicts(newDicts);
     }
 
     useEffect(() => {
@@ -64,6 +81,53 @@ export function Word() {
         }
         return () => setDictOptions(null);
     }, [lang])
+
+    function submit() {
+        if (lang === null) {
+            throw new Error("Language not selected");
+        }
+
+        if (originalWord.length === 0) {
+            setError('Upišite izvornu riječ.');
+            return;
+        }
+
+        if (translatedWord.length === 0) {
+            setError('Upišite prevedenu riječ.');
+            return;
+        }
+
+        if (dicts.length === 0) {
+            setError('Potrebno je odabrati barem jedan rječnik.');
+            return;
+        }
+
+        let id = parseInt(wordId ?? '-1')
+
+        let wordData: BackendWord = {
+            id: wordId ? id : undefined,
+            wordLanguageCode: lang.code,
+            originalWord: originalWord,
+            translatedWord: translatedWord,
+            wordDescription: usages,
+            wordSynonyms: synonimes,
+            dictionaryIds: dicts.map(dict => dict.clickArg),
+        }
+
+        console.log(wordData);
+
+        fetch('/api/v1/word', {
+            method: wordId ? 'PUT' : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(wordData)
+        }).then(res => {
+            if (res.ok) {
+                navigate('/home/' + lang.code);
+            } else {
+                console.error(res);
+            }
+        })
+    }
 
     function onLangClick(langCode: string) {
         if (lang === null) {
@@ -134,7 +198,7 @@ export function Word() {
             usagesInputRef.current.focus();
             usagesInputRef.current.value = usageText[0];
         }
-        setUsages([...synonimes]);
+        setUsages([...usages]);
         setUsageSuggestions();
     }
 
@@ -162,7 +226,7 @@ export function Word() {
         console.log(pickedDictIdx);
         if (pickedDictIdx !== -1) {
             setDicts([dictOptions[pickedDictIdx], ...dicts]);
-            dictOptions.splice(pickedDictIdx, 1)
+            dictOptions.splice(pickedDictIdx, 1);
             setDictOptions([...dictOptions]);
         }
     }
@@ -181,6 +245,9 @@ export function Word() {
             setDicts([...dicts]);
         }
     }
+
+    let dictIds = dicts.map(dict => dict.clickArg);
+    let activeOptions = dictOptions?.filter(option => !dictIds.includes(option.clickArg)) ?? [];
 
     return (
         <div>
@@ -206,8 +273,8 @@ export function Word() {
                 <h2 className={styles.sectionTitle}>Riječi</h2>
                 <div className={styles.sectionText}>Upišite stranu riječ i njezin prijevod.</div>
                 <div className={styles.wordWrapper}>
-                    <InputText onChange={setOriginalWord} name="originalWord" placeholder="Izvorna riječ" />
-                    <InputText onChange={setTranslatedWord} name="translatedWord" placeholder="Prevedena riječ" />
+                    <InputText value={originalWord ?? ''} onChange={setOriginalWord} name="originalWord" placeholder="Izvorna riječ" />
+                    <InputText value={translatedWord ?? ''} onChange={setTranslatedWord} name="translatedWord" placeholder="Prevedena riječ" />
                 </div>
             </div>
             <div className={styles.section}>
@@ -251,16 +318,20 @@ export function Word() {
                 <div className={styles.sectionText}>Dodajte riječ u neki od postojećih rječnika.</div>
                 <Autocomplete
                     placeholder="Ime rječnika"
-                    options={dictOptions?.filter(option => option.text.includes(dictInput)) ?? []}
+                    options={activeOptions?.filter(option => option.text.includes(dictInput)) ?? []}
                     handleSubmit={addDictionary}
                     handleInputChange={setDictInput} />
                 <div>Odabrani rječnici</div>
                 <ItemsList
-                    className={styles.marginList}
+                    className={styles.marginTopSmall}
                     items={dicts}
                     handleClick={handleAddedDictionaryClick} />
             </div>
-            <Button type={ButtonType.ACCENT} className={styles.saveBtn}>spremi</Button>
+            {
+                error !== null &&
+                <div className={styles.error}>{error}</div>
+            }
+            <Button type={ButtonType.ACCENT} className={styles.saveBtn} onClick={submit}>spremi</Button>
         </div>
     );
 }

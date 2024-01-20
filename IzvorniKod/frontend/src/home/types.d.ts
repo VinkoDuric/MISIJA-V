@@ -19,3 +19,14 @@ type DictionaryMeta = {
     id: number;
     name: string;
 }
+
+type BackendWord = {
+    id?: number;
+    wordLanguageCode: string;
+    originalWord: string;
+    translatedWord: string;
+    wordDescription: string[];
+    wordSynonyms: string[];
+    dictionaryIds: number[];
+};
+
