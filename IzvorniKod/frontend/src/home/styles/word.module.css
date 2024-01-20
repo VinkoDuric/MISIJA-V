@@ -32,3 +32,9 @@
     color: red;
     margin-top: 1.5rem;
 }
+.addWordButton {
+    padding: 10px;
+    font-weight: normal;
+    margin: auto;
+    margin-top: 0.5rem;
+}

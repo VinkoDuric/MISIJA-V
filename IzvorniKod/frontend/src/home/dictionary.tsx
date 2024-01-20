@@ -4,6 +4,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { ItemsList, ItemsListElement } from "./components/itemsList";
 import { useNavigate, useParams } from "react-router-dom";
 import { Autocomplete } from "./components/autocomplete";
+import { Button, ButtonType } from "../components/buttons";
+import styles from './styles/word.module.css';
 
 function wordMetaToItemsListElements(words: WordMeta[]): ItemsListElement[] {
     return words.map(word => ({ clickArg: word.id, text: word.text }));
@@ -89,6 +91,7 @@ export function Dictionary() {
         <div>
             <Autocomplete inputRef={inputRef} placeholder="Ime rječnika" btnText="spremi" handleSubmit={handleSubmit} />
             <ItemsList items={wordMetaToItemsListElements(words)} icon={faTrash} handleIconClick={handleItemIconClick} handleClick={handleItemClick} />
+            <Button type={ButtonType.NORMAL} className={styles.addWordButton} onClick={()=>{navigate('/word')}}>Dodaj riječ</Button>
         </div>
     );
 }
