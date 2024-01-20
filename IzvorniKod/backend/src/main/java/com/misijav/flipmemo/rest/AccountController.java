@@ -16,6 +16,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,35 +66,61 @@ public class AccountController {
                                  HttpServletResponse response) {
         Account requester = (Account) userDetails;
 
-        // update user data
+        // Update user data
         logger.info("Received request to modify account from user {}", requester.getEmail());
-        accountService.updateAccount(requester.getId(), accModifyRequest);
-        logger.info("Successfully modified user account {} to {}", requester.getEmail(), accModifyRequest.email());
+        Account updatedUserAccount = accountService.updateAccount(requester.getId(), accModifyRequest);
+        logger.info("Successfully modified user account {} to {}", requester.getEmail(), updatedUserAccount.getEmail());
 
-        // create auth request with new user data
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(accModifyRequest.email(),
-                accModifyRequest.password());
+        // If the user changes the password, create a new cookie
+        if (accModifyRequest.password() != null && !accModifyRequest.password().isEmpty()) {
+            // Create auth request with new user data
+            AuthenticationRequest authenticationRequest = new AuthenticationRequest(updatedUserAccount.getEmail(),
+                    accModifyRequest.password());
 
-        // log in user with new credentials
-        AuthenticationResponse responseData = authenticationService.login(authenticationRequest);
+            // Log in user with new credentials
+            AuthenticationResponse responseData = authenticationService.login(authenticationRequest);
 
-        // create new cookie
-        ResponseCookie cookie = ResponseCookie.from("auth", responseData.token())
-                .httpOnly(true)
-                .secure(false)
-                .path("/api/v1")
-                .maxAge(Duration.ofHours(15))
-                .sameSite("Lax")
-                .build();
+            // Create new cookie
+            ResponseCookie cookie = ResponseCookie.from("auth", responseData.token())
+                    .httpOnly(true)
+                    .secure(false)
+                    .path("/api/v1")
+                    .maxAge(Duration.ofHours(15))
+                    .sameSite("Lax")
+                    .build();
 
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+            return ResponseEntity.ok()
+                    .body(responseData.account());
+        }
+
+        // If the user changes the email, delete the old cookie (user needs to log in again)
+        else if (accModifyRequest.email() != null && !accModifyRequest.email().isEmpty()) {
+            // Create new cookie to invalidate session
+            ResponseCookie invalidatedCookie = ResponseCookie.from("auth", "")
+                    .httpOnly(true)
+                    .secure(false)
+                    .path("/api/v1")
+                    .maxAge(0)
+                    .sameSite("Lax")
+                    .build();
+
+            response.setHeader(HttpHeaders.SET_COOKIE, invalidatedCookie.toString());
+
+            return ResponseEntity.ok("User " + updatedUserAccount.getEmail() + " needs to log in again.");
+        }
+
+        // If the user changes just firstName and/or lastName, send updated user info to frontend
+        AuthenticationResponse responseData = authenticationService.refresh(
+                SecurityContextHolder.getContext().getAuthentication());
 
         return ResponseEntity.ok()
                 .body(responseData.account());
     }
 
     @DeleteMapping("/deleteAccount/{email}")
-    public ResponseEntity<Void> deleteAccount(@AuthenticationPrincipal UserDetails userDetails,
+    public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal UserDetails userDetails,
                                               @PathVariable String email) {
         Account requester = (Account) userDetails;
 
@@ -107,14 +134,14 @@ public class AccountController {
         if (requester.getRole() == Roles.ADMIN) {
             accountService.deleteAccount(target.getId());
             logger.info("Account with email {} deleted successfully.", email);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("User account " + email + " deleted successfully.");
         } else {
             throw new AccessDeniedException("The user is not an ADMIN!");
         }
     }
 
     @PutMapping("/modifyAccount/{email}")
-    public ResponseEntity<Void> modifyAccount(@AuthenticationPrincipal UserDetails userDetails,
+    public ResponseEntity<?> modifyAccount(@AuthenticationPrincipal UserDetails userDetails,
                                               @RequestBody AccountModificationRequest request,
                                               @PathVariable String email) {
         Account requester = (Account) userDetails;
@@ -126,9 +153,9 @@ public class AccountController {
 
         // Check if the requester is an ADMIN
         if (requester.getRole() == Roles.ADMIN) {
-            accountService.updateAccount(target.getId(), request);
-            logger.info("Successfully modified account from {} to {}", target.getEmail(), request.email());
-            return ResponseEntity.ok().build();
+            Account updatedUserAccount = accountService.updateAccount(target.getId(), request);
+            logger.info("Successfully modified account from {} to {}", email, updatedUserAccount.getEmail());
+            return ResponseEntity.ok("Account modified successfully.");
         } else {
             throw new AccessDeniedException("The user is not an ADMIN!");
         }
