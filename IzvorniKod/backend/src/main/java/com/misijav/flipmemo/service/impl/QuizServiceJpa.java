@@ -54,7 +54,6 @@ public class QuizServiceJpa implements QuizService {
             Word originalWord = selectWordForQuiz(userPots);
             String question = originalWord.getOriginalWord();
             logger.info("User id {} dict id {} word id {}.", userId, dictId, originalWord.getWordId());
-            updateWordTimestamp(originalWord, dictId, userId);  // update timestamp for word
 
             List<String> answerChoices = new ArrayList<>();
             answerChoices.add(originalWord.getTranslatedWord());
@@ -79,7 +78,6 @@ public class QuizServiceJpa implements QuizService {
             // return translated word (hrv) with multiple original words (eng)
             Word translatedWord = selectWordForQuiz(userPots);
             String question = translatedWord.getTranslatedWord();
-            updateWordTimestamp(translatedWord, dictId, userId);  // update timestamp for word
 
             List<String> answerChoices = new ArrayList<>();
             answerChoices.add(translatedWord.getOriginalWord());
@@ -106,7 +104,6 @@ public class QuizServiceJpa implements QuizService {
             // return original word (eng) (user should record audio (with original word (eng)))
             Word originalWord = selectWordForQuiz(userPots);
             String question = originalWord.getOriginalWord();
-            updateWordTimestamp(originalWord, dictId, userId);  // update timestamp for word
             return new GetQuizQuestionResponse(question, null);
         }
         return null;
@@ -132,12 +129,12 @@ public class QuizServiceJpa implements QuizService {
     private Word selectWordForQuiz(List<Pot> userPots) {
         logger.info("User in selectWordForQuiz");
         logger.info("userPots = {}", userPots);
-        logger.info("1 pot = {}", userPots.get(5).getWords());
-        logger.info("2 pot = {}", userPots.get(4).getWords());
-        logger.info("3 pot = {}", userPots.get(3).getWords());
-        logger.info("4 pot = {}", userPots.get(2).getWords());
-        logger.info("5 pot = {}", userPots.get(1).getWords());
-        logger.info("6 pot = {}", userPots.get(0).getWords());
+        logger.info("1 pot = {}", userPots.get(0).getWords());
+        logger.info("2 pot = {}", userPots.get(1).getWords());
+        logger.info("3 pot = {}", userPots.get(2).getWords());
+        logger.info("4 pot = {}", userPots.get(3).getWords());
+        logger.info("5 pot = {}", userPots.get(4).getWords());
+        logger.info("6 pot = {}", userPots.get(5).getWords());
 
         // Sort pots by potNumber in descending order (Pot6,..,Pot1)
         userPots.sort((pot1, pot2) -> Integer.compare(pot2.getPotNumber(), pot1.getPotNumber()));
@@ -197,27 +194,33 @@ public class QuizServiceJpa implements QuizService {
             // check if original word (eng) matches with translated word (hrv)
             if (word.getTranslatedWord().equals(request.answer())) {  // if word translated == answer
                 moveWordToNextPot(userId, request.dictId(), word);  // Move word to next pot
+                updateWordTimestamp(word, request.dictId(), userId);  // update timestamp for word
                 return 10;
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);  // Move word to first pot
+                updateWordTimestamp(word, request.dictId(), userId);  // update timestamp for word
                 return 0;
             }
         } else if (learningMode.equals(LearningMode.TRANSLATED_ORIGINAL)) {
             // check if translated word (hrv) matches with original word (eng)
             if (word.getOriginalWord().equals(request.answer())) {  // if original word == answer
                 moveWordToNextPot(userId, request.dictId(), word);
+                updateWordTimestamp(word, request.dictId(), userId);  // update timestamp for word
                 return 10;
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);
+                updateWordTimestamp(word, request.dictId(), userId);  // update timestamp for word
                 return 0;
             }
         } else if (learningMode.equals(LearningMode.AUDIO_RESPONSE)) {
             // check if original word is equal to user written answer
             if (word.getOriginalWord().equals(request.answer())) {
                 moveWordToNextPot(userId, request.dictId(), word);
+                updateWordTimestamp(word, request.dictId(), userId);  // update timestamp for word
                 return 10;
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);
+                updateWordTimestamp(word, request.dictId(), userId);  // update timestamp for word
                 return 0;
             }
         } else if (learningMode.equals(LearningMode.ORIGINAL_AUDIO)) {
@@ -230,6 +233,7 @@ public class QuizServiceJpa implements QuizService {
             } else {
                 moveWordToFirstPot(userId, request.dictId(), word);
             }
+            updateWordTimestamp(word, request.dictId(), userId);  // update timestamp for word
             return evaluation;
         }
         return 0;
