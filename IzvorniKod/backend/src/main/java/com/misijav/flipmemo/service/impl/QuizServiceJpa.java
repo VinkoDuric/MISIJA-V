@@ -114,23 +114,30 @@ public class QuizServiceJpa implements QuizService {
 
     private void updateWordTimestamp(Word word, Long dictId, Long userId) {
         logger.info("User inside updateWordTimestamp method");
-        Pot pot = potRepository.findByUserIdWordIdAndDictId(userId, word.getWordId(), dictId)
-                .orElseThrow(() -> new ResourceNotFoundException("Pot for user "
-                        + userId + ", dictionary " + dictId + ", and word " + word.getWordId() + " not found"));
+        for (Pot pot : word.getPots()) {
+            if (pot.getUser().getId().equals(userId) && pot.getDictionary().getId().equals(dictId)) {
+                // Update the last reviewed timestamp for the selected word
+                Map<Pot, LocalDateTime> lastReviewedTimes = word.getLastReviewedTimes();
+                lastReviewedTimes.put(pot, LocalDateTime.now()); // Update the timestamp for the current pot
+                word.setLastReviewedTimes(lastReviewedTimes);
 
-        // Update the last reviewed timestamp for the selected word
-        Map<Pot, LocalDateTime> lastReviewedTimes = word.getLastReviewedTimes();
-        lastReviewedTimes.put(pot, LocalDateTime.now()); // Update the timestamp for the current pot
-        word.setLastReviewedTimes(lastReviewedTimes);
-
-        // Save the updated word
-        wordRepository.save(word);
+                // Save the updated word
+                Word updatedWord = wordRepository.save(word);
+                logger.info("updatedWord = {}", updatedWord);
+                return;
+            }
+        }
     }
 
     private Word selectWordForQuiz(List<Pot> userPots) {
         logger.info("User in selectWordForQuiz");
         logger.info("userPots = {}", userPots);
-        logger.info("First pot = {}", userPots.get(0).getWords());
+        logger.info("1 pot = {}", userPots.get(5).getWords());
+        logger.info("2 pot = {}", userPots.get(4).getWords());
+        logger.info("3 pot = {}", userPots.get(3).getWords());
+        logger.info("4 pot = {}", userPots.get(2).getWords());
+        logger.info("5 pot = {}", userPots.get(1).getWords());
+        logger.info("6 pot = {}", userPots.get(0).getWords());
 
         // Sort pots by potNumber in descending order (Pot6,..,Pot1)
         userPots.sort((pot1, pot2) -> Integer.compare(pot2.getPotNumber(), pot1.getPotNumber()));
@@ -147,6 +154,8 @@ public class QuizServiceJpa implements QuizService {
                 break;
             }
         }
+
+        logger.info("Fetched words = {}", wordList);
 
         if (wordList.size() < 5) {
             // Check if there is enough words inside pots
@@ -227,36 +236,57 @@ public class QuizServiceJpa implements QuizService {
     }
 
     private void moveWordToNextPot(Long userId, Long dictId, Word word) {
-        Pot currentPot = potRepository.findByUserIdWordIdAndDictId(userId, word.getWordId(), dictId)
-                .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
-                        + userId + ", and word " + word.getWordId()));
+        logger.info("User in moveWordToNextPot");
+        int maxPotNum = 0;
+        int currentPotNumber = 0;
+        Pot currentPot = null;
 
-        currentPot.removeWord(word);
-        potRepository.save(currentPot);
+        for (Pot pot : word.getPots()) {
+            if (pot.getUser().getId().equals(userId) && pot.getDictionary().getId().equals(dictId)) {
+                maxPotNum = pot.getMaxPotNumber();
+                currentPotNumber = pot.getPotNumber();
+                currentPot = pot;
+                break;
+            }
+        }
 
-        if (currentPot.getMaxPotNumber() > currentPot.getPotNumber()) {  // if it is not last pot
-            Pot nextPot = potRepository.findByUserIdPotNumberAndDictId(userId, currentPot.getPotNumber() + 1, dictId)
+        if (currentPot != null) {
+            currentPot.removeWord(word);
+            potRepository.save(currentPot);
+            word.getPots().remove(currentPot); // Remove current pot from word's list of pots
+        }
+
+        if (maxPotNum > currentPotNumber) {
+            int finalCurrentPotNumber = currentPotNumber;
+            Pot nextPot = potRepository.findByUserIdPotNumberAndDictId(userId, currentPotNumber + 1, dictId)
                     .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
-                            + userId + ", and pot number " + currentPot.getPotNumber()));
+                            + userId + ", and pot number " + finalCurrentPotNumber));
 
             nextPot.addWord(word);
+            word.getPots().add(nextPot); // Add next pot to the word's list of pots
             potRepository.save(nextPot);
+            wordRepository.save(word);
         }  // else : word is removed from last pot
     }
 
     private void moveWordToFirstPot(Long userId, Long dictId, Word word) {
-        Pot currentPot = potRepository.findByUserIdWordIdAndDictId(userId, word.getWordId(), dictId)
-                .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
-                        + userId + ", and word " + word.getWordId()));
+        logger.info("User in moveWordToFirstPot");
 
-        currentPot.removeWord(word);  // Remove word from current pot
-        potRepository.save(currentPot);
+        for (Pot pot : new ArrayList<>(word.getPots())) {
+            if (pot.getUser().getId().equals(userId) && pot.getDictionary().getId().equals(dictId)) {
+                pot.removeWord(word);  // Remove word from current pot
+                potRepository.save(pot);
+                word.getPots().remove(pot);
+            }
+        }
 
         Pot firstPot = potRepository.findByUserIdPotNumberAndDictId(userId, 1, dictId)
                 .orElseThrow(() -> new ResourceNotFoundException("No pot found for user "
                         + userId + ", and pot number 1"));
 
         firstPot.addWord(word);  // Add word to first pot
+        word.getPots().add(firstPot); // Add this pot to the word's list of pots
         potRepository.save(firstPot);
+        wordRepository.save(word);
     }
 }

@@ -1,5 +1,6 @@
 package com.misijav.flipmemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,12 +49,14 @@ public class Pot {
 
     public void setMaxPotNumber(int maxPotNumber) { this.maxPotNumber = maxPotNumber; }
 
+    @JsonIgnore
     public void setDictionary(Dictionary dictionary) { this.dictionary = dictionary; }
 
     public Long getPotId() {
         return potId;
     }
 
+    @JsonIgnore
     public Account getUser() {
         return user;
     }
@@ -75,7 +78,10 @@ public class Pot {
         if (words == null) {
             words = new ArrayList<>();
         }
-        words.add(word);
+        if (!words.contains(word)) {
+            words.add(word);
+            word.addPot(this); // Add this pot to the word's list of pots
+        }
     }
 
     // Method to remove a word from a pot

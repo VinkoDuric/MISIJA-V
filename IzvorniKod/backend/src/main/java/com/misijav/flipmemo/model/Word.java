@@ -1,5 +1,6 @@
 package com.misijav.flipmemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -32,6 +33,11 @@ public class Word {
     private List<Dictionary> dictionaries = new ArrayList<>();
 
     @ManyToMany
+    @JoinTable(
+            name = "word_in_pot",
+            joinColumns = @JoinColumn(name = "word_id"),
+            inverseJoinColumns = @JoinColumn(name = "pot_id")
+    )
     private List<Pot> pots;
 
     @ElementCollection(fetch = FetchType.LAZY)
@@ -61,6 +67,7 @@ public class Word {
 
     public List<String> getWordDescription() { return wordDescription; }
 
+    @JsonIgnore
     public List<Long> getDictionaries() {
         List<Long> dictionariesId = new ArrayList<>();
         for (Dictionary dict : dictionaries) {
@@ -69,6 +76,7 @@ public class Word {
         return dictionariesId;
     }
 
+    @JsonIgnore
     public List<Pot> getPots() {
         return pots;
     }
@@ -101,7 +109,9 @@ public class Word {
         if (pots == null) {
             pots = new ArrayList<>();
         }
-        pots.add(pot);
+        if (!pots.contains(pot)) {
+            pots.add(pot);
+        }
     }
 
     @Override

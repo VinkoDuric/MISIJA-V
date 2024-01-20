@@ -1,5 +1,6 @@
 package com.misijav.flipmemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class Account implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Pot> pots;
 
-    private Account() {}
+    protected Account() {}
 
     public Account(String email, String firstName, String lastName, String password, Roles role) {
         this.email = email;
@@ -79,6 +81,17 @@ public class Account implements UserDetails {
     public Long getTokenVersion() { return tokenVersion; }
 
     public void incrementTokenVersion() { ++tokenVersion; }
+
+    public void addPot(Pot pot) {
+        if (pots == null) {
+            pots = new ArrayList<>();
+        }
+        pots.add(pot);
+        pot.setAccount(this);
+    }
+
+    @JsonIgnore
+    public List<Pot> getPots() { return pots; }
 
     @Override
     public String toString() {

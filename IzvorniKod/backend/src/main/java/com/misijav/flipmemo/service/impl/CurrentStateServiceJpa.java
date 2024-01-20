@@ -3,6 +3,7 @@ package com.misijav.flipmemo.service.impl;
 import com.misijav.flipmemo.dao.AccountRepository;
 import com.misijav.flipmemo.dao.DictionaryRepository;
 import com.misijav.flipmemo.dao.PotRepository;
+import com.misijav.flipmemo.dao.WordRepository;
 import com.misijav.flipmemo.exception.ResourceNotFoundException;
 import com.misijav.flipmemo.model.*;
 import com.misijav.flipmemo.service.CurrentStateService;
@@ -15,14 +16,17 @@ public class CurrentStateServiceJpa implements CurrentStateService {
     private final DictionaryRepository dictionaryRepository;
     private final PotRepository potRepository;
     private final AccountRepository accountRepository;
+    private final WordRepository wordRepository;
 
     @Autowired
     public CurrentStateServiceJpa(DictionaryRepository dictionaryRepository,
                                   PotRepository potRepository,
-                                  AccountRepository accountRepository) {
+                                  AccountRepository accountRepository,
+                                  WordRepository wordRepository) {
         this.dictionaryRepository = dictionaryRepository;
         this.potRepository = potRepository;
         this.accountRepository = accountRepository;
+        this.wordRepository = wordRepository;
     }
 
     @Transactional
@@ -42,7 +46,19 @@ public class CurrentStateServiceJpa implements CurrentStateService {
                 }
             }
             newPot.setMaxPotNumber(numberOfPots);
-            potRepository.save(newPot);
+            Pot pot = potRepository.save(newPot);
+
+            if (potNum == 1) {  // associate word with pot
+                for (Word word : dictionary.getDictWords()) {
+                    word.addPot(pot);
+                    wordRepository.save(word);
+                }
+            }
+
+            dictionary.addPot(pot);
+            dictionaryRepository.save(dictionary);
+            user.addPot(pot);
+            accountRepository.save(user);
         }
     }
 }

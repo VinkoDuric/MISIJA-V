@@ -16,7 +16,7 @@ public class Language {
     private String languageImage;
 
     @OneToMany(mappedBy = "dictLang")
-    private List<Dictionary> dictionaries;
+    private List<Dictionary> dictionaries;  // < YEP
 
     protected Language() {}
 
